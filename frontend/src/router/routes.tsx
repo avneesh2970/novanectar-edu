@@ -6,6 +6,10 @@ import CourseDetails from "../components/CourseDetails";
 import Internships from "../pages/Internships";
 import PaymentSuccess from "../pages/PaymentSuccess";
 
+import Signup from "../components/auth/SignUp";
+import Login from "../components/auth/LogIn";
+import AboutUs from "../components/AboutUs/AboutUs";
+
 export const routes: RouteObject[] = [
   {
     path: "/",
@@ -24,12 +28,24 @@ export const routes: RouteObject[] = [
         element: <Contact />,
       },
       {
+        path: "about-us",
+        element: <AboutUs />,
+      },
+      {
         path: "courses",
         element: <Courses />,
       },
       {
         path: "internships",
         element: <Internships />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
       },
       {
         path: "courses/:courseId",

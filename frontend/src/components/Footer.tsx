@@ -1,13 +1,16 @@
-import logo from "../assets/nav-logo.png";
+import logo from "../assets/logos/footer-logo.png";
 export default function Footer() {
   return (
     <footer className="mt-16 bg-gray-800 text-white py-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
         {/* Logo Section */}
         <div>
-          <h3 className="text-lg font-bold mb-4">
-            <img src={logo} alt="logo" className="text-white" />
-            NOVANECTAR SERVICES PVT. LTD.
+          <h3 className="text-lg font-bold mb-4 flex gap-3">
+            <img src={logo} alt="logo" className="text-white w-14" />
+            <p className="text-[#1DA1F2] text-lg">
+              NOVANECTAR{" "}
+              <span className="text-white block">SERVICESPVT. LTD.</span>{" "}
+            </p>
           </h3>
           <p className="text-sm">
             NovaNectar is a prominent provider of training and solutions,

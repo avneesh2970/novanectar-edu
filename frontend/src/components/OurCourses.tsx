@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 export default function OurCourses() {
   const [activeTab, setActiveTab] = useState("");
   const navigate = useNavigate();
-  // const [selectedCard, setSelectedCard] = useState(null);
   let filteredCards;
 
   if (activeTab) {
@@ -13,7 +12,6 @@ export default function OurCourses() {
   } else {
     filteredCards = coursesCards;
   }
-
 
   const handleCourseClick = (courseId: string) => {
     navigate(`/courses/${courseId}`);
@@ -23,15 +21,13 @@ export default function OurCourses() {
   //   setSelectedCard(null);
   // };
 
-
-
   return (
     <>
       <div className="text-center py-6">
         <h1 className="text-3xl font-semibold">Courses We Offer</h1>
       </div>
 
-      <div className="min-h-screen bg-gray-100 p-4">
+      <div className="min-h-screen bg-white p-4 mt-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-center space-x-4 mb-6">
             <button
@@ -55,10 +51,14 @@ export default function OurCourses() {
               Technology
             </button>
             <button
-              className="px-4 py-2 text-sm font-semibold rounded-full bg-gray-200 text-gray-700"
+              className={`px-4 py-2 text-sm font-semibold rounded-full text-gray-700 ${
+                activeTab === ""
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700"
+              }`}
               onClick={() => setActiveTab("")}
             >
-              More
+              All
             </button>
           </div>
 
@@ -67,7 +67,7 @@ export default function OurCourses() {
               <div
                 key={card.id}
                 onClick={() => handleCourseClick(card.id)}
-                className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+                className="bg-white shadow-lg shadow-blue-200 rounded-lg overflow-hidden transition-transform transform hover:scale-105"
               >
                 <img
                   src={card.image}
