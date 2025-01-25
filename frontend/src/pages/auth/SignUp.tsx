@@ -1,4 +1,4 @@
-import SignUpForm from "./Sign-up-form";
+import SignUpForm from "../../components/auth/Sign-up-form";
 import mainImage from "../../assets/auth/mainImage.png";
 
 export default function Signup() {

@@ -6,8 +6,8 @@ import CourseDetails from "../components/CourseDetails";
 import Internships from "../pages/Internships";
 import PaymentSuccess from "../pages/PaymentSuccess";
 
-import Signup from "../components/auth/SignUp";
-import Login from "../components/auth/LogIn";
+import Signup from "../pages/auth/SignUp";
+import Login from "../pages/auth/LogIn";
 import AboutUs from "../components/AboutUs/AboutUs";
 
 export const routes: RouteObject[] = [
