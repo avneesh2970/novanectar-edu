@@ -1,44 +1,99 @@
-
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 interface FormData {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 
 export default function SignUpForm() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  })
+  });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+
+    try {
+      if (formData.password.length < 6) {
+        toast.error("password must be greater that 6 character");
+        return;
+      }
+      if (formData.firstName.length < 2) {
+        toast.error("name must be atleast 2 character");
+        return;
+      }
+      if (formData.lastName.length < 2) {
+        toast.error("name must be atleast 2 character");
+        return;
+      }
+      if (formData.email.trim() === "") {
+        toast.error("must have email");
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        toast("Please enter a valid email address");
+        return;
+      }
+      setIsLoading(true);
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success("account created successfully");
+      }
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+      navigate("/");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      toast.error(error.response.data.message)
+    }finally {
+      setIsLoading(false);
+    }
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      console.log("Form submitted:", formData)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("Form submitted:", formData);
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className="bg-white/90 border border-blue-500 mt-28 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform transition-all duration-300 hover:shadow-2xl">
@@ -54,11 +109,19 @@ export default function SignUpForm() {
       {/* Social Login Buttons */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <button className="flex items-center justify-center gap-2 p-2 border rounded-lg hover:bg-gray-50 transition-colors">
-          <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+          <img
+            src="https://www.google.com/favicon.ico"
+            alt="Google"
+            className="w-5 h-5"
+          />
           Google
         </button>
         <button className="flex items-center justify-center gap-2 p-2 border rounded-lg hover:bg-gray-50 transition-colors">
-          <img src="https://www.facebook.com/favicon.ico" alt="Facebook" className="w-5 h-5" />
+          <img
+            src="https://www.facebook.com/favicon.ico"
+            alt="Facebook"
+            className="w-5 h-5"
+          />
           Facebook
         </button>
       </div>
@@ -119,6 +182,5 @@ export default function SignUpForm() {
         </button>
       </form>
     </div>
-  )
+  );
 }
-

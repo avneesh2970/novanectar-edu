@@ -5,6 +5,8 @@ import { dbConnect } from "./src/lib/dbConnect.js";
 import router from "./src/query/query.route.js";
 import paymentRouter from "./src/orders/order.route.js";
 import contactRouter from "./src/contacts/contacts.route.js";
+import authRoutes from "./src/user/user.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
@@ -13,11 +15,19 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
+app.use("/api/auth", authRoutes);
 app.use("/api", router);
 app.use("/api", paymentRouter);
 app.use("/api", contactRouter);

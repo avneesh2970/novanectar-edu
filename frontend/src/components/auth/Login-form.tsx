@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FormData {
   email: string;
@@ -12,17 +14,39 @@ export default function LoginForm() {
     email: "",
     password: "",
   });
-
+  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.password.length < 6) {
+      toast("password must be atleast 6 characters long");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast("Please enter a valid email address");
+      return;
+    }
     setIsLoading(true);
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        { email: formData.email, password: formData.password },
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success("logged in successfully");
+      }
       console.log("Form submitted:", formData);
-    } catch (error) {
-      console.error("Error:", error);
+      setFormData({ email: "", password: "" });
+      navigate("/")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      console.log("error is : ", error);
+      toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
