@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../store/AuthStore";
 
 interface FormData {
   firstName: string;
@@ -20,60 +21,71 @@ export default function SignUpForm() {
     password: "",
   });
   const navigate = useNavigate();
+  const { signup } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.password.length < 6) {
+      toast.error("password must be greater that 6 character");
+      return;
+    }
+    if (formData.firstName.length < 2) {
+      toast.error("name must be atleast 2 character");
+      return;
+    }
+    if (formData.lastName.length < 2) {
+      toast.error("name must be atleast 2 character");
+      return;
+    }
+    if (formData.email.trim() === "") {
+      toast.error("must have email");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast("Please enter a valid email address");
+      return;
+    }
+    setIsLoading(true);
 
     try {
-      if (formData.password.length < 6) {
-        toast.error("password must be greater that 6 character");
-        return;
-      }
-      if (formData.firstName.length < 2) {
-        toast.error("name must be atleast 2 character");
-        return;
-      }
-      if (formData.lastName.length < 2) {
-        toast.error("name must be atleast 2 character");
-        return;
-      }
-      if (formData.email.trim() === "") {
-        toast.error("must have email");
-        return;
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        toast("Please enter a valid email address");
-        return;
-      }
-      setIsLoading(true);
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/signup",
-        {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          password: formData.password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.data.success) {
-        toast.success("account created successfully");
-      }
+      // const response = await axios.post(
+      //   "http://localhost:3000/api/auth/signup",
+      //   {
+      //     firstName: formData.firstName,
+      //     lastName: formData.lastName,
+      //     email: formData.email,
+      //     password: formData.password,
+      //   },
+      //   {
+      //     withCredentials: true,
+      //   }
+      // );
+      // if (response.data.success) {
+      //   toast.success("account created successfully");
+      // }
+      const credentials = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      };
+      const result = await signup(credentials);
       setFormData({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
       });
-      navigate("/");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
-      toast.error(error.response.data.message)
-    }finally {
+      if (result.success) {
+        navigate("/");
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log("error is : ", error);
+      toast.error(error.response.data.message);
+    } finally {
       setIsLoading(false);
     }
 

@@ -2,10 +2,14 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/nav-logo.png";
+import { useAuth } from "../store/AuthStore";
+import { button } from "framer-motion/client";
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, logout } = useAuth();
+  console.log("isAuthenticated: ", isAuthenticated);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -64,20 +68,25 @@ const Layout = () => {
                   </NavLink>
                 ))}
               </div>
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/signup"
-                  className="px-4 py-2 text-base font-medium text-blue-600 border border-blue-600 rounded-md transition-colors duration-200 hover:bg-blue-600 hover:text-white"
-                >
-                  Sign Up
-                </Link>
-                <Link
-                  to="/login"
-                  className="px-4 py-2 text-base font-medium text-gray-600 border border-gray-300 rounded-md transition-colors duration-200 hover:bg-gray-300 hover:text-gray-900"
-                >
-                  Log In
-                </Link>
-              </div>
+
+              {isAuthenticated ? (
+                <button className="px-4 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 hover:text-blue-600 hover:bg-gray-50" onClick={logout}>LOGOUT</button>
+              ) : (
+                <div className="flex items-center space-x-4">
+                  <Link
+                    to="/signup"
+                    className="px-4 py-2 text-base font-medium text-blue-600 border border-blue-600 rounded-md transition-colors duration-200 hover:bg-blue-600 hover:text-white"
+                  >
+                    Sign Up
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="px-4 py-2 text-base font-medium text-gray-600 border border-gray-300 rounded-md transition-colors duration-200 hover:bg-gray-300 hover:text-gray-900"
+                  >
+                    Log In
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Hamburger Menu for Mobile */}

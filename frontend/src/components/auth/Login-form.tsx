@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../store/AuthStore";
 
 interface FormData {
   email: string;
@@ -9,6 +10,7 @@ interface FormData {
 }
 
 export default function LoginForm() {
+  const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -30,21 +32,28 @@ export default function LoginForm() {
 
     try {
       // Simulate API call
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        { email: formData.email, password: formData.password },
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.data.success) {
-        toast.success("logged in successfully");
-      }
-      console.log("Form submitted:", formData);
+      // const response = await axios.post(
+      //   "http://localhost:3000/api/auth/login",
+      //   { email: formData.email, password: formData.password },
+      //   {
+      //     withCredentials: true,
+      //   }
+      // );
+      // if (response.data.success) {
+      //   toast.success("logged in successfully");
+      // }
+      const credentials = {
+        email: formData.email,
+        password: formData.password,
+      };
+      const result = await login(credentials);
       setFormData({ email: "", password: "" });
-      navigate("/")
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
+      if (result.success) {
+        navigate("/"); // or wherever you want to redirect after login
+      }
+      // navigate("/")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log("error is : ", error);
       toast.error(error.response.data.message);
     } finally {
@@ -100,8 +109,6 @@ export default function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-
-
         <input
           type="email"
           name="email"
