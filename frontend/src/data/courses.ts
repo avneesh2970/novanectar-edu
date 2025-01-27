@@ -664,7 +664,7 @@ export const placementAssistentCards = [
 
 export const internshipData = [
   {
-    id: 1,
+    id: "1",
     title: "Python Developer",
     icon: "python",
     description:
@@ -676,7 +676,7 @@ export const internshipData = [
 
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Python Programming Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -735,7 +735,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 2,
+    id: "2",
     title: "C/C++ Programming",
     icon: "code",
     description:
@@ -747,7 +747,7 @@ export const internshipData = [
 
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "C/C++ Programming Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -806,7 +806,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 3,
+    id: "3",
     title: "Graphic Designer",
     icon: "design",
     description:
@@ -818,7 +818,7 @@ export const internshipData = [
 
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Graphic Designer Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -877,7 +877,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 4,
+    id: "4",
     title: "Data Analytics",
     icon: "analytics",
     description:
@@ -888,7 +888,7 @@ export const internshipData = [
     image: internImages.intern4,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Data Analytics Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -947,7 +947,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 5,
+    id: "5",
     title: "Web Developer",
     icon: "web",
     description:
@@ -958,7 +958,7 @@ export const internshipData = [
     image: internImages.intern5,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Web Developer Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1017,8 +1017,8 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 6,
-    title: "Artificial Intelligence",
+    id: "6",
+    title: "Artieficial Intlligence",
     icon: "ai",
     description:
       "Solve real-world problems using AI techniques, designing and implementing intelligent systems. Gain expertise in AI applications.",
@@ -1028,7 +1028,7 @@ export const internshipData = [
     image: internImages.intern6,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Artieficial Intlligence Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1087,7 +1087,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 7,
+    id: "7",
     title: "Machine Learning",
     icon: "ai",
     description:
@@ -1098,7 +1098,7 @@ export const internshipData = [
     image: internImages.intern7,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Machine Learning Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1157,7 +1157,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 8,
+    id: "8",
     title: "Java Developer",
     icon: "ai",
     description:
@@ -1168,7 +1168,7 @@ export const internshipData = [
     image: internImages.intern8,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Java Programming Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1227,7 +1227,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 9,
+    id: "9",
     title: "Full Stack Developer",
     icon: "ai",
     description:
@@ -1238,7 +1238,7 @@ export const internshipData = [
     image: internImages.intern9,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Full Stack Developer Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1297,7 +1297,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 10,
+    id: "10",
     title: "App Development",
     icon: "ai",
     description:
@@ -1308,7 +1308,7 @@ export const internshipData = [
     image: internImages.intern10,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "App Development Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1367,7 +1367,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 11,
+    id: "11",
     title: "Data Science",
     icon: "ai",
     description:
@@ -1378,7 +1378,7 @@ export const internshipData = [
     image: internImages.intern11,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Data Science Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1437,7 +1437,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 12,
+    id: "12",
     title: "UI/UX Designer",
     icon: "ai",
     description:
@@ -1446,7 +1446,7 @@ export const internshipData = [
     image: internImages.intern12,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "UI/UX Designer Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1505,7 +1505,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 13,
+    id: "13",
     title: "Cybersecurity",
     icon: "ai",
     description:
@@ -1514,7 +1514,7 @@ export const internshipData = [
     image: internImages.intern13,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Cybersecurity Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1573,7 +1573,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 14,
+    id: "14",
     title: "Digital Marketing",
     icon: "ai",
     description:
@@ -1582,7 +1582,7 @@ export const internshipData = [
     image: internImages.intern14,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Digital Marketing Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1641,7 +1641,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 15,
+    id: "15",
     title: "Content Writing",
     icon: "ai",
     description:
@@ -1650,7 +1650,7 @@ export const internshipData = [
     image: internImages.intern15,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "Content Writing Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 
@@ -1709,7 +1709,7 @@ export const internshipData = [
     duration: "6 months",
   },
   {
-    id: 16,
+    id: "16",
     title: "WordPress",
     icon: "ai",
     description:
@@ -1718,7 +1718,7 @@ export const internshipData = [
     image: internImages.intern16,
     category: "Technology",
 
-    title_: "Java Programming Course",
+    title_: "WordPress Internship",
     description_:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
 

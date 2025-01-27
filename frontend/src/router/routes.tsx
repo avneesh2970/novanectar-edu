@@ -9,6 +9,7 @@ import PaymentSuccess from "../pages/PaymentSuccess";
 import Signup from "../pages/auth/SignUp";
 import Login from "../pages/auth/LogIn";
 import AboutUs from "../components/AboutUs/AboutUs";
+import InternshipDetail from "../components/internships/InternshipDetail";
 
 export const routes: RouteObject[] = [
   {
@@ -50,6 +51,10 @@ export const routes: RouteObject[] = [
       {
         path: "courses/:courseId",
         element: <CourseDetails />,
+      },
+      {
+        path: "internships/:internshipId",
+        element: <InternshipDetail/>,
       },
       {
         path: "payment/success",

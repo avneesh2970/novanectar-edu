@@ -1,19 +1,26 @@
 import { useState } from "react";
 import internship from "../assets/internship.png";
 import Footer from "../components/Footer";
-import EnrollmentModal from "../components/EnrollmentModal";
+// import EnrollmentModal from "../components/EnrollmentModal";
 import { internshipData } from "../data/courses";
+import { useNavigate } from "react-router-dom";
 
 export default function Internships() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
-  const [selectedInternship, setSelectedInternship] = useState({});
+  const [hoveredCard, setHoveredCard] = useState<number | string | null>(null);
+  // const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
+  // const [selectedInternship, setSelectedInternship] = useState({});
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const internshipHandler = (domain: any) => {
-    // const internshipCourse = internshipData.find((course) => course.id === domain.id);
-    setIsEnrollModalOpen(true);
-    setSelectedInternship(domain);
+  // const internshipHandler = (domain: any) => {
+  //   // const internshipCourse = internshipData.find((course) => course.id === domain.id);
+  //   setIsEnrollModalOpen(true);
+  //   setSelectedInternship(domain);
+  // };
+  const navigate = useNavigate();
+
+  const handleInternshipClick = (courseId: string) => {
+    navigate(`/internships/${courseId}`);
   };
+
   return (
     <>
       <div className="max-w-6xl mx-auto p-4 mt-28">
@@ -108,7 +115,8 @@ export default function Internships() {
                   }`}
                   onMouseEnter={() => setHoveredCard(domain.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  onClick={() => internshipHandler(domain)}
+                  // onClick={() => internshipHandler(domain)}
+                  onClick={() => handleInternshipClick(domain.id)}
                 >
                   {/* Card Image */}
                   <div className="h-48 overflow-hidden">
@@ -144,11 +152,11 @@ export default function Internships() {
                   />
                 </div>
               ))}
-              <EnrollmentModal
+              {/* <EnrollmentModal
                 isOpen={isEnrollModalOpen}
                 onClose={() => setIsEnrollModalOpen(false)}
                 course={selectedInternship}
-              />
+              /> */}
             </div>
           </div>
         </div>
