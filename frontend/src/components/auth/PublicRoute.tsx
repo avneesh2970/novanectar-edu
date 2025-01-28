@@ -1,15 +1,17 @@
 
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../store/AuthStore";
+import { useAuth } from "../../hooks/useAuth";
 
-const PublicRoute = ({ children }) => {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PublicRoute = ({ children }:any) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  return !isAuthenticated ? children : <Navigate to="/dashboard" replace />;
+  return !isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
 export default PublicRoute;

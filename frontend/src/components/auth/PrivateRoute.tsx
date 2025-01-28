@@ -1,8 +1,10 @@
 
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../store/AuthStore";
+import { useAuth } from "../../hooks/useAuth";
 
-const PrivateRoute = ({ children }) => {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PrivateRoute = ({ children }:any) => {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
   if (isLoading) {

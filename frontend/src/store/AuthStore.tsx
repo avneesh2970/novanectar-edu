@@ -1,10 +1,11 @@
-import { createContext, useContext, useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const AuthContext = createContext();
+const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }:any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (credentials) => {
+  const login = async (credentials:any) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
@@ -39,14 +40,14 @@ export const AuthProvider = ({ children }) => {
       setUsername(response.data.firstName + " " + response.data.lastName);
       toast.success("Logged in successfully");
       return { success: response.data.success };
-    } catch (error) {
+    } catch (error:any) {
       toast.error(error.response?.data?.message || "Login failed");
       return { success: false, error };
     }
   };
 
 ///////////////////////////////////////////////////////
-const signup = async (credentials) => {
+const signup = async (credentials:any) => {
   try {
     const response = await axios.post(
       "http://localhost:3000/api/auth/signup",
@@ -57,14 +58,11 @@ const signup = async (credentials) => {
     setUsername(response.data.firstName + " " + response.data.lastName);
     toast.success("Logged in successfully");
     return { success: response.data.success };
-  } catch (error) {
+  } catch (error:any) {
     toast.error(error.response?.data?.message || "Login failed");
     return { success: false, error };
   }
 };
-///////////////////////////////////////////////////////
-
-
 
   const logout = async () => {
     try {
@@ -99,10 +97,4 @@ const signup = async (credentials) => {
   );
 };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+export default AuthContext;

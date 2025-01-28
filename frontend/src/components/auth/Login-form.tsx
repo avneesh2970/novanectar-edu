@@ -1,8 +1,9 @@
-import axios from "axios";
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../store/AuthStore";
+import { useAuth } from "../../hooks/useAuth";
+
 
 interface FormData {
   email: string;

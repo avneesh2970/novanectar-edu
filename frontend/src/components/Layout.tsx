@@ -2,8 +2,9 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/nav-logo.png";
-import { useAuth } from "../store/AuthStore";
-import { button } from "framer-motion/client";
+import { useAuth } from "../hooks/useAuth";
+
+
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
