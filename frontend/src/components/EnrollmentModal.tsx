@@ -290,14 +290,6 @@ export default function EnrollmentModal({
               />
             </div>
 
-            {/* {error && <p className="text-red-500 text-sm mt-2">{error}</p>} */}
-
-            {/* <button
-              type="submit"
-              className="mt-6 w-full px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-            >
-              Submit
-            </button> */}
             <div className="flex gap-4 mt-4">
               <button
                 onClick={onClose}
@@ -307,7 +299,6 @@ export default function EnrollmentModal({
               </button>
               <button
                 type="submit"
-                // onClick={handlePayment}
                 disabled={isProcessing}
                 className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
               >

@@ -1,37 +1,90 @@
-// src/components/CourseDetails.tsx
-import { useParams, useNavigate } from "react-router-dom";
-import { internshipData } from "../../data/courses";
-import EnrollmentModal from "../EnrollmentModal";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import CourseSlip from "../CourseSlip";
-// import { Course } from '../types';
+import { useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { internshipData } from "../../data/courses";
+import InternshipEnrollmentModal from "./InternshipEnrollmentModal";
 
-interface OpenSections {
-  [key: number]: boolean;
-}
-
-export default function InternshipDetail() {
+const InternshipDetail = () => {
   const { internshipId } = useParams();
-  console.log("params:", internshipId);
   const navigate = useNavigate();
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
+  const [selectedDuration, setSelectedDuration] = useState("6");
 
-  const [openSections, setOpenSections] = useState<OpenSections>({});
+  const durationOptions = [
+    {
+      months: "1",
+      price: "99",
+      highlight: "Perfect for quick skill development",
+    },
+    {
+      months: "3",
+      price: "299",
+      highlight: "Ideal for in-depth learning",
+    },
+    {
+      months: "6",
+      price: "699",
+      highlight: "Complete professional experience",
+    },
+  ];
 
-  const toggleSection = (section: number) => {
-    setOpenSections((prevState) => ({
-      ...prevState,
-      [section]: !prevState[section],
-    }));
+  const internshipJourney = [
+    {
+      title: "Enrollment Process",
+      description:
+        "Choose your preferred internship duration and complete the enrollment process",
+      icon: "🚀",
+    },
+    {
+      title: "Offer Letter",
+      description:
+        "Receive your internship offer letter within 24 hours of successful enrollment",
+      icon: "📝",
+    },
+    {
+      title: "Introduction Session",
+      description:
+        "Comprehensive orientation about the program and technologies",
+      icon: "👥",
+    },
+    {
+      title: "Elementary Task",
+      description:
+        "Complete mandatory fundamental assignments to demonstrate basic skills",
+      icon: "✨",
+    },
+    {
+      title: "Live Projects",
+      description: "Work on real-world projects with experienced developers",
+      icon: "💻",
+    },
+    {
+      title: "Certification & LOR",
+      description:
+        "Earn your certificates and performance-based recommendation letter",
+      icon: "🏆",
+    },
+    {
+      title: "Career Growth",
+      description:
+        "Performance-based stipend and opportunity for full-time position",
+      icon: "📈",
+    },
+  ];
+
+  const handleSelectedInternship = (month: any) => {
+    setSelectedDuration(month);
+    setIsEnrollModalOpen(true);
   };
 
-  // const course = coursesCards.find((course) => course.id === courseId) as Course;
-  const internship = internshipData.find((course) => course.id === internshipId);
-  internshipData.find((intern)=>{
-    console.log("test",intern.id);
-    console.log("testpp",internshipId);
-  });
-//   console.log("internship: ", internship);
+  const internship = internshipData.find(
+    (course) => course.id === internshipId
+  );
+  // internshipData.find((intern) => {
+  //   console.log("test", intern.id);
+  //   console.log("testpp", internshipId);
+  // });
   if (!internship) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -49,103 +102,165 @@ export default function InternshipDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="bg-white p-6 rounded-lg shadow-md mt-20">
-        <h1 className="text-3xl font-semibold mb-4">{internship.title_}</h1>
-        <p className="text-gray-600 mb-6 text-sm">{internship.description_}</p>
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          {internship.features.map((feature, index) => (
-            <p key={index} className="text-sm text-gray-700 flex items-center">
-              ✅ {feature}
-            </p>
-          ))}
+    <div className="min-h-screen bg-white mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-700 mb-6">
+            {internship.title_}
+          </h1>
+          <p className="text-xl sm:text-2xl text-blue-500 max-w-3xl mx-auto">
+            Transform your career with hands-on experience in Python
+            development. Learn, build, and grow with industry experts.
+          </p>
         </div>
-        <div className="p-4 rounded-lg mb-6">
-          <h2 className="text-lg font-semibold mb-2">This Course Includes:</h2>
-          <ul className="text-gray-700 text-sm">
-            <li>🎥 {internship.courseIncludes.videoHours}</li>
-            <li>📚 {internship.courseIncludes.resources}</li>
-            <li>💻 {internship.courseIncludes.codingExercises}</li>
-            <li>📰 {internship.courseIncludes.articles}</li>
-            <li>🏆 {internship.courseIncludes.certificate}</li>
-            <li>📱 {internship.courseIncludes.access}</li>
-          </ul>
-          <div className="pt-6 font-semibold text-gray-700 text-lg flex items-center">
-            <span className="mr-2">Price:</span>
-            <span className="text-green-600 text-xl font-bold">
-              {internship.price} Rs
-            </span>
+
+        {/* Duration Options */}
+        <div className="mb-20">
+          <h2 className="text-3xl font-bold text-blue-500 mb-10 text-center">
+            Choose Your Internship Duration
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {durationOptions.map((option) => (
+              <motion.div
+                key={option.months}
+                whileHover={{ scale: 1.03 }}
+                className={`shadow-sm shadow-blue-500 rounded-2xl p-8 cursor-pointer transition-all ${
+                  selectedDuration === option.months
+                    ? "bg-blue-100 border-2 border-blue-500"
+                    : "bg-white border-2 border-gray-200 hover:border-blue-300"
+                }`}
+                onClick={() => handleSelectedInternship(option.months)}
+              >
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-blue-500 mb-4">
+                    {option.months} Month
+                  </h3>
+                  <p className="text-3xl font-extrabold text-blue-600 mb-6">
+                    ₹{option.price}{" "}
+                    <span className="text-sm font-normal text-blue-400">
+                      INR
+                    </span>
+                  </p>
+                  <p className="text-lg text-blue-500">{option.highlight}</p>
+                  <button className="px-8 py-2 border border-blue-500 rounded-lg mt-4 text-blue-600 font-semibold hover:bg-blue-500 hover:text-white transition-colors duration-500">
+                    ENROLL
+                  </button>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
-        <button
-          onClick={() => setIsEnrollModalOpen(true)}
-          className="border border-blue-800 text-blue-800 font-semibold px-14 py-1 rounded-lg hover:bg-blue-800 hover:text-white transition-colors mb-8"
-        >
-          Enroll Now
-        </button>
 
-        <EnrollmentModal
-          isOpen={isEnrollModalOpen}
-          onClose={() => setIsEnrollModalOpen(false)}
-          course={internship}
-        />
-        <div className="flex justify-between text-sm text-gray-900 max-w-lg mb-6">
-          <p className="font-semibold text-balck">
-            Number of learners:{" "}
-            <span className="block">{internship.stats.learners}</span>
-          </p>
-          <p className="font-semibold text-balck">
-            Hands-on practices:{" "}
-            <span className="block">{internship.stats.practices}</span>
-          </p>
-          <p className="font-semibold text-balck">
-            Rating: <span className="block">{internship.stats.rating} ⭐</span>
-          </p>
-        </div>
-        <div>
-          <div className="max-w-4xl mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Course Content</h1>
-            <p className="mb-4 text-gray-600">
-              {internship.content.length} sections ·{" "}
-              {internship.content.reduce((total, item) => total + item.lectures, 0)}{" "}
-              lectures ·{" "}
-              {internship.content.reduce((total, item) => {
-                const [hours, minutes] = item.duration.split(" ").map(Number);
-                return total + (hours * 60 + minutes);
-              }, 0)}{" "}
-              minutes total length
-            </p>
-            <div className="bg-white shadow rounded-lg divide-y">
-              {internship.content.map((section, index) => (
-                <div key={index}>
-                  <div
-                    className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100"
-                    onClick={() => toggleSection(index)}
-                  >
-                    <span className="font-medium">{section.title}</span>
-                    <span className="text-gray-500">
-                      {section.lectures} lectures · {section.duration}
-                    </span>
-                    <span className="text-blue-500">
-                      {openSections[index] ? "▲" : "▼"}
-                    </span>
+        {/* Journey Section */}
+        <div className="mb-20">
+          <h2 className="text-3xl font-bold text-blue-500 mb-10 text-center">
+            Your Internship Journey
+          </h2>
+          <div className="relative">
+            <div className="absolute left-8 inset-y-0 w-0.5 bg-blue-200 hidden md:block"></div>
+            {internshipJourney.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="flex flex-col md:flex-row mb-8 relative"
+              >
+                <div className="md:w-32 flex-shrink-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl z-10">
+                    {step.icon}
                   </div>
-                  {openSections[index] && (
-                    <ul className="p-4 bg-gray-50">
-                      {section.content.map((lecture, lectureIndex) => (
-                        <li key={lectureIndex} className="py-1 text-gray-600">
-                          {lecture}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </div>
-              ))}
+                <div className="mt-4 md:mt-0 md:ml-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex-grow">
+                  <h3 className="text-xl font-semibold text-blue-500 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-blue-500">{step.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Benefits Section */}
+        <div className="mb-20 bg-blue-50 p-8 rounded-3xl">
+          <h2 className="text-3xl font-bold text-blue-500 mb-10 text-center">
+            What You'll Get
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <h3 className="text-2xl font-bold text-blue-500 mb-6">
+                Performance Benefits
+              </h3>
+              <ul className="space-y-4">
+                <li className="flex items-center text-lg text-blue-700">
+                  <span className="mr-4 text-2xl">💰</span>
+                  Performance-based stipend
+                </li>
+                <li className="flex items-center text-lg text-blue-500">
+                  <span className="mr-4 text-2xl">🎯</span>
+                  Full-time job opportunity
+                </li>
+                <li className="flex items-center text-lg text-blue-500">
+                  <span className="mr-4 text-2xl">📈</span>
+                  Career growth mentorship
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <h3 className="text-2xl font-bold text-blue-500 mb-6">
+                Learning Benefits
+              </h3>
+              <ul className="space-y-4">
+                <li className="flex items-center text-lg text-blue-500">
+                  <span className="mr-4 text-2xl">💻</span>
+                  Real project experience
+                </li>
+                <li className="flex items-center text-lg text-blue-500">
+                  <span className="mr-4 text-2xl">🏆</span>
+                  Industry certification
+                </li>
+                <li className="flex items-center text-lg text-blue-500">
+                  <span className="mr-4 text-2xl">📝</span>
+                  Letter of recommendation
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+
+        {/* CTA Section */}
+        <div className="text-center bg-blue-100 p-8 sm:p-12 rounded-3xl">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-500">
+            Ready to Begin Your Journey?
+          </h2>
+          <p className="mb-8 text-xl sm:text-2xl text-blue-500">
+            Start your professional growth with our {selectedDuration}-month
+            internship program
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            // onClick={() => setIsEnrollModalOpen(true)}
+            onClick={() => handleSelectedInternship("6")}
+            className="bg-blue-500 text-white px-12 py-4 rounded-full font-bold text-xl sm:text-2xl hover:bg-blue-500 transition-colors"
+          >
+            Apply Now
+          </motion.button>
+        </div>
       </div>
-      <CourseSlip courseData={internship} />
+
+      {/* Enrollment Modal */}
+      <InternshipEnrollmentModal
+        isEnrollModalOpen={isEnrollModalOpen}
+        setIsEnrollModalOpen={setIsEnrollModalOpen}
+        selectedDuration={selectedDuration}
+        setSelectedDuration={setSelectedDuration}
+        internship={internship}
+      />
     </div>
   );
-}
+};
+
+export default InternshipDetail;
