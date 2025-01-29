@@ -15,16 +15,19 @@ const InternshipDetail = () => {
     {
       months: "1",
       price: "99",
+      originalPrice:"199",
       highlight: "Perfect for quick skill development",
     },
     {
       months: "3",
       price: "299",
+      originalPrice:"599",
       highlight: "Ideal for in-depth learning",
     },
     {
       months: "6",
       price: "699",
+      originalPrice:"1399",
       highlight: "Complete professional experience",
     },
   ];
@@ -121,29 +124,47 @@ const InternshipDetail = () => {
             Choose Your Internship Duration
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {durationOptions.map((option) => (
+            {durationOptions.map((option, idx) => (
               <motion.div
-                key={option.months}
+                key={idx}
                 whileHover={{ scale: 1.03 }}
-                className={`shadow-sm shadow-blue-500 rounded-2xl p-8 cursor-pointer transition-all ${
+                className={`shadow-sm shadow-blue-500 rounded-2xl cursor-pointer transition-all ${
                   selectedDuration === option.months
                     ? "bg-blue-100 border-2 border-blue-500"
                     : "bg-white border-2 border-gray-200 hover:border-blue-300"
                 }`}
                 onClick={() => handleSelectedInternship(option.months)}
               >
-                <div className="text-center">
+                <div className="text-center bg-white rounded-lg shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:border-2 hover:border-blue-500">
                   <h3 className="text-2xl font-bold text-blue-500 mb-4">
-                    {option.months} Month
+                    {option.months} Month Internship
                   </h3>
+
+                  {/* Discount Badge */}
+                  <div className="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">
+                    50% OFF
+                  </div>
+
+                  {/* Original Price with Strikethrough */}
+                  <p className="text-lg text-gray-400 line-through mb-2">
+                    ₹{option.originalPrice} INR
+                  </p>
+
+                  {/* Discounted Price */}
                   <p className="text-3xl font-extrabold text-blue-600 mb-6">
                     ₹{option.price}{" "}
                     <span className="text-sm font-normal text-blue-400">
                       INR
                     </span>
                   </p>
-                  <p className="text-lg text-blue-500">{option.highlight}</p>
-                  <button className="px-8 py-2 border border-blue-500 rounded-lg mt-4 text-blue-600 font-semibold hover:bg-blue-500 hover:text-white transition-colors duration-500">
+
+                  {/* Highlight */}
+                  <p className="text-lg text-blue-500 mb-6">
+                    {option.highlight}
+                  </p>
+
+                  {/* Enroll Button */}
+                  <button className="w-full mt-4 px-8 py-2 border border-blue-500 rounded-lg text-blue-600 font-semibold hover:bg-blue-50 transition-colors duration-300">
                     ENROLL
                   </button>
                 </div>

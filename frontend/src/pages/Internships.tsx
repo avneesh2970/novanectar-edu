@@ -3,15 +3,20 @@ import internship from "../assets/internship.png";
 import Footer from "../components/Footer";
 import { internshipData } from "../data/courses";
 import { useNavigate } from "react-router-dom";
+import { ContactPopup } from "../components/contacts/ContactPopup";
 
 export default function Internships() {
   const [hoveredCard, setHoveredCard] = useState<number | string | null>(null);
+  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const handleInternshipClick = (courseId: string) => {
     navigate(`/internships/${courseId}`);
   };
+
+  const toggleContactPopup = () => setIsContactPopupOpen(!isContactPopupOpen);
+
 
   return (
     <>
@@ -86,7 +91,13 @@ export default function Internships() {
             </div>
           </div>
           <div className="flex justify-center mt-6">
-            <button className="border border-blue-800 text-blue-800 px-14 py-2 rounded-md hover:bg-blue-800 hover:text-white transition-colors">
+            <button className="border border-blue-800 text-blue-800 px-14 py-2 rounded-md hover:bg-blue-800 hover:text-white transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+           
+              toggleContactPopup();
+            }}
+            >
               Contact Us
             </button>
           </div>
@@ -147,6 +158,7 @@ export default function Internships() {
           </div>
         </div>
       </div>
+      <ContactPopup isOpen={isContactPopupOpen} onClose={toggleContactPopup} />
       <Footer />
     </>
   );
