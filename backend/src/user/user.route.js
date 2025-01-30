@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
-router.get("/getUser",protectRoute, getUser);
+router.get("/getUser", protectRoute, getUser);
 
 router.put("/update-profile", protectRoute, updateProfile);
 

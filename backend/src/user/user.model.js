@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
 
-enrollments: [
+    enrollments: [
       {
         type: {
           type: String,
@@ -27,8 +27,7 @@ enrollments: [
           required: true,
         },
         item: {
-          type: mongoose.Schema.Types.ObjectId,
-          refPath: "enrollments.type",
+          type: mongoose.Schema.Types.Mixed,
           required: true,
         },
       },

@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
   courseId: {
-    type: String,
+    type: mongoose.Schema.Types.Mixed,
     required: true,
   },
   userId: {
     type: String,
     required: true,
   },
-  orderType:{
+  orderType: {
     type: String,
     required: true,
   },
