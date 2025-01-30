@@ -11,7 +11,6 @@ const SessionBooking = () => {
 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log('Form submitted:', formData);
   };
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {

@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -51,21 +50,6 @@ export default function SignUpForm() {
     setIsLoading(true);
 
     try {
-      // const response = await axios.post(
-      //   "http://localhost:3000/api/auth/signup",
-      //   {
-      //     firstName: formData.firstName,
-      //     lastName: formData.lastName,
-      //     email: formData.email,
-      //     password: formData.password,
-      //   },
-      //   {
-      //     withCredentials: true,
-      //   }
-      // );
-      // if (response.data.success) {
-      //   toast.success("account created successfully");
-      // }
       const credentials = {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -86,16 +70,6 @@ export default function SignUpForm() {
     } catch (error: any) {
       console.log("error is : ", error);
       toast.error(error.response.data.message);
-    } finally {
-      setIsLoading(false);
-    }
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Form submitted:", formData);
-    } catch (error) {
-      console.error("Error:", error);
     } finally {
       setIsLoading(false);
     }

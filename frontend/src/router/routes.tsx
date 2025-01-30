@@ -10,6 +10,9 @@ import Signup from "../pages/auth/SignUp";
 import Login from "../pages/auth/LogIn";
 import AboutUs from "../components/AboutUs/AboutUs";
 import InternshipDetail from "../components/internships/InternshipDetail";
+import PublicRoute from "../components/auth/PublicRoute";
+import PrivateRoute from "../components/auth/PrivateRoute";
+import Profile from "../pages/profile/Profile";
 
 export const routes: RouteObject[] = [
   {
@@ -41,12 +44,28 @@ export const routes: RouteObject[] = [
         element: <Internships />,
       },
       {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile/>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "login",
-        element: <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: "signup",
-        element: <Signup />,
+        element: (
+          <PublicRoute>
+            <Signup />
+          </PublicRoute>
+        ),
       },
       {
         path: "courses/:courseId",
@@ -54,7 +73,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: "internships/:internshipId",
-        element: <InternshipDetail/>,
+        element: <InternshipDetail />,
       },
       {
         path: "payment/success",

@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/nav-logo.png";
 import { useAuth } from "../hooks/useAuth";
 
-
-
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -71,7 +69,13 @@ const Layout = () => {
               </div>
 
               {isAuthenticated ? (
-                <button className="px-4 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 hover:text-blue-600 hover:bg-gray-50" onClick={logout}>LOGOUT</button>
+                <Link to="/profile">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                    alt="profile"
+                    className="w-10 h-10"
+                  />
+                </Link>
               ) : (
                 <div className="flex items-center space-x-4">
                   <Link
@@ -160,29 +164,42 @@ const Layout = () => {
                     ))}
 
                     <div className="flex justify-between w-full space-x-4 mt-4">
-                      <Link
-                        to="/signup"
-                        className="flex-1 text-center px-6 py-2 text-sm font-semibold rounded-lg 
+                      {isAuthenticated ? (
+                        <>
+                          <button
+                            className="px-4 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                            onClick={logout}
+                          >
+                            LOGOUT
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            to="/signup"
+                            className="flex-1 text-center px-6 py-2 text-sm font-semibold rounded-lg 
       bg-blue-500 text-white 
       hover:bg-blue-600 hover:shadow-lg 
       transition-all duration-300 ease-in-out 
       transform hover:-translate-y-1 
       focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-                      >
-                        Sign Up
-                      </Link>
+                          >
+                            Sign Up
+                          </Link>
 
-                      <Link
-                        to="/login"
-                        className="flex-1 text-center px-6 py-2 text-sm font-semibold rounded-lg 
+                          <Link
+                            to="/login"
+                            className="flex-1 text-center px-6 py-2 text-sm font-semibold rounded-lg 
       border-2 border-gray-400 text-gray-600 
       hover:bg-gray-500 hover:text-white hover:border-transparent hover:shadow-lg 
       transition-all duration-300 ease-in-out 
       transform hover:-translate-y-1 
       focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
-                      >
-                        Log In
-                      </Link>
+                          >
+                            Log In
+                          </Link>
+                        </>
+                      )}
                     </div>
                   </div>
                 </motion.div>
