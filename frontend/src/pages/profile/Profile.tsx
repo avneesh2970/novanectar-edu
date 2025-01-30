@@ -15,6 +15,7 @@ const Profile = () => {
     email: "",
     enrollments: [],
   });
+  // console.log("userInfo:", userInfo);
   const [loading, setLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -228,8 +229,52 @@ const Profile = () => {
                   {userInfo.enrollments
                     .filter((e: any) => e.type === "course")
                     .map((enrollment: any, index: number) => (
-                      <li key={index} className="mb-2">
-                        Course ID: {enrollment.item}
+                      <li key={index} className="mb-4">
+                        <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                          <div className="flex justify-between items-start mb-4">
+                            <div>
+                              <h3 className="text-lg font-semibold text-gray-800">
+                                Course ID: {enrollment.item.courseId}
+                              </h3>
+                              <p className="text-gray-600 text-sm mt-1">
+                                Enrolled on:{" "}
+                                {new Date(
+                                  enrollment.item.createdAt
+                                ).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <span className="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">
+                              {enrollment.item.status}
+                            </span>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="text-gray-700">
+                              <span className="font-medium">Name:</span>{" "}
+                              {enrollment.item.name}
+                            </div>
+                            <div className="text-gray-700">
+                              <span className="font-medium">Email:</span>{" "}
+                              {enrollment.item.email}
+                            </div>
+                            <div className="text-gray-700">
+                              <span className="font-medium">Phone:</span>{" "}
+                              {enrollment.item.phone}
+                            </div>
+                            <div className="text-gray-700">
+                              <span className="font-medium">Amount Paid:</span>{" "}
+                              ₹{enrollment.item.amount}
+                            </div>
+                            <div className="text-gray-700 text-sm">
+                              <span className="font-medium">Order ID:</span>{" "}
+                              {enrollment.item.razorpayOrderId}
+                            </div>
+                            <div className="text-gray-700 text-sm">
+                              <span className="font-medium">Payment ID:</span>{" "}
+                              {enrollment.item.razorpayPaymentId}
+                            </div>
+                          </div>
+                        </div>
                       </li>
                     ))}
                 </ul>
@@ -246,12 +291,56 @@ const Profile = () => {
               </h1>
               {userInfo.enrollments.filter((e: any) => e.type === "internship")
                 .length > 0 ? (
-                <ul>
+                  <ul>
                   {userInfo.enrollments
                     .filter((e: any) => e.type === "internship")
                     .map((enrollment: any, index: number) => (
-                      <li key={index} className="mb-2">
-                        Internship ID: {enrollment.item}
+                      <li key={index} className="mb-4">
+                        <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                          <div className="flex justify-between items-start mb-4">
+                            <div>
+                              <h3 className="text-lg font-semibold text-gray-800">
+                                Course ID: {enrollment.item.courseId}
+                              </h3>
+                              <p className="text-gray-600 text-sm mt-1">
+                                Enrolled on:{" "}
+                                {new Date(
+                                  enrollment.item.createdAt
+                                ).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <span className="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">
+                              {enrollment.item.status}
+                            </span>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="text-gray-700">
+                              <span className="font-medium">Name:</span>{" "}
+                              {enrollment.item.name}
+                            </div>
+                            <div className="text-gray-700">
+                              <span className="font-medium">Email:</span>{" "}
+                              {enrollment.item.email}
+                            </div>
+                            <div className="text-gray-700">
+                              <span className="font-medium">Phone:</span>{" "}
+                              {enrollment.item.phone}
+                            </div>
+                            <div className="text-gray-700">
+                              <span className="font-medium">Amount Paid:</span>{" "}
+                              ₹{enrollment.item.amount}
+                            </div>
+                            <div className="text-gray-700 text-sm">
+                              <span className="font-medium">Order ID:</span>{" "}
+                              {enrollment.item.razorpayOrderId}
+                            </div>
+                            <div className="text-gray-700 text-sm">
+                              <span className="font-medium">Payment ID:</span>{" "}
+                              {enrollment.item.razorpayPaymentId}
+                            </div>
+                          </div>
+                        </div>
                       </li>
                     ))}
                 </ul>

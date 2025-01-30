@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema(
           required: true,
         },
         item: {
-          type: mongoose.Schema.Types.Mixed,
-          required: true,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Order",
         },
       },
     ],

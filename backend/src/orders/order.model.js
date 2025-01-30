@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
   courseId: {
-    type: mongoose.Schema.Types.Mixed,
+    type: String,
     required: true,
   },
   userId: {

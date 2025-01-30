@@ -85,7 +85,7 @@ const verifyPayment = async (req, res) => {
       console.log("test 3 payment verification run");
       if (updatedOrder) {
         // Add the enrollment to the user's schema
-        const itemId = updatedOrder.courseId
+        // const itemId = updatedOrder.courseId;
 
         await User.findByIdAndUpdate(
           updatedOrder.userId,
@@ -93,12 +93,12 @@ const verifyPayment = async (req, res) => {
             $push: {
               enrollments: {
                 type: updatedOrder.orderType,
-                item: itemId,
+                item: updatedOrder._id,
               },
             },
           },
-          { new: true },
-        )
+          { new: true }
+        );
       }
       console.log("test 5 payment verification run");
       res.json({ success: true });

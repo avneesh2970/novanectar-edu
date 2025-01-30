@@ -15,6 +15,7 @@ const InternshipEnrollmentModal = ({
     name: "",
     email: "",
     phone: "",
+    orderType: "internship",
     duration: selectedDuration,
   });
   const [errors, setErrors] = useState<any>({});
@@ -140,10 +141,12 @@ const InternshipEnrollmentModal = ({
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             courseId: internship.id,
             amount: price,
-            userId: "current-user-id",
+            // userId: "current-user-id",
+            orderType: formData.orderType,
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
