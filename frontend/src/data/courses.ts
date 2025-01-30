@@ -64,7 +64,7 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
+    price: 1,
     duration: "6 months",
   },
   {

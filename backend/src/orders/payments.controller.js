@@ -1,11 +1,15 @@
 import { Order } from "./order.model.js";
 import { razorpay } from "./razorpay.config.js";
 import crypto from "crypto";
+import User from "../user/user.model.js";
 
 // Create order endpoint
 const createOrder = async (req, res) => {
   try {
-    const { courseId, amount, userId, name, email, phone } = req.body;
+    const { courseId, amount, name, email, phone, orderType } =
+      req.body;
+      const userId = req.user._id;
+
     // Create Razorpay order
     const options = {
       amount: amount * 100, // Amount in smallest currency unit (paise)
@@ -23,6 +27,7 @@ const createOrder = async (req, res) => {
     const order = new Order({
       courseId,
       userId,
+      orderType,
       amount,
       razorpayOrderId: razorpayOrder.id,
       status: "created",
@@ -35,6 +40,7 @@ const createOrder = async (req, res) => {
 
     res.json({
       orderId: razorpayOrder.id,
+      orderType,
       amount: amount * 100,
       currency: "INR",
       notes: options.notes,
@@ -63,14 +69,32 @@ const verifyPayment = async (req, res) => {
 
     if (expectedSignature === razorpay_signature) {
       // Update order status in database
-      await Order.findOneAndUpdate(
+     const updatedOrder = await Order.findOneAndUpdate(
         { razorpayOrderId: razorpay_order_id },
         {
           razorpayPaymentId: razorpay_payment_id,
           status: "paid",
-        }
+        },
+        {new:true}
       );
 
+      if (updatedOrder) {
+        // Add the enrollment to the user's schema
+        await User.findByIdAndUpdate(
+          updatedOrder.userId,
+          {
+            $push: {
+              enrollments: {
+                type: updatedOrder.orderType,
+                item: updatedOrder.courseId,
+              },
+            },
+          },
+          { new: true },
+        )
+      }
+
+   
       res.json({ success: true });
     } else {
       res.status(400).json({ error: "Invalid signature" });

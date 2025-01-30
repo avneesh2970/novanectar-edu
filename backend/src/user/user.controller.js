@@ -89,14 +89,26 @@ export const logout = (req, res) => {
 };
 
 /////////////////////////////////////get user profile/////////////////////////////////////
+// export const getUser = async (req, res) => {
+//   try {
+//     res.status(200).json({ ...req.user, isAuthenticated: true });
+//   } catch (error) {
+//     console.log("Error in checkAuth controller", error.message);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 export const getUser = async (req, res) => {
   try {
-    res.status(200).json({ ...req.user, isAuthenticated: true });
+    const user = await User.findById(req.user._id).populate({
+      path: "enrollments.item",
+      select: "title", // Assuming your course/internship model has a 'title' field
+    })
+    res.status(200).json({ ...user.toObject(), isAuthenticated: true })
   } catch (error) {
-    console.log("Error in checkAuth controller", error.message);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.log("Error in getUser controller", error.message)
+    res.status(500).json({ message: "Internal Server Error" })
   }
-};
+}
 /////////////////////////////////////get user profile/////////////////////////////////////
 
 export const updateProfile = async (req, res) => {

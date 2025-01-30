@@ -18,6 +18,22 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
     },
+
+enrollments: [
+      {
+        type: {
+          type: String,
+          enum: ["course", "internship"],
+          required: true,
+        },
+        item: {
+          type: mongoose.Schema.Types.ObjectId,
+          refPath: "enrollments.type",
+          required: true,
+        },
+      },
+    ],
+
     password: {
       type: String,
       required: true,

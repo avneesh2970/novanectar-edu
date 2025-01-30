@@ -18,6 +18,7 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  orderType: string;
 }
 
 export default function EnrollmentModal({
@@ -33,6 +34,7 @@ export default function EnrollmentModal({
     name: "",
     email: "",
     phone: "",
+    orderType: "course",
   });
 
   const validateForm = (): boolean => {
@@ -103,11 +105,13 @@ export default function EnrollmentModal({
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             courseId: course.id,
             amount: course.price,
-            userId: "current-user-id", // Replace with actual user ID
+            // userId: "current-user-id",
             name: formData.name,
+            orderType: formData.orderType,
             email: formData.email,
             phone: formData.phone,
           }),

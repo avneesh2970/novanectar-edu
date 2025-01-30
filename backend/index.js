@@ -32,7 +32,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", router);
 app.use("/api", paymentRouter);
 app.use("/api", contactRouter);
-app.use("/api",userMessageRouter);
+app.use("/api", userMessageRouter);
 const PORT = process.env.PORT || 5000;
 
 dbConnect().then(() => {
