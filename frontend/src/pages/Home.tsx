@@ -5,6 +5,8 @@ import Testimonials from "../components/Testimonials";
 import GetPlacement from "../components/GetPlacement";
 import Footer from "../components/Footer";
 import StudentJourney from "../components/student-journey/Journey";
+import CallingIcon from "../components/socialContact/Call";
+import WhatsappIcon from "../components/socialContact/Whatsapp";
 
 const Home = () => {
   return (
@@ -28,6 +30,10 @@ const Home = () => {
 
       {/* Footer Section */}
       <Footer />
+
+      {/* call icons */}
+      <CallingIcon />
+      <WhatsappIcon />
     </>
   );
 };

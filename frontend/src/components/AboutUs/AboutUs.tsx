@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import about from "../../assets/About/about.png";
 import Footer from "../Footer";
+import CallingIcon from "../socialContact/Call";
+import WhatsappIcon from "../socialContact/Whatsapp";
 
 const AboutUs = () => {
   return (
@@ -122,7 +124,10 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
+      {/* call icons */}
+      <CallingIcon />
+      <WhatsappIcon />
     </div>
   );
 };

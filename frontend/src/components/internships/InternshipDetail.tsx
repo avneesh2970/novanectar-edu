@@ -186,7 +186,7 @@ const InternshipDetail = () => {
             Your Internship Journey
           </h2>
           <div className="relative">
-            <div className="absolute left-8 inset-y-0 w-0.5 bg-blue-200 hidden md:block"></div>
+            <div className="absolute left-16 inset-y-0 w-0.5 bg-blue-200 hidden md:block"></div>
             {internshipJourney.map((step, index) => (
               <motion.div
                 key={index}

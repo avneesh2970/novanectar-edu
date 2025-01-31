@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import CallingIcon from "../components/socialContact/Call";
+import WhatsappIcon from "../components/socialContact/Whatsapp";
 
 const SessionBooking = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    course: '',
-    time: '',
-    phoneNumber: '',
-    email: ''
+    fullName: "",
+    course: "",
+    time: "",
+    phoneNumber: "",
+    email: "",
   });
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
     <div className="max-w-2xl mx-auto p-4 bg-white mt-28">
-      <h1 className="text-xl font-medium text-center">Attend our One to One Session</h1>
+      <h1 className="text-xl font-medium text-center">
+        Attend our One to One Session
+      </h1>
 
       {/* Why attend section */}
       <div className="mt-8">
-        <h2 className="text-lg font-medium text-center">Why attend the Session?</h2>
-        
+        <h2 className="text-lg font-medium text-center">
+          Why attend the Session?
+        </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           {/* Feature 1 */}
           <div className="border border-gray-200 rounded-lg p-4 text-center">
@@ -35,7 +41,9 @@ const SessionBooking = () => {
               <span className="text-blue-600 font-bold">1:1</span>
             </div>
             <h3 className="font-medium text-sm mb-2">Personalized Course</h3>
-            <p className="text-xs text-gray-600">Every course plan suited to your needs & goals</p>
+            <p className="text-xs text-gray-600">
+              Every course plan suited to your needs & goals
+            </p>
           </div>
 
           {/* Feature 2 */}
@@ -44,7 +52,9 @@ const SessionBooking = () => {
               <span className="text-blue-600 text-xl">💬</span>
             </div>
             <h3 className="font-medium text-sm mb-2">Direct Interaction</h3>
-            <p className="text-xs text-gray-600">Face to face talk with your mentor</p>
+            <p className="text-xs text-gray-600">
+              Face to face talk with your mentor
+            </p>
           </div>
 
           {/* Feature 3 */}
@@ -53,23 +63,29 @@ const SessionBooking = () => {
               <span className="text-blue-600 text-xl">✨</span>
             </div>
             <h3 className="font-medium text-sm mb-2">Clarity and Confidence</h3>
-            <p className="text-xs text-gray-600">Get clear direction about your learning path</p>
+            <p className="text-xs text-gray-600">
+              Get clear direction about your learning path
+            </p>
           </div>
         </div>
       </div>
 
       {/* Schedule section */}
       <div className="mt-8">
-        <h2 className="text-lg font-medium text-center mb-4">Schedule of Daily Session</h2>
+        <h2 className="text-lg font-medium text-center mb-4">
+          Schedule of Daily Session
+        </h2>
         <div className="flex flex-wrap justify-center gap-4">
           {[
-            { day: '28', name: 'Sunday' },
-            { day: '29', name: 'Monday' },
-            { day: '30', name: 'Tuesday' },
-            { day: '31', name: 'Wednesday' }
+            { day: "28", name: "Sunday" },
+            { day: "29", name: "Monday" },
+            { day: "30", name: "Tuesday" },
+            { day: "31", name: "Wednesday" },
           ].map(({ day, name }) => (
-            <div key={day} 
-                 className="w-16 h-16 bg-[#EEF5FF] rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-blue-100">
+            <div
+              key={day}
+              className="w-16 h-16 bg-[#EEF5FF] rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-blue-100"
+            >
               <span className="font-bold text-sm">{day}</span>
               <span className="text-xs text-gray-600">{name}</span>
             </div>
@@ -129,6 +145,9 @@ const SessionBooking = () => {
           </button>
         </form>
       </div>
+      {/* call icons */}
+      <CallingIcon />
+      <WhatsappIcon />
     </div>
   );
 };

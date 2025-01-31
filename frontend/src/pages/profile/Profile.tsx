@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { updateProfile } from "../../api/services";
+import CallingIcon from "../../components/socialContact/Call";
+import WhatsappIcon from "../../components/socialContact/Whatsapp";
 
 // import courseImages from "../../assets/courses/index";
 const courseImages: Record<string, { default: string }> = import.meta.glob(
@@ -366,6 +368,9 @@ const Profile = () => {
           )}
         </main>
       </div>
+       {/* call icons */}
+       <CallingIcon />
+      <WhatsappIcon />
     </div>
   );
 };

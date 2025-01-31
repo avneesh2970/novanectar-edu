@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { contactForm } from "../api/services";
+import CallingIcon from "../components/socialContact/Call";
+import WhatsappIcon from "../components/socialContact/Whatsapp";
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
@@ -191,6 +193,9 @@ export default function Contact() {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
+          {/* call icons */}
+          <CallingIcon />
+      <WhatsappIcon />
     </div>
   );
 }
