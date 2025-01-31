@@ -53,8 +53,9 @@ export const updateProfile = {
       });
       console.log("result: ", dataa);
       toast.success("Profile Updated successfully");
-    } catch (error) {
-      toast.error("error in updating profile");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      toast.error(error.response.data.message || "error in updating profile");
       console.log("error in updating profile: ", error);
     }
   },

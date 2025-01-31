@@ -4,12 +4,23 @@ import crypto from "crypto";
 import User from "../user/user.model.js";
 
 import mongoose from "mongoose";
-const { ObjectId } = mongoose.Types;
+// const { ObjectId } = mongoose.Types;
 
 // Create order endpoint
 const createOrder = async (req, res) => {
   try {
-    const { courseId, amount, name, email, phone, orderType } = req.body;
+    const {
+      courseId,
+      courseName,
+      courseTitle,
+      courseDescription,
+      courseImage,
+      amount,
+      name,
+      email,
+      phone,
+      orderType,
+    } = req.body;
     const userId = req.user._id;
 
     // Create Razorpay order
@@ -28,6 +39,10 @@ const createOrder = async (req, res) => {
     // Create order in database
     const order = new Order({
       courseId,
+      courseName,
+      courseTitle,
+      courseDescription,
+      courseImage,
       userId,
       orderType,
       amount,
@@ -43,6 +58,10 @@ const createOrder = async (req, res) => {
     res.json({
       orderId: razorpayOrder.id,
       orderType,
+      courseName,
+      courseTitle,
+      courseDescription,
+      courseImage,
       amount: amount * 100,
       currency: "INR",
       notes: options.notes,

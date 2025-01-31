@@ -3,6 +3,18 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { updateProfile } from "../../api/services";
 
+// import courseImages from "../../assets/courses/index";
+const courseImages: Record<string, { default: string }> = import.meta.glob(
+  "../../assets/courses/*.png",
+  { eager: true }
+);
+const internshipImages: Record<string, { default: string }> = import.meta.glob(
+  "../../assets/internships/*.png",
+  { eager: true }
+);
+
+// import internshipImages from "../../assets/internships/index";
+
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<
     "profile" | "enrolled-courses" | "enrolled-internships"
@@ -223,61 +235,66 @@ const Profile = () => {
               <h1 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 md:mb-6">
                 Enrolled Courses
               </h1>
+              {/* {console.log("enrollments: ", userInfo)} */}
               {userInfo.enrollments.filter((e: any) => e.type === "course")
                 .length > 0 ? (
-                <ul>
-                  {userInfo.enrollments
-                    .filter((e: any) => e.type === "course")
-                    .map((enrollment: any, index: number) => (
-                      <li key={index} className="mb-4">
-                        <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <h3 className="text-lg font-semibold text-gray-800">
-                                Course ID: {enrollment.item.courseId}
-                              </h3>
-                              <p className="text-gray-600 text-sm mt-1">
-                                Enrolled on:{" "}
-                                {new Date(
-                                  enrollment.item.createdAt
-                                ).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <span className="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">
-                              {enrollment.item.status}
-                            </span>
-                          </div>
+                <div>
+              
+                  <div className="min-h-screen bg-gray-50 p-8">
+                    <div className="mx-auto max-w-7xl">
+                      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {userInfo.enrollments
+                          .filter((e: any) => e.type === "course")
+                         
+                          .map((enrollment: any, index: number) => (
+                            <div
+                              key={index}
+                              className="group relative h-full overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-100/40"
+                            >
+                            
+                              {/* {console.log("enrollment.item", enrollment.item)}
 
-                          <div className="space-y-2">
-                            <div className="text-gray-700">
-                              <span className="font-medium">Name:</span>{" "}
-                              {enrollment.item.name}
+                              {console.log("courseImage: ", courseImages)} */}
+                              {/* {console.log(`oooooooooo , ${courseImages}`)} */}
+
+                              <div className="relative h-48 overflow-hidden">
+                                <img
+                                  src={
+                                    courseImages[
+                                      `../../assets/courses/course${enrollment.item.courseId}.png`
+                                    ]?.default
+                                  }
+                                  alt={enrollment.item?.courseTitle}
+                                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 to-transparent" />
+                              </div>
+                              <div className="p-6">
+                                <div className="mb-4 flex items-start justify-between">
+                                  <h3 className="text-xl font-semibold text-gray-800">
+                                    {enrollment.item?.courseTitle}
+                                  </h3>
+                                  <span className="text-sm text-gray-500">
+                                    {new Date(
+                                      enrollment.item.createdAt
+                                    ).toLocaleDateString()}
+                                  </span>
+                                </div>
+
+                                <p className="text-gray-600 line-clamp-3">
+                                  {enrollment.item?.courseDescription}
+                                </p>
+
+                                <div className="absolute inset-0 -left-[100%] hidden transition-all duration-500 group-hover:left-0 group-hover:block">
+                                  <div className="absolute inset-0 border-2 border-blue-200/30"></div>
+                                </div>
+                              </div>
                             </div>
-                            <div className="text-gray-700">
-                              <span className="font-medium">Email:</span>{" "}
-                              {enrollment.item.email}
-                            </div>
-                            <div className="text-gray-700">
-                              <span className="font-medium">Phone:</span>{" "}
-                              {enrollment.item.phone}
-                            </div>
-                            <div className="text-gray-700">
-                              <span className="font-medium">Amount Paid:</span>{" "}
-                              ₹{enrollment.item.amount}
-                            </div>
-                            <div className="text-gray-700 text-sm">
-                              <span className="font-medium">Order ID:</span>{" "}
-                              {enrollment.item.razorpayOrderId}
-                            </div>
-                            <div className="text-gray-700 text-sm">
-                              <span className="font-medium">Payment ID:</span>{" "}
-                              {enrollment.item.razorpayPaymentId}
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                </ul>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <p>You are not enrolled in any courses yet.</p>
               )}
@@ -291,59 +308,57 @@ const Profile = () => {
               </h1>
               {userInfo.enrollments.filter((e: any) => e.type === "internship")
                 .length > 0 ? (
-                  <ul>
-                  {userInfo.enrollments
-                    .filter((e: any) => e.type === "internship")
-                    .map((enrollment: any, index: number) => (
-                      <li key={index} className="mb-4">
-                        <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <h3 className="text-lg font-semibold text-gray-800">
-                                Course ID: {enrollment.item.courseId}
-                              </h3>
-                              <p className="text-gray-600 text-sm mt-1">
-                                Enrolled on:{" "}
-                                {new Date(
-                                  enrollment.item.createdAt
-                                ).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <span className="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">
-                              {enrollment.item.status}
-                            </span>
-                          </div>
+                <div>
+                  <div className="min-h-screen bg-gray-50 p-8">
+                    <div className="mx-auto max-w-7xl">
+                      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {userInfo.enrollments
+                          .filter((e: any) => e.type === "internship")
+                          .map((enrollment: any, index: number) => (
+                            <div
+                              key={index}
+                              className="group relative h-full overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-100/40"
+                            >
+                          
+                              
+                              <div className="relative h-48 overflow-hidden">
+                                <img
+                                  src={
+                                    internshipImages[
+                                      `../../assets/internships/intern${enrollment.item.courseId}.png`
+                                    ]?.default
+                                  }
+                                  alt={enrollment.item?.courseTitle}
+                                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 to-transparent" />
+                              </div>
+                              <div className="p-6">
+                                <div className="mb-4 flex items-start justify-between">
+                                  <h3 className="text-xl font-semibold text-gray-800">
+                                    {enrollment.item?.courseTitle}
+                                  </h3>
+                                  <span className="text-sm text-gray-500">
+                                    {new Date(
+                                      enrollment.item.createdAt
+                                    ).toLocaleDateString()}
+                                  </span>
+                                </div>
 
-                          <div className="space-y-2">
-                            <div className="text-gray-700">
-                              <span className="font-medium">Name:</span>{" "}
-                              {enrollment.item.name}
+                                <p className="text-gray-600 line-clamp-3">
+                                  {enrollment.item?.courseDescription}
+                                </p>
+
+                                <div className="absolute inset-0 -left-[100%] hidden transition-all duration-500 group-hover:left-0 group-hover:block">
+                                  <div className="absolute inset-0 border-2 border-blue-200/30"></div>
+                                </div>
+                              </div>
                             </div>
-                            <div className="text-gray-700">
-                              <span className="font-medium">Email:</span>{" "}
-                              {enrollment.item.email}
-                            </div>
-                            <div className="text-gray-700">
-                              <span className="font-medium">Phone:</span>{" "}
-                              {enrollment.item.phone}
-                            </div>
-                            <div className="text-gray-700">
-                              <span className="font-medium">Amount Paid:</span>{" "}
-                              ₹{enrollment.item.amount}
-                            </div>
-                            <div className="text-gray-700 text-sm">
-                              <span className="font-medium">Order ID:</span>{" "}
-                              {enrollment.item.razorpayOrderId}
-                            </div>
-                            <div className="text-gray-700 text-sm">
-                              <span className="font-medium">Payment ID:</span>{" "}
-                              {enrollment.item.razorpayPaymentId}
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                </ul>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <p>You are not enrolled in any internships yet.</p>
               )}

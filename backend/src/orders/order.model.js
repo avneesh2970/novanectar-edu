@@ -5,6 +5,18 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  courseName: {
+    type: String,
+  },
+  courseTitle: {
+    type: String,
+  },
+  courseDescription: {
+    type: String,
+  },
+  courseImg: {
+    type: String,
+  },
   userId: {
     type: String,
     required: true,

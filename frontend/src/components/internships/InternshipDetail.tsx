@@ -4,30 +4,33 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { internshipData } from "../../data/courses";
 import InternshipEnrollmentModal from "./InternshipEnrollmentModal";
+import { useAuth } from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const InternshipDetail = () => {
   const { internshipId } = useParams();
   const navigate = useNavigate();
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState("6");
+  const { isAuthenticated } = useAuth();
 
   const durationOptions = [
     {
       months: "1",
       price: "99",
-      originalPrice:"199",
+      originalPrice: "199",
       highlight: "Perfect for quick skill development",
     },
     {
       months: "3",
       price: "299",
-      originalPrice:"599",
+      originalPrice: "599",
       highlight: "Ideal for in-depth learning",
     },
     {
       months: "6",
       price: "699",
-      originalPrice:"1399",
+      originalPrice: "1399",
       highlight: "Complete professional experience",
     },
   ];
@@ -77,8 +80,12 @@ const InternshipDetail = () => {
   ];
 
   const handleSelectedInternship = (month: any) => {
-    setSelectedDuration(month);
-    setIsEnrollModalOpen(true);
+    if (isAuthenticated) {
+      setSelectedDuration(month);
+      setIsEnrollModalOpen(true);
+    } else {
+      toast.error("please log in first to enroll");
+    }
   };
 
   const internship = internshipData.find(

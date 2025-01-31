@@ -124,7 +124,7 @@ const InternshipEnrollmentModal = ({
   } else {
     throw new Error("Invalid duration");
   }
-
+console.log("internship: ", internship);
   const handlePayment = async () => {
     try {
       setIsProcessing(true);
@@ -144,6 +144,10 @@ const InternshipEnrollmentModal = ({
           credentials: "include",
           body: JSON.stringify({
             courseId: internship.id,
+            courseName: internship.title,
+            courseTitle: internship.title,
+            courseDescription: internship.description,
+            courseImage: internship.image || "",
             amount: price,
             // userId: "current-user-id",
             orderType: formData.orderType,

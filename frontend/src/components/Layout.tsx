@@ -7,8 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { isAuthenticated, logout } = useAuth();
-  console.log("isAuthenticated: ", isAuthenticated);
+  const { isAuthenticated } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -166,12 +165,9 @@ const Layout = () => {
                     <div className="flex justify-between w-full space-x-4 mt-4">
                       {isAuthenticated ? (
                         <>
-                          <button
-                            className="px-4 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                            onClick={logout}
-                          >
-                            LOGOUT
-                          </button>
+                          <Link to="/profile" className="px-4 py-2 text-sm font-bold text-gray-800">
+                            Profile
+                          </Link>
                         </>
                       ) : (
                         <>

@@ -108,6 +108,10 @@ export default function EnrollmentModal({
           credentials: "include",
           body: JSON.stringify({
             courseId: course.id,
+            courseName: course.title,
+            courseTitle: course.title,
+            courseDescription: course.description,
+            courseImage: course.image || "",
             amount: course.price,
             // userId: "current-user-id",
             name: formData.name,
