@@ -5,8 +5,19 @@ import api from "../api/axios";
 
 const AuthContext = createContext<any>(null);
 
+// 6 hours in milliseconds
+const SESSION_DURATION = 6 * 60 * 60 * 1000;
+
 export const AuthProvider = ({ children }: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
+    const sessionData = sessionStorage.getItem("authData");
+    if (sessionData) {
+      const { expiresAt } = JSON.parse(sessionData);
+      return new Date().getTime() < expiresAt;
+    }
+    return false;
+  });
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,9 +37,34 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const adminLogin = (userId:any, password:any) => {
+    if (
+      userId === import.meta.env.VITE_ADMIN_USER &&
+      password === import.meta.env.VITE_ADMIN_PASSWORD
+    ) {
+      setIsAdminAuthenticated(true);
+      return true;
+    }
+    return false;
+  };
+
+  const adminLogout = () => {
+    setIsAdminAuthenticated(false);
+    sessionStorage.removeItem('authData');
+  };
+
   useEffect(() => {
     checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (isAdminAuthenticated) {
+      const expiresAt = new Date().getTime() + SESSION_DURATION;
+      sessionStorage.setItem("authData", JSON.stringify({ expiresAt }));
+    } else {
+      sessionStorage.removeItem("authData");
+    }
+  }, [isAdminAuthenticated]);
 
   const getUser = async () => {
     try {
@@ -94,6 +130,9 @@ export const AuthProvider = ({ children }: any) => {
         getUser,
         signup,
         username,
+        adminLogin,
+        adminLogout,
+        isAdminAuthenticated,
       }}
     >
       {children}

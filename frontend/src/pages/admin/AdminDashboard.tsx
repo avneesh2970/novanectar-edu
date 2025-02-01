@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import type React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { useAuth } from "../hooks/useAuth"
 
 interface EnrollmentStats {
   _id: string;
@@ -56,7 +56,6 @@ const AdminDashboard: React.FC = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [orderType, setOrderType] = useState("");
-  //   const { user } = useAuth()
 
   useEffect(() => {
     fetchStats();
@@ -141,10 +140,6 @@ const AdminDashboard: React.FC = () => {
     e.preventDefault();
     fetchEnrollments();
   };
-
-  //   if (!user || user.role !== "admin") {
-  //     return <div>Access Denied</div>
-  //   }
 
   return (
     <div className="container mx-auto px-4 py-28">

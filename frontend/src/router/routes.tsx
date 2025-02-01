@@ -15,6 +15,7 @@ import PrivateRoute from "../components/auth/PrivateRoute";
 import Profile from "../pages/profile/Profile";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminLogin from "../pages/admin/AdminLogin";
+import AdminProtectedRoute from "../components/auth/AdminProtectedRoute";
 
 export const routes: RouteObject[] = [
   {
@@ -49,7 +50,7 @@ export const routes: RouteObject[] = [
         path: "profile",
         element: (
           <PrivateRoute>
-            <Profile/>
+            <Profile />
           </PrivateRoute>
         ),
       },
@@ -87,9 +88,13 @@ export const routes: RouteObject[] = [
       },
       {
         path: "admin/dashboard",
-        element: <AdminDashboard />,
+        element: (
+          <AdminProtectedRoute>
+            <AdminDashboard />
+          </AdminProtectedRoute>
+        ),
       },
-      
+
       {
         path: "*",
         element: <NotFound />,

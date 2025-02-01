@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Lock, User } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
 
 const AdminLogin = () => {
+  const navigate = useNavigate();
+  const { adminLogin } = useAuth();
   const [formData, setFormData] = useState({
     userId: '',
     password: ''
   });
+  const [error, setError] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError(''); // Clear error when user types
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login attempt with:', formData);
+    const success = adminLogin(formData.userId, formData.password);
+    
+    if (success) {
+      navigate('/admin/dashboard');
+    } else {
+      setError('Invalid credentials. Please try again.');
+    }
   };
 
   return (
@@ -27,6 +39,12 @@ const AdminLogin = () => {
           <h1 className="text-2xl font-bold text-center text-gray-800">Admin Login</h1>
           <p className="text-center text-gray-600 mt-2">Enter your credentials to login</p>
         </div>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -71,12 +89,6 @@ const AdminLogin = () => {
           >
             Login
           </button>
-
-          <div className="flex items-center justify-end mt-4">
-            <a href="#" className="text-sm text-blue-600 hover:text-blue-700">
-              Forgot Password?
-            </a>
-          </div>
         </form>
       </div>
     </div>
