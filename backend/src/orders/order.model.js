@@ -17,9 +17,13 @@ const orderSchema = new mongoose.Schema({
   courseImg: {
     type: String,
   },
+  // userId: {
+  //   type: String,
+  //   required: true,
+  // },
   userId: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   orderType: {
     type: String,

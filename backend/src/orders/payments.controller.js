@@ -77,12 +77,9 @@ const createOrder = async (req, res) => {
 
 // Verify payment endpoint
 const verifyPayment = async (req, res) => {
-  console.log("payment verification run");
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
       req.body;
-
-    console.log("test 1 payment verification run");
 
     // Verify payment signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -90,7 +87,7 @@ const verifyPayment = async (req, res) => {
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body.toString())
       .digest("hex");
-    console.log("test 2 payment verification run");
+
     if (expectedSignature === razorpay_signature) {
       // Update order status in database
       const updatedOrder = await Order.findOneAndUpdate(
@@ -101,7 +98,7 @@ const verifyPayment = async (req, res) => {
         },
         { new: true }
       );
-      console.log("test 3 payment verification run");
+
       if (updatedOrder) {
         // Add the enrollment to the user's schema
         // const itemId = updatedOrder.courseId;
@@ -119,7 +116,7 @@ const verifyPayment = async (req, res) => {
           { new: true }
         );
       }
-      console.log("test 5 payment verification run");
+
       res.json({ success: true });
     } else {
       res.status(400).json({ error: "Invalid signature" });

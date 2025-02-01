@@ -13,6 +13,8 @@ import InternshipDetail from "../components/internships/InternshipDetail";
 import PublicRoute from "../components/auth/PublicRoute";
 import PrivateRoute from "../components/auth/PrivateRoute";
 import Profile from "../pages/profile/Profile";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminLogin from "../pages/admin/AdminLogin";
 
 export const routes: RouteObject[] = [
   {
@@ -79,6 +81,15 @@ export const routes: RouteObject[] = [
         path: "payment/success",
         element: <PaymentSuccess />,
       },
+      {
+        path: "admin",
+        element: <AdminLogin />,
+      },
+      {
+        path: "admin/dashboard",
+        element: <AdminDashboard />,
+      },
+      
       {
         path: "*",
         element: <NotFound />,

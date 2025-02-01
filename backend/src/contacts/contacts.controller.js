@@ -20,3 +20,12 @@ export const contacts = async (req,res) => {
   }
 };
 
+export const getAllContacts = async (req, res) => {
+  try {
+    const contacts = await Contacts.find().sort({ createdAt: -1 })
+    res.status(200).json(contacts)
+  } catch (error) {
+    console.log("Error in getAllContacts", error)
+    res.status(500).json({ message: "Internal server error" })
+  }
+}

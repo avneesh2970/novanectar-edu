@@ -14,6 +14,16 @@ const queryForm = async (req, res) => {
   }
 };
 
+const getAllQueries = async (req, res) => {
+  try {
+    const queries = await Query.find().sort({ createdAt: -1 })
+    res.status(200).json(queries)
+  } catch (error) {
+    console.log("Error in getAllQueries", error)
+    res.status(500).json({ message: "Internal server error" })
+  }
+}
+
 const healthCheck = (req, res) => {
   try {
     return res.status(200).json({ message: "api is up and running" });
@@ -23,4 +33,4 @@ const healthCheck = (req, res) => {
   }
 };
 
-export { queryForm, healthCheck };
+export { queryForm, healthCheck, getAllQueries };

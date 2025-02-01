@@ -21,3 +21,12 @@ export const userMessage = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getAllUserMessages = async (req, res) => {
+ try {
+   const allMessages = await ClientMessage.find().sort({ createdAt: -1 });
+   return res.status(200).json({success:true, data: allMessages})
+ } catch (error) {
+  console.log("error in getAllUsersMessages: ", error)
+ }
+};
