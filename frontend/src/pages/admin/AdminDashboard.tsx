@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import jsPDF from "jspdf"
-import html2canvas from "html2canvas"
+import "jspdf-autotable"
 
 interface EnrollmentStats {
   _id: string
@@ -53,14 +54,15 @@ const AdminDashboard: React.FC = () => {
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [orderType, setOrderType] = useState("")
-
-  const dashboardRef = useRef<HTMLDivElement>(null)
+  const [queryFilter, setQueryFilter] = useState("")
+  const [contactFilter, setContactFilter] = useState("")
 
   useEffect(() => {
     fetchStats()
     fetchEnrollments()
     fetchQueries()
     fetchContacts()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchStats = async () => {
@@ -113,31 +115,103 @@ const AdminDashboard: React.FC = () => {
     fetchEnrollments()
   }
 
-  const generatePDF = async () => {
-    if (dashboardRef.current) {
-      const canvas = await html2canvas(dashboardRef.current)
-      const imgData = canvas.toDataURL("image/png")
-      const pdf = new jsPDF("p", "mm", "a4")
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = canvas.width
-      const imgHeight = canvas.height
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
-      const imgX = (pdfWidth - imgWidth * ratio) / 2
-      const imgY = 30
+  const generatePDF = () => {
+    const doc = new jsPDF()
+    doc.text("Filtered Enrollments", 14, 15)
 
-      pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
-      pdf.save("admin-dashboard.pdf")
+    const tableColumn = ["ID", "User Name", "Student Name", "Amount", "Date", "Type", "Status"]
+    const tableRows = enrollments.map((enrollment:any) => [
+      enrollment.courseId,
+      `${enrollment.userId.firstName} ${enrollment.userId.lastName}`,
+      enrollment.name,
+      `$${enrollment.amount.toFixed(2)}`,
+      new Date(enrollment.createdAt).toLocaleDateString(),
+      enrollment.orderType,
+      enrollment.status,
+    ])
+    ;(doc as any).autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20,
+      styles: { fontSize: 8, cellPadding: 1.5, overflow: "linebreak" },
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 30 },
+        3: { cellWidth: 20 },
+        4: { cellWidth: 25 },
+        5: { cellWidth: 25 },
+        6: { cellWidth: 20 },
+      },
+    })
+
+    doc.save("filtered_enrollments.pdf")
+  }
+
+  const exportToCSV = () => {
+    const csvContent = [
+      // CSV header
+      [
+        "Internship ID",
+        "User Name",
+        "Logged In Email",
+        "Student Name",
+        "Student Email",
+        "Student Phone",
+        "Amount",
+        "Date",
+        "Type",
+        "Status",
+      ],
+      // CSV data rows
+      ...enrollments.map((enrollment:any) => [
+        enrollment.courseId,
+        `${enrollment.userId.firstName} ${enrollment.userId.lastName}`,
+        enrollment.userId.email,
+        enrollment.name,
+        enrollment.email,
+        enrollment.phone,
+        enrollment.amount.toFixed(2),
+        new Date(enrollment.createdAt).toLocaleDateString(),
+        enrollment.orderType,
+        enrollment.status,
+      ]),
+    ]
+      .map((row) => row.map((cell) => `"${cell}"`).join(","))
+      .join("\n")
+
+    const blob = new Blob(["\ufeff" + csvContent], { type: "text/csv;charset=utf-8;" })
+    const link = document.createElement("a")
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob)
+      link.setAttribute("href", url)
+      link.setAttribute("download", "filtered_enrollments.csv")
+      link.style.visibility = "hidden"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
   }
 
-  return (
-    <div ref={dashboardRef} className="container mx-auto px-4 py-28">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+  const filteredQueries = queries.filter(
+    (query) =>
+      query.fullName.toLowerCase().includes(queryFilter.toLowerCase()) ||
+      query.email.toLowerCase().includes(queryFilter.toLowerCase()) ||
+      query.phoneNumber.includes(queryFilter),
+  )
 
-      <button onClick={generatePDF} className="bg-green-500 text-white px-4 py-2 rounded mb-4">
-        Download PDF
-      </button>
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.fullName.toLowerCase().includes(contactFilter.toLowerCase()) ||
+      contact.email.toLowerCase().includes(contactFilter.toLowerCase()) ||
+      contact.phoneNumber.includes(contactFilter) ||
+      contact.course.toLowerCase().includes(contactFilter.toLowerCase()) ||
+      contact.city.toLowerCase().includes(contactFilter.toLowerCase()),
+  )
+
+  return (
+    <div className="container mx-auto px-4 py-28">
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Enrollment Statistics</h2>
@@ -177,10 +251,17 @@ const AdminDashboard: React.FC = () => {
           </button>
         </form>
 
+        <button onClick={generatePDF} className="bg-green-500 text-white px-4 py-2 rounded mb-4">
+          Download Filtered Enrollments PDF
+        </button>
+        <button onClick={exportToCSV} className="bg-blue-500 text-white px-4 py-2 rounded mb-4 ml-2">
+          Export to CSV
+        </button>
+
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border p-2">Course/Internship ID</th>
+              <th className="border p-2">Internship ID/userDetail</th>
               <th className="border p-2">Student</th>
               <th className="border p-2">Amount</th>
               <th className="border p-2">Date</th>
@@ -189,9 +270,13 @@ const AdminDashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {enrollments.map((enrollment) => (
+            {enrollments.map((enrollment: any) => (
               <tr key={enrollment._id}>
-                <td className="border p-2">{enrollment.courseId}</td>
+                <td className="border p-2">
+                  {enrollment.courseId} <br />{" "}
+                  <span>userName: {enrollment.userId.firstName + " " + enrollment.userId.lastName}</span> <br />
+                  <span>LoggedIn email: {enrollment.userId.email}</span>
+                </td>
                 <td className="border p-2">
                   {enrollment.name}
                   <br />
@@ -211,6 +296,13 @@ const AdminDashboard: React.FC = () => {
 
       <div className="mt-12">
         <h2 className="text-2xl font-semibold mb-4">Query Form Submissions</h2>
+        <input
+          type="text"
+          placeholder="Filter queries..."
+          value={queryFilter}
+          onChange={(e) => setQueryFilter(e.target.value)}
+          className="border rounded px-2 py-1 mb-4 w-full"
+        />
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200">
@@ -221,7 +313,7 @@ const AdminDashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {queries.map((query) => (
+            {filteredQueries.map((query) => (
               <tr key={query._id}>
                 <td className="border p-2">{query.fullName}</td>
                 <td className="border p-2">{query.phoneNumber}</td>
@@ -235,6 +327,13 @@ const AdminDashboard: React.FC = () => {
 
       <div className="mt-12">
         <h2 className="text-2xl font-semibold mb-4">Contact Form Submissions</h2>
+        <input
+          type="text"
+          placeholder="Filter contacts..."
+          value={contactFilter}
+          onChange={(e) => setContactFilter(e.target.value)}
+          className="border rounded px-2 py-1 mb-4 w-full"
+        />
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200">
@@ -247,7 +346,7 @@ const AdminDashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {filteredContacts.map((contact) => (
               <tr key={contact._id}>
                 <td className="border p-2">{contact.fullName}</td>
                 <td className="border p-2">{contact.course}</td>
