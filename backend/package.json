@@ -19,10 +19,10 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.2",
-    "razorpay": "^2.9.5"
+    "razorpay": "^2.9.5",
+    "resend": "^4.1.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
