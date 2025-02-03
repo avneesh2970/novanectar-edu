@@ -102,7 +102,6 @@ export const getUser = async (req, res) => {
     const user = await User.findById(req.user._id)
       .populate("enrollments.item")
       .exec();
-    console.log("getUser:", user);
     res.status(200).json({ ...user.toObject(), isAuthenticated: true });
   } catch (error) {
     console.log("Error in getUser controller", error.message);

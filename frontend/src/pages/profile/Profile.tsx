@@ -29,7 +29,6 @@ const Profile = () => {
     email: "",
     enrollments: [],
   });
-  // console.log("userInfo:", userInfo);
   const [loading, setLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -237,7 +236,6 @@ const Profile = () => {
               <h1 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 md:mb-6">
                 Enrolled Courses
               </h1>
-              {/* {console.log("enrollments: ", userInfo)} */}
               {userInfo.enrollments.filter((e: any) => e.type === "course")
                 .length > 0 ? (
                 <div>
@@ -254,11 +252,6 @@ const Profile = () => {
                               className="group relative h-full overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-100/40"
                             >
                             
-                              {/* {console.log("enrollment.item", enrollment.item)}
-
-                              {console.log("courseImage: ", courseImages)} */}
-                              {/* {console.log(`oooooooooo , ${courseImages}`)} */}
-
                               <div className="relative h-48 overflow-hidden">
                                 <img
                                   src={

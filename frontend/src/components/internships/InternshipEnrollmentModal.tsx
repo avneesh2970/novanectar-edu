@@ -100,7 +100,6 @@ const InternshipEnrollmentModal = ({
     // If no errors, proceed
     if (Object.keys(newErrors).length === 0) {
       // Handle payment logic here
-      console.log("Form submitted:", formData);
       handlePayment();
     }
   };
@@ -124,7 +123,7 @@ const InternshipEnrollmentModal = ({
   } else {
     throw new Error("Invalid duration");
   }
-console.log("internship: ", internship);
+
   const handlePayment = async () => {
     try {
       setIsProcessing(true);

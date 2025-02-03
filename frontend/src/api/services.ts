@@ -48,10 +48,10 @@ export const updateProfile = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submitForm: async (data: any) => {
     try {
-      const dataa = await api.put("/api/auth/update-profile", data, {
+      await api.put("/api/auth/update-profile", data, {
         withCredentials: true,
       });
-      console.log("result: ", dataa);
+     
       toast.success("Profile Updated successfully");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {

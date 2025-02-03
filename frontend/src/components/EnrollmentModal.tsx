@@ -68,7 +68,7 @@ export default function EnrollmentModal({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted:", formData);
+      // console.log("Form submitted:", formData);
     } else {
       return;
     }

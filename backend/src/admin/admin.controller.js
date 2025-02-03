@@ -37,7 +37,6 @@ export const getFilteredEnrollments = async (req, res) => {
     const enrollments = await Order.find(query)
       .populate("userId", "firstName lastName email")
       .sort({ createdAt: -1 });
-    console.log("enrollments", enrollments);
     res.json(enrollments);
   } catch (error) {
     console.error("Error in getFilteredEnrollments:", error);
