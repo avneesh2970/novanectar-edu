@@ -74,6 +74,36 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUser]);
 
+  const getCourseNumber = (orderType: any, courseName: any) => {
+    if (orderType === "course") {
+      if (courseName === "MERN Full-Stack Development") return "1";
+      else if (courseName === "Web Development") return "2";
+      else if (courseName == "Data Analytics") return "3";
+      else if (courseName == "Java Programming") return "4";
+      else if (courseName == "MEAN Full-Stack Development") return "5";
+      else if (courseName == "C/C++ Programming") return "6";
+      else if (courseName == "Python Programming") return "7";
+      else if (courseName == "Graphic Design") return "8";
+    } else if (orderType === "internship") {
+      if (courseName === "Python Developer") return "1";
+      else if (courseName === "C/C++ Programming") return "2";
+      else if (courseName === "Graphic Designer") return "3";
+      else if (courseName === "Data Analytics") return "4";
+      else if (courseName === "Web Developer") return "5";
+      else if (courseName === "Artieficial Intlligence") return "6";
+      else if (courseName === "Machine Learning") return "7";
+      else if (courseName === "Java Developer") return "8";
+      else if (courseName === "Full Stack Developer") return "9";
+      else if (courseName === "App Development") return "10";
+      else if (courseName === "Data Science") return "11";
+      else if (courseName === "UI/UX Designer") return "12";
+      else if (courseName === "Cybersecurity") return "13";
+      else if (courseName === "Digital Marketing") return "14";
+      else if (courseName === "Content Writing") return "15";
+      else if (courseName === "WordPress") return "16";
+    }
+  };
+
   return (
     <div className="mt-12 md:mt-20">
       <p className="ml-4 md:ml-6 font-medium pt-10 md:pt-8 text-xl md:text-3xl">
@@ -239,24 +269,25 @@ const Profile = () => {
               {userInfo.enrollments.filter((e: any) => e.type === "course")
                 .length > 0 ? (
                 <div>
-              
                   <div className="min-h-screen bg-gray-50 p-8">
                     <div className="mx-auto max-w-7xl">
                       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {userInfo.enrollments
                           .filter((e: any) => e.type === "course")
-                         
+
                           .map((enrollment: any, index: number) => (
                             <div
                               key={index}
                               className="group relative h-full overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-100/40"
                             >
-                            
                               <div className="relative h-48 overflow-hidden">
                                 <img
                                   src={
                                     courseImages[
-                                      `../../assets/courses/course${enrollment.item.courseId}.png`
+                                      `../../assets/courses/course${getCourseNumber(
+                                        enrollment.item.orderType,
+                                        enrollment.item.courseName
+                                      )}.png`
                                     ]?.default
                                   }
                                   alt={enrollment.item?.courseTitle}
@@ -314,13 +345,14 @@ const Profile = () => {
                               key={index}
                               className="group relative h-full overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-100/40"
                             >
-                          
-                              
                               <div className="relative h-48 overflow-hidden">
                                 <img
                                   src={
                                     internshipImages[
-                                      `../../assets/internships/intern${enrollment.item.courseId}.png`
+                                      `../../assets/internships/intern${getCourseNumber(
+                                        enrollment.item.orderType,
+                                        enrollment.item.courseName
+                                      )}.png`
                                     ]?.default
                                   }
                                   alt={enrollment.item?.courseTitle}
@@ -361,8 +393,8 @@ const Profile = () => {
           )}
         </main>
       </div>
-       {/* call icons */}
-       <CallingIcon />
+      {/* call icons */}
+      <CallingIcon />
       <WhatsappIcon />
     </div>
   );
