@@ -107,7 +107,7 @@ export default function EnrollmentModal({
           },
           credentials: "include",
           body: JSON.stringify({
-            courseId: course.id,
+            // courseId: course.id,
             courseName: course.title,
             courseTitle: course.title,
             courseDescription: course.description,
@@ -163,7 +163,7 @@ export default function EnrollmentModal({
             onClose();
             navigate("/payment/success");
             const paymentData = {
-              courseData: course,
+              courseData: {...course, id:data.courseId},
               billingDetails: formData,
               invoiceNumber: "INV-2024-001",
               purchaseDate: new Date().toLocaleDateString(),

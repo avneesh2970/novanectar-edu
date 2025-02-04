@@ -82,23 +82,35 @@ export const routes: RouteObject[] = [
         path: "payment/success",
         element: <PaymentSuccess />,
       },
-      {
-        path: "admin",
-        element: <AdminLogin />,
-      },
-      {
-        path: "admin/dashboard",
-        element: (
-          <AdminProtectedRoute>
-            <AdminDashboard />
-          </AdminProtectedRoute>
-        ),
-      },
+      // {
+      //   path: "admin",
+      //   element: <AdminLogin />,
+      // },
+      // {
+      //   path: "admin/dashboard",
+      //   element: (
+      //     <AdminProtectedRoute>
+      //       <AdminDashboard />
+      //     </AdminProtectedRoute>
+      //   ),
+      // },
 
       {
         path: "*",
         element: <NotFound />,
       },
     ],
+  },
+  {
+    path: "admin",
+    element: <AdminLogin />,
+  },
+  {
+    path: "admin/dashboard",
+    element: (
+      <AdminProtectedRoute>
+        <AdminDashboard />
+      </AdminProtectedRoute>
+    ),
   },
 ];

@@ -2,15 +2,84 @@ import { Order } from "./order.model.js";
 import { razorpay } from "./razorpay.config.js";
 import crypto from "crypto";
 import User from "../user/user.model.js";
+import EnrollmentSequence from "./enrollmentSequence.model.js";
+import CourseEnrollmentSequence from "./courseEnrollmentSeq.model.js";
 
-import mongoose from "mongoose";
-// const { ObjectId } = mongoose.Types;
+// Function to generate enrollment ID
+const generateEnrollmentId = async (prefix = "NN") => {
+  try {
+    // Get current month (zero-padded)
+    const currentMonth = new Date().getMonth() + 1;
+    const monthStr = currentMonth.toString().padStart(2, "0");
+
+    // Find or create sequence for the current month
+    let sequenceTracker = await EnrollmentSequence.findOne({
+      prefix,
+      month: monthStr,
+    });
+
+    if (!sequenceTracker) {
+      sequenceTracker = new EnrollmentSequence({
+        prefix,
+        month: monthStr,
+        currentNumber: 1000,
+      });
+    } else {
+      sequenceTracker.currentNumber += 1;
+    }
+
+    await sequenceTracker.save();
+
+    // Generate the enrollment ID
+    return `${prefix}/${monthStr}/${sequenceTracker.currentNumber}`;
+  } catch (error) {
+    console.error("Error generating enrollment ID:", error);
+    // Fallback to a random number if generation fails
+    return `${prefix}/${new Date().getMonth() + 1}/${Math.floor(
+      1000 + Math.random() * 9000
+    )}`;
+  }
+};
+const generateCourseEnrollmentId = async (prefix = "TR") => {
+  try {
+    // Get current month (zero-padded)
+    const currentMonth = new Date().getMonth() + 1;
+    const monthStr = currentMonth.toString().padStart(2, "0");
+
+    // Find or create sequence for the current month
+    let sequenceTracker = await CourseEnrollmentSequence.findOne({
+      prefix,
+      month: monthStr,
+    });
+
+    if (!sequenceTracker) {
+      sequenceTracker = new CourseEnrollmentSequence({
+        prefix,
+        month: monthStr,
+        currentNumber: 1000,
+      });
+    } else {
+      sequenceTracker.currentNumber += 1;
+    }
+
+    await sequenceTracker.save();
+
+    // Generate the enrollment ID
+    return `${prefix}/${monthStr}/${sequenceTracker.currentNumber}`;
+  } catch (error) {
+    console.error("Error generating enrollment ID:", error);
+    // Fallback to a random number if generation fails
+    return `${prefix}/${new Date().getMonth() + 1}/${Math.floor(
+      1000 + Math.random() * 9000
+    )}`;
+  }
+};
 
 // Create order endpoint
 const createOrder = async (req, res) => {
   try {
     const {
-      courseId,
+      // courseId,
       courseName,
       courseTitle,
       courseDescription,
@@ -22,6 +91,15 @@ const createOrder = async (req, res) => {
       orderType,
     } = req.body;
     const userId = req.user._id;
+    // console.log("order-type:", orderType);
+
+    let generatedCourseId;
+    if (orderType === "course") {
+      generatedCourseId = await generateCourseEnrollmentId("TR");
+    } else {
+      // Generate enrollment ID
+      generatedCourseId = await generateEnrollmentId("NN");
+    }
 
     // Create Razorpay order
     const options = {
@@ -30,7 +108,7 @@ const createOrder = async (req, res) => {
       receipt: `receipt_${Date.now()}`,
       payment_capture: 1,
       notes: {
-        courseId: courseId,
+        courseId: generatedCourseId, //using generated it
         userId: userId,
       },
     };
@@ -38,7 +116,7 @@ const createOrder = async (req, res) => {
     const razorpayOrder = await razorpay.orders.create(options);
     // Create order in database
     const order = new Order({
-      courseId,
+      courseId: generatedCourseId, //using generated id
       courseName,
       courseTitle,
       courseDescription,
@@ -57,6 +135,7 @@ const createOrder = async (req, res) => {
 
     res.json({
       orderId: razorpayOrder.id,
+      courseId: generatedCourseId, // Return the generated ID
       orderType,
       courseName,
       courseTitle,

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import logo from "../../assets/logo.png"
 
 interface EnrollmentStats {
   _id: string;
@@ -262,7 +263,11 @@ const AdminDashboard: React.FC = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-28">
+    <div className="container mx-auto px-4 py-8">
+      <nav className="flex justify-center items-center gap-2">
+        <img src={logo} alt="logo" className="w-20 h-20" />
+        <h2 className="font-bold text-3xl underline text-blue-400">NOVANECTAR</h2>
+      </nav>
       <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
       <div className="mb-8">

@@ -117,12 +117,13 @@ const InternshipEnrollmentModal = ({
   if (selectedDuration === "3") {
     price = 299;
   } else if (selectedDuration === "1") {
-    price = 99;
+    price = 1;
   } else if (selectedDuration === "6") {
     price = 699;
   } else {
     throw new Error("Invalid duration");
   }
+
 
   const handlePayment = async () => {
     try {
@@ -142,7 +143,7 @@ const InternshipEnrollmentModal = ({
           },
           credentials: "include",
           body: JSON.stringify({
-            courseId: internship.id,
+            // courseId: internship.id,
             courseName: internship.title,
             courseTitle: internship.title,
             courseDescription: internship.description,
@@ -272,7 +273,7 @@ const InternshipEnrollmentModal = ({
     }
   };
 
-  const handleDurationChange = (e:any) => {
+  const handleDurationChange = (e: any) => {
     setSelectedDuration(e.target.value);
     handleChange(e);
   };
