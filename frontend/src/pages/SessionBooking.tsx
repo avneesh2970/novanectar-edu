@@ -1,133 +1,182 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import CallingIcon from "../components/socialContact/Call";
 import WhatsappIcon from "../components/socialContact/Whatsapp";
+import { motion } from "framer-motion";
+import { bookingForm } from "../api/services";
 
 const SessionBooking = () => {
   const [formData, setFormData] = useState({
     fullName: "",
-    course: "",
+    domain: "",
+    date: "",
     time: "",
     phoneNumber: "",
     email: "",
+    message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("formData: ", formData);
+    try {
+      bookingForm.submitForm(formData);
+
+      setFormData({
+        fullName: "",
+        domain: "",
+        date: "",
+        time: "",
+        phoneNumber: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white mt-28">
-      <h1 className="text-xl font-medium text-center">
-        Attend our One to One Session
-      </h1>
+    <div className="mx-auto py-6 px-6 sm:px-20 bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-lg pt-28">
+      <motion.h1
+        className="text-3xl font-bold text-center text-blue-500 mb-8"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        Attend our One-to-One Session
+      </motion.h1>
 
       {/* Why attend section */}
-      <div className="mt-8">
-        <h2 className="text-lg font-medium text-center">
+      <motion.div
+        className="mt-12"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        <h2 className="text-2xl font-semibold text-center text-blue-500 mb-6">
           Why attend the Session?
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Feature 1 */}
-          <div className="border border-gray-200 rounded-lg p-4 text-center">
-            <div className="w-12 h-12 bg-[#EEF5FF] rounded-lg flex items-center justify-center mx-auto mb-3">
-              <span className="text-blue-600 font-bold">1:1</span>
+          <motion.div
+            className="bg-white border-2 border-blue-200 rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-blue-500 font-bold text-2xl">1:1</span>
             </div>
-            <h3 className="font-medium text-sm mb-2">Personalized Course</h3>
-            <p className="text-xs text-gray-600">
-              Every course plan suited to your needs & goals
+            <h3 className="font-semibold text-lg mb-3 text-blue-500">
+              Personalized Course
+            </h3>
+            <p className="text-sm text-gray-600">
+              Every course plan suited to your unique needs & goals
             </p>
-          </div>
+          </motion.div>
 
           {/* Feature 2 */}
-          <div className="border border-gray-200 rounded-lg p-4 text-center">
-            <div className="w-12 h-12 bg-[#EEF5FF] rounded-lg flex items-center justify-center mx-auto mb-3">
-              <span className="text-blue-600 text-xl">💬</span>
+          <motion.div
+            className="bg-white border-2 border-blue-200 rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-blue-500 text-2xl">💬</span>
             </div>
-            <h3 className="font-medium text-sm mb-2">Direct Interaction</h3>
-            <p className="text-xs text-gray-600">
-              Face to face talk with your mentor
+            <h3 className="font-semibold text-lg mb-3 text-blue-600">
+              Direct Interaction
+            </h3>
+            <p className="text-sm text-gray-600">
+              Face-to-face talk with your dedicated mentor
             </p>
-          </div>
+          </motion.div>
 
           {/* Feature 3 */}
-          <div className="border border-gray-200 rounded-lg p-4 text-center">
-            <div className="w-12 h-12 bg-[#EEF5FF] rounded-lg flex items-center justify-center mx-auto mb-3">
-              <span className="text-blue-600 text-xl">✨</span>
+          <motion.div
+            className="bg-white border-2 border-blue-200 rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-blue-500 text-2xl">✨</span>
             </div>
-            <h3 className="font-medium text-sm mb-2">Clarity and Confidence</h3>
-            <p className="text-xs text-gray-600">
+            <h3 className="font-semibold text-lg mb-3 text-blue-500">
+              Clarity and Confidence
+            </h3>
+            <p className="text-sm text-gray-600">
               Get clear direction about your learning path
             </p>
-          </div>
+          </motion.div>
         </div>
-      </div>
-
-      {/* Schedule section */}
-      <div className="mt-8">
-        <h2 className="text-lg font-medium text-center mb-4">
-          Schedule of Daily Session
-        </h2>
-        <div className="flex flex-wrap justify-center gap-4">
-          {[
-            { day: "28", name: "Sunday" },
-            { day: "29", name: "Monday" },
-            { day: "30", name: "Tuesday" },
-            { day: "31", name: "Wednesday" },
-          ].map(({ day, name }) => (
-            <div
-              key={day}
-              className="w-16 h-16 bg-[#EEF5FF] rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-blue-100"
-            >
-              <span className="font-bold text-sm">{day}</span>
-              <span className="text-xs text-gray-600">{name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      </motion.div>
 
       {/* Form section */}
-      <div className="mt-8">
-        <h2 className="text-sm font-medium text-center mb-6">
-          Fill the form to attend one to one session with our mentor
+      <motion.div
+        className="mt-16"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        <h2 className="text-xl font-semibold text-center text-blue-500 mb-8">
+          Book Your One-to-One Session with Our Mentor
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
           <input
             name="fullName"
             placeholder="Your Full Name"
             value={formData.fullName}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+            required
           />
           <input
-            name="course"
-            placeholder="Select Course"
-            value={formData.course}
+            name="domain"
+            placeholder="Your Domain"
+            value={formData.domain}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+            required
           />
-          <input
-            name="time"
-            placeholder="Time"
-            type="time"
-            value={formData.time}
-            onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
+          <div className="flex gap-4">
+            <input
+              name="date"
+              type="date"
+              value={formData.date}
+              onChange={handleChange}
+              className="w-1/2 px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+              required
+            />
+            <input
+              name="time"
+              type="time"
+              value={formData.time}
+              onChange={handleChange}
+              className="w-1/2 px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+              required
+            />
+          </div>
           <input
             name="phoneNumber"
             placeholder="Phone Number"
             type="tel"
             value={formData.phoneNumber}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+            required
           />
           <input
             name="email"
@@ -135,19 +184,32 @@ const SessionBooking = () => {
             type="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+            required
           />
-          <button
+          <textarea
+            name="message"
+            placeholder="Add your query"
+            value={formData.message}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 h-32 resize-none"
+          />
+          <motion.button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Register Now
-          </button>
+          </motion.button>
         </form>
-      </div>
+      </motion.div>
+
       {/* call icons */}
-      <CallingIcon />
-      <WhatsappIcon />
+      <div className="mt-8 flex justify-center space-x-4">
+        <CallingIcon />
+        <WhatsappIcon />
+      </div>
     </div>
   );
 };

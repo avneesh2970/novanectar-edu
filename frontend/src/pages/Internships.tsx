@@ -96,7 +96,6 @@ export default function Internships() {
               className="border border-blue-800 text-blue-800 px-14 py-2 rounded-md hover:bg-blue-800 hover:text-white transition-colors"
               onClick={(e) => {
                 e.preventDefault();
-
                 toggleContactPopup();
               }}
             >

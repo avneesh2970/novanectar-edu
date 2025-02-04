@@ -30,16 +30,16 @@ export const contactForm = {
   },
 };
 
-export const userMessageForm = {
+export const bookingForm = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submitForm: async (data: any) => {
     try {
-      const response = await api.post("/api/user-message", data);
+      const response = await api.post("/api/book-session", data);
       toast.success("Form submitted successfully");
       return response.data;
     } catch (error) {
       toast.error("error in submitting form");
-      console.log("error in query-form: ", error);
+      console.log("error in booking: ", error);
     }
   },
 };

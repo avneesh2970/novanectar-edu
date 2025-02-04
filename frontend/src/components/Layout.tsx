@@ -23,7 +23,7 @@ const Layout = () => {
     { to: "/internships", label: "Internships" },
     { to: "/contact-us", label: "Contact Us" },
     { to: "/about-us", label: "About Us" },
-    { to: "/session-book", label: "Books" },
+    { to: "/session-book", label: "Free Consulting" },
   ];
 
   return (
