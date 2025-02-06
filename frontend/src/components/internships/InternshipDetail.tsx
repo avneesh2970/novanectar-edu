@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { internshipData } from "../../data/courses";
@@ -13,6 +13,10 @@ const InternshipDetail = () => {
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState("6");
   const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []); // Runs when the component mounts
 
   const durationOptions = [
     {

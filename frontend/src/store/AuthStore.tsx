@@ -77,6 +77,17 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const getAllUsers = async () => {
+    try {
+      const response = await api.get("/api/auth/get-all-users", {
+        withCredentials: true,
+      });
+      return response.data;
+    } catch (error) {
+      console.log("error in get all user  ", error);
+    }
+  };
+
   const login = async (credentials: any) => {
     try {
       const response = await api.post("/api/auth/login", credentials, {
@@ -128,6 +139,7 @@ export const AuthProvider = ({ children }: any) => {
         logout,
         login,
         getUser,
+        getAllUsers,
         signup,
         username,
         adminLogin,

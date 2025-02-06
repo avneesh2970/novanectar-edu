@@ -7,6 +7,7 @@ export const coursesCards = [
     id: "1",
     category: "Trending",
     title: "MERN Full-Stack Development",
+    duration: "4 month",
     title_: "MERN Full-Stack Development Course",
     description:
       "Novanectar's MERN course: Develop robust web applications with MongoDB, Express, React, and Node.js.",
@@ -65,17 +66,18 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    duration: "6 months",
+    regularPrice:5999
   },
   {
     id: "2",
     category: "Trending",
-    title: "Web Development",
-    title_: "Web Development Course",
+    title: "Frontend Development",
+    duration: "4 month",
+    title_: "Frontend Development Course",
     description:
-      "Novanectar's Web Development course: Create dynamic websites and applications with HTML, CSS, JavaScript, and frameworks.",
+      "Novanectar's Frontend Development course: Create dynamic websites and applications with HTML, CSS, JavaScript, and frameworks.",
     description_:
-      "Novanectar's Web Development course: Create dynamic websites and applications with HTML, CSS, JavaScript, and frameworks.",
+      "Novanectar's Frontend Development course: Create dynamic websites and applications with HTML, CSS, JavaScript, and frameworks.",
     image: courseImages.course2,
     features: [
       "Beginner to Advanced Curriculum",
@@ -118,7 +120,7 @@ export const coursesCards = [
         ],
       },
       {
-        title: "Introduction to Statistics for Data Analysis",
+        title: "Introduction to Statistics for Frontend development",
         lectures: 5,
         duration: "32 hr 36 min",
         content: [
@@ -129,12 +131,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    duration: "6 months",
+    regularPrice:5999
   },
   {
     id: "3",
     category: "Technology",
     title: "Data Analytics",
+    duration:"4 month",
     title_: "Data Analytics Course",
     description:
       "Novanectar's Data Analytics course: Extract insights from data with statistics, machine learning, and visualization tools.",
@@ -193,13 +196,14 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    duration: "6 months",
+    regularPrice:5999
   },
   {
     id: "4",
     category: "Technology",
-    title: "Java Programming",
-    title_: "Java Programming Course",
+    title: "Java Full Stack Development",
+    duration:"4 month",
+    title_: "Java Full Stack Development Course",
     description:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
     description_:
@@ -257,12 +261,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    duration: "6 months",
+    regularPrice:5999
   },
   {
     id: "5",
     category: "Trending",
     title: "MEAN Full-Stack Development",
+    duration: "4 month",
     title_: "MEAN Full-Stack Development Course",
     description:
       "Novanectar's MEAN course: Build scalable web applications with MongoDB, Express, Angular, and Node.js.",
@@ -321,140 +326,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    duration: "6 months",
+    regularPrice:5999
   },
   {
     id: "6",
-    category: "Technology",
-    title: "C/C++ Programming",
-    title_: "C/C++ Programming Course",
-    description:
-      "Novanectar's C/C++ course: Build strong programming fundamentals, developing skills foroperating systems, games, and applications.",
-    description_:
-      "Novanectar's C/C++ course: Build strong programming fundamentals, developing skills foroperating systems, games, and applications.",
-    image: courseImages.course6,
-    features: [
-      "Comprehensive Curriculum",
-      "Certificate of Completion",
-      "100% Placement Assistance",
-      "Hands-On Coding",
-      "Regular Assignments",
-      "Mock Interviews",
-      "Problem-Solving Focus",
-      "Skilled Mentors",
-    ],
-    courseIncludes: {
-      videoHours: "48 hours on-demand video",
-      resources: "120 downloadable resources",
-      codingExercises: "6 coding exercises",
-      articles: "45 articles",
-      certificate: "Certificate of completion",
-      access: "Access on mobile and TV",
-    },
-    stats: {
-      learners: "2,987,123",
-      practices: "1,875",
-      rating: "4.3",
-    },
-    content: [
-      {
-        title: "Introduction",
-        lectures: 2,
-        duration: "3 min",
-        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
-      },
-      {
-        title: "SQL",
-        lectures: 35,
-        duration: "2 hr 55 min",
-        content: [
-          "Lecture 1: Introduction to SQL",
-          "Lecture 2: Queries",
-          "...",
-        ],
-      },
-      {
-        title: "Introduction to Statistics for Data Analysis",
-        lectures: 5,
-        duration: "32 hr 36 min",
-        content: [
-          "Lecture 1: Mean and Median",
-          "Lecture 2: Probability",
-          "...",
-        ],
-      },
-    ],
-    price: 2999,
-    duration: "6 months",
-  },
-  {
-    id: "7",
-    category: "Technology",
-    title: "Python Programming",
-    title_: "Python Programming Course",
-    description:
-      "Novanectar's Python course: Master data science, AI, and automation, enhancing career prospects and problem-solving skills.",
-    description_:
-      "Novanectar's Python course: Master data science, AI, and automation, enhancing career prospects and problem-solving skills.",
-    image: courseImages.course7,
-    features: [
-      "Data Science Specialization",
-      "Certificate of Completion",
-      "100% Placement Assistance",
-      "Project-Based Learning",
-      "Weekly Assignments",
-      "Mock Interviews",
-      "Interactive Code Challenges",
-      "Expert-Led Training",
-    ],
-    courseIncludes: {
-      videoHours: "70 hours on-demand video",
-      resources: "180 downloadable resources",
-      codingExercises: "15 coding exercises",
-      articles: "80 articles",
-      certificate: "Certificate of completion",
-      access: "Access on mobile and TV",
-    },
-    stats: {
-      learners: "6,123,456",
-      practices: "2,654",
-      rating: "4.9",
-    },
-    content: [
-      {
-        title: "Introduction",
-        lectures: 2,
-        duration: "3 min",
-        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
-      },
-      {
-        title: "SQL",
-        lectures: 35,
-        duration: "2 hr 55 min",
-        content: [
-          "Lecture 1: Introduction to SQL",
-          "Lecture 2: Queries",
-          "...",
-        ],
-      },
-      {
-        title: "Introduction to Statistics for Data Analysis",
-        lectures: 5,
-        duration: "32 hr 36 min",
-        content: [
-          "Lecture 1: Mean and Median",
-          "Lecture 2: Probability",
-          "...",
-        ],
-      },
-    ],
-    price: 2999,
-    duration: "6 months",
-  },
-  {
-    id: "8",
     category: "Trending",
     title: "Graphic Design",
+    duration:"3 month",
     title_: "Graphic DesignCourse",
     description:
       "Novanectar's Graphic Design course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -512,8 +390,463 @@ export const coursesCards = [
         ],
       },
     ],
+    price: 2499,
+    regularPrice:4999 
+  },
+  {
+    id: "7",
+    category: "Trending",
+    title: "Full Stack",
+    duration:"4 month",
+    title_: "Full Stack Development course",
+    description:
+      "Novanectar's Full Stack course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar's Full Stack course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course7,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
     price: 2999,
-    duration: "6 months",
+    regularPrice:5999
+  },
+  {
+    id: "8",
+    category: "Trending",
+    title: "React Development",
+    duration:"3 month",
+    title_: "React Development course",
+    description:
+      "Novanectar React Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar's React Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course8,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 2499,
+    regularPrice:4999
+  },
+  {
+    id: "9",
+    category: "Trending",
+    title: "Angular Development",
+    duration:"3 month",
+    title_: "Angular Development course",
+    description:
+      "Novanectar Angular Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar's Angular Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course9,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 2499,
+    regularPrice:4999
+  },
+  {
+    id: "10",
+    category: "Trending",
+    title: "Data Science Development",
+    duration:"6 month",
+    title_: "Data Science course",
+    description:
+      "Novanectar Data Science Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar's Data Science Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course10,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 3999,
+    regularPrice:7999
+  },
+  {
+    id: "11",
+    category: "Trending",
+    title: "Digital Marketing",
+    duration:"3 month",
+    title_: "Digital Marketing course",
+    description:
+      "Novanectar Digital Marketing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar's Digital Marketing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course11,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 2499,
+    regularPrice:4999
+  },
+  {
+    id: "12",
+    category: "Trending",
+    title: "UI UX Designing",
+    duration:"3 month",
+    title_: "UI UX Designing course",
+    description:
+      "Novanectar UI UX Designing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar's UI UX Designing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course12,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 2499,
+    regularPrice:4999
+  },
+  {
+    id: "13",
+    category: "Trending",
+    title: "Machine Learning",
+    duration:"3 month",
+    title_: "Machine Learning course",
+    description:
+      "Novanectar Machine Learning course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    description_:
+      "Novanectar Machine Learning course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
+    image: courseImages.course13,
+    features: [
+      "Creative Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Portfolio Development",
+      "Design Projects",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Guidance",
+    ],
+    courseIncludes: {
+      videoHours: "40 hours on-demand video",
+      resources: "100 downloadable resources",
+      codingExercises: "0 coding exercises",
+      articles: "30 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,456,789",
+      practices: "1,234",
+      rating: "4.2",
+    },
+    content: [
+      {
+        title: "Introduction",
+        lectures: 2,
+        duration: "3 min",
+        content: ["Lecture 1: Overview", "Lecture 2: Basics"],
+      },
+      {
+        title: "SQL",
+        lectures: 35,
+        duration: "2 hr 55 min",
+        content: [
+          "Lecture 1: Introduction to SQL",
+          "Lecture 2: Queries",
+          "...",
+        ],
+      },
+      {
+        title: "Introduction to Statistics for Data Analysis",
+        lectures: 5,
+        duration: "32 hr 36 min",
+        content: [
+          "Lecture 1: Mean and Median",
+          "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 2499,
+    regularPrice:4999
   },
 ];
 

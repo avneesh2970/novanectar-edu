@@ -77,6 +77,25 @@ export default function OurCourses() {
                 <div className="p-4">
                   <h2 className="text-lg font-semibold mb-2">{card.title}</h2>
                   <p className="text-gray-600 text-sm">{card.description}</p>
+                  <p className="text-gray-600 text-sm">
+                    <span className="font-medium">
+                      Duration: {card.duration}
+                    </span>
+                  </p>
+                  {/* <p className="text-gray-600 text-sm">
+                    <span className="font-medium">
+                      regular price: {card.regularPrice}
+                    </span>
+                  </p> */}
+                  <p>
+                    <span className="font-medium text-gray-600">
+                      Regular price: <del>{card.regularPrice} Rs</del>
+                    </span>
+                  </p>
+
+                  <p className="text-gray-600 text-sm">
+                    <span className="font-medium">price: {card.price} Rs</span>
+                  </p>
                   <a
                     href="#"
                     className="text-blue-500 text-sm mt-2 inline-block hover:underline"

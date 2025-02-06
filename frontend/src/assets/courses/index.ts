@@ -6,7 +6,12 @@ import course5 from "./course5.png";
 import course6 from "./course6.png";
 import course7 from "./course7.png";
 import course8 from "./course8.png";
+import course9 from "./course9.png";
+import course10 from "./course10.png";
+import course11 from "./course11.png";
+import course12 from "./course12.png";
+import course13 from "./course13.png";
 
-const courseImages = { course1, course2, course3, course4, course5, course6, course7, course8 };
+const courseImages = { course1, course2, course3, course4, course5, course6, course7, course8, course9, course10, course11, course12, course13 };
 
 export default courseImages;

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   checkAuth,
+  getAllUser,
   getUser,
   login,
   logout,
@@ -24,5 +25,6 @@ router.get("/getUser", protectRoute, getUser);
 router.put("/update-profile", protectRoute, updateProfile);
 
 router.get("/check", protectRoute, checkAuth);
+router.get("/get-all-users", getAllUser);
 
 export default router;
