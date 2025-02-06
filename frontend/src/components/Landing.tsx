@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import landing from "../assets/landing.jpg";
+import landing from "../assets/landing.webp";
 import { QueryFormData } from "../types";
 import { queyForm } from "../api/services";
 import { Link } from "react-router-dom";
