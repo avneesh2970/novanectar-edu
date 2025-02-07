@@ -65,8 +65,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:5999
+    price: 4999,
+    regularPrice:11999
   },
   {
     id: "2",
@@ -130,8 +130,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:5999
+    price: 4999,
+    regularPrice:11999
   },
   {
     id: "3",
@@ -195,8 +195,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:5999
+    price: 4999,
+    regularPrice:11999
   },
   {
     id: "4",
@@ -260,8 +260,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:5999
+    price: 4999,
+    regularPrice:11999
   },
   {
     id: "5",
@@ -325,8 +325,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:5999
+    price: 4999,
+    regularPrice:11999
   },
   {
     id: "6",
@@ -390,8 +390,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2499,
-    regularPrice:4999 
+    price: 2999,
+    regularPrice:6999 
   },
   {
     id: "7",
@@ -455,8 +455,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:5999
+    price: 4999,
+    regularPrice:11999
   },
   {
     id: "8",
@@ -520,8 +520,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2499,
-    regularPrice:4999
+    price: 2999,
+    regularPrice:6999
   },
   {
     id: "9",
@@ -585,8 +585,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2499,
-    regularPrice:4999
+    price: 2999,
+    regularPrice:6999
   },
   {
     id: "10",
@@ -650,8 +650,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 3999,
-    regularPrice:7999
+    price: 6999,
+    regularPrice:14999
   },
   {
     id: "11",
@@ -715,8 +715,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2499,
-    regularPrice:4999
+    price: 2999,
+    regularPrice:6999
   },
   {
     id: "12",
@@ -780,8 +780,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2499,
-    regularPrice:4999
+    price: 2999,
+    regularPrice:6999
   },
   {
     id: "13",
@@ -845,8 +845,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2499,
-    regularPrice:4999
+    price: 2999,
+    regularPrice:6999
   },
 ];
 
