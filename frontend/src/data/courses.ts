@@ -396,7 +396,7 @@ export const coursesCards = [
   {
     id: "7",
     category: "Trending",
-    title: "Full Stack",
+    title: "Full Stack Development",
     duration:"4 month",
     title_: "Full Stack Development course",
     description:
@@ -591,7 +591,7 @@ export const coursesCards = [
   {
     id: "10",
     category: "Trending",
-    title: "Data Science Development",
+    title: "Data Science",
     duration:"6 month",
     title_: "Data Science course",
     description:
