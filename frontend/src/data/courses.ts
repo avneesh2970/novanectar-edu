@@ -956,7 +956,12 @@ export const coursesCards = [
         title: "Advanced Python Concepts",
         lectures: 5,
         duration: "3 hr",
-        content: ["Lecture 1: Python Internals", "Lecture 2: Memory Management", "Lecture 3: Decorators & Generators", "..."],
+        content: [
+          "Lecture 1: Python Internals",
+          "Lecture 2: Memory Management",
+          "Lecture 3: Decorators & Generators",
+          "...",
+        ],
       },
       {
         title: "Object-Oriented Programming",
@@ -991,8 +996,7 @@ export const coursesCards = [
     ],
     price: 4999,
     regularPrice: 11999,
-}
-
+  },
 ];
 
 export const programs = [
