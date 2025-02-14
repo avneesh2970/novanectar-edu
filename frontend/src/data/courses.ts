@@ -66,7 +66,7 @@ export const coursesCards = [
       },
     ],
     price: 4999,
-    regularPrice:11999
+    regularPrice: 11999,
   },
   {
     id: "2",
@@ -131,13 +131,13 @@ export const coursesCards = [
       },
     ],
     price: 4999,
-    regularPrice:11999
+    regularPrice: 11999,
   },
   {
     id: "3",
     category: "Technology",
     title: "Data Analytics",
-    duration:"4 month",
+    duration: "4 month",
     title_: "Data Analytics Course",
     description:
       "Novanectar's Data Analytics course: Extract insights from data with statistics, machine learning, and visualization tools.",
@@ -196,13 +196,13 @@ export const coursesCards = [
       },
     ],
     price: 4999,
-    regularPrice:11999
+    regularPrice: 11999,
   },
   {
     id: "4",
     category: "Technology",
     title: "Java Full Stack Development",
-    duration:"4 month",
+    duration: "4 month",
     title_: "Java Full Stack Development Course",
     description:
       "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
@@ -261,7 +261,7 @@ export const coursesCards = [
       },
     ],
     price: 4999,
-    regularPrice:11999
+    regularPrice: 11999,
   },
   {
     id: "5",
@@ -326,13 +326,13 @@ export const coursesCards = [
       },
     ],
     price: 4999,
-    regularPrice:11999
+    regularPrice: 11999,
   },
   {
     id: "6",
     category: "Trending",
     title: "Graphic Design",
-    duration:"3 month",
+    duration: "3 month",
     title_: "Graphic DesignCourse",
     description:
       "Novanectar's Graphic Design course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -391,13 +391,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    regularPrice:6999 
+    regularPrice: 6999,
   },
   {
     id: "7",
     category: "Trending",
     title: "Full Stack Development",
-    duration:"4 month",
+    duration: "4 month",
     title_: "Full Stack Development course",
     description:
       "Novanectar's Full Stack course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -456,13 +456,13 @@ export const coursesCards = [
       },
     ],
     price: 4999,
-    regularPrice:11999
+    regularPrice: 11999,
   },
   {
     id: "8",
     category: "Trending",
     title: "React Development",
-    duration:"3 month",
+    duration: "3 month",
     title_: "React Development course",
     description:
       "Novanectar React Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -521,13 +521,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    regularPrice:6999
+    regularPrice: 6999,
   },
   {
     id: "9",
     category: "Trending",
     title: "Angular Development",
-    duration:"3 month",
+    duration: "3 month",
     title_: "Angular Development course",
     description:
       "Novanectar Angular Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -586,13 +586,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    regularPrice:6999
+    regularPrice: 6999,
   },
   {
     id: "10",
     category: "Trending",
     title: "Data Science",
-    duration:"6 month",
+    duration: "6 month",
     title_: "Data Science course",
     description:
       "Novanectar Data Science Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -651,13 +651,13 @@ export const coursesCards = [
       },
     ],
     price: 6999,
-    regularPrice:14999
+    regularPrice: 14999,
   },
   {
     id: "11",
     category: "Trending",
     title: "Digital Marketing",
-    duration:"3 month",
+    duration: "3 month",
     title_: "Digital Marketing course",
     description:
       "Novanectar Digital Marketing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -716,13 +716,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    regularPrice:6999
+    regularPrice: 6999,
   },
   {
     id: "12",
     category: "Trending",
     title: "UI UX Designing",
-    duration:"3 month",
+    duration: "3 month",
     title_: "UI UX Designing course",
     description:
       "Novanectar UI UX Designing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -781,13 +781,13 @@ export const coursesCards = [
       },
     ],
     price: 2999,
-    regularPrice:6999
+    regularPrice: 6999,
   },
   {
     id: "13",
     category: "Trending",
     title: "Machine Learning",
-    duration:"3 month",
+    duration: "4 month",
     title_: "Machine Learning course",
     description:
       "Novanectar Machine Learning course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -845,9 +845,154 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 2999,
-    regularPrice:6999
+    price: 4999,
+    regularPrice: 11999,
   },
+  {
+    id: "14",
+    category: "Trending",
+    title: "Artificial Intelligence",
+    duration: "4 months",
+    title_: "Artificial Intelligence Course",
+    description:
+      "Novanectar Artificial Intelligence course: Master AI concepts, build intelligent systems, and explore deep learning for real-world applications.",
+    description_:
+      "Novanectar Artificial Intelligence course: Master AI concepts, build intelligent systems, and explore deep learning for real-world applications.",
+    image: courseImages.course14,
+    features: [
+      "Comprehensive AI Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-on AI Projects",
+      "Neural Networks & Deep Learning",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Mentorship",
+    ],
+    courseIncludes: {
+      videoHours: "50 hours on-demand video",
+      resources: "120 downloadable resources",
+      codingExercises: "30 coding exercises",
+      articles: "40 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "1,250,432",
+      practices: "1,500",
+      rating: "4.5",
+    },
+    content: [
+      {
+        title: "Introduction to AI",
+        lectures: 3,
+        duration: "1 hr",
+        content: [
+          "Lecture 1: What is AI?",
+          "Lecture 2: AI vs Machine Learning",
+          "Lecture 3: AI Applications",
+        ],
+      },
+      {
+        title: "Machine Learning Fundamentals",
+        lectures: 20,
+        duration: "10 hr",
+        content: [
+          "Lecture 1: Supervised vs Unsupervised Learning",
+          "Lecture 2: Regression Models",
+          "...",
+        ],
+      },
+      {
+        title: "Deep Learning & Neural Networks",
+        lectures: 15,
+        duration: "12 hr",
+        content: [
+          "Lecture 1: Introduction to Neural Networks",
+          "Lecture 2: Activation Functions",
+          "...",
+        ],
+      },
+    ],
+    price: 4999,
+    regularPrice: 11999,
+  },
+  {
+    id: "15",
+    category: "Trending",
+    title: "Advanced Python",
+    duration: "4 months",
+    title_: "Advanced Python Course",
+    description:
+      "Novanectar Advanced Python course: Enhance your Python skills with in-depth concepts, advanced programming techniques, and real-world projects.",
+    description_:
+      "Novanectar Advanced Python course: Enhance your Python skills with in-depth concepts, advanced programming techniques, and real-world projects.",
+    image: courseImages.course15,
+    features: [
+      "In-Depth Python Concepts",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-on Coding Projects",
+      "Data Structures & Algorithms",
+      "Mock Interviews",
+      "Practical Assignments",
+      "Industry Expert Mentorship",
+    ],
+    courseIncludes: {
+      videoHours: "45 hours on-demand video",
+      resources: "110 downloadable resources",
+      codingExercises: "50 coding exercises",
+      articles: "35 articles",
+      certificate: "Certificate of completion",
+      access: "Access on mobile and TV",
+    },
+    stats: {
+      learners: "980,567",
+      practices: "1,200",
+      rating: "4.6",
+    },
+    content: [
+      {
+        title: "Advanced Python Concepts",
+        lectures: 5,
+        duration: "3 hr",
+        content: ["Lecture 1: Python Internals", "Lecture 2: Memory Management", "Lecture 3: Decorators & Generators", "..."],
+      },
+      {
+        title: "Object-Oriented Programming",
+        lectures: 8,
+        duration: "6 hr",
+        content: [
+          "Lecture 1: Classes & Objects",
+          "Lecture 2: Inheritance & Polymorphism",
+          "...",
+        ],
+      },
+      {
+        title: "Data Structures & Algorithms",
+        lectures: 10,
+        duration: "8 hr",
+        content: [
+          "Lecture 1: Lists, Tuples, and Dictionaries",
+          "Lecture 2: Searching & Sorting Algorithms",
+          "...",
+        ],
+      },
+      {
+        title: "Working with APIs & Databases",
+        lectures: 6,
+        duration: "5 hr",
+        content: [
+          "Lecture 1: RESTful APIs in Python",
+          "Lecture 2: Database Connectivity (SQL & NoSQL)",
+          "...",
+        ],
+      },
+    ],
+    price: 4999,
+    regularPrice: 11999,
+}
+
 ];
 
 export const programs = [
