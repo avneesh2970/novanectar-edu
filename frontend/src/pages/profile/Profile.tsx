@@ -7,7 +7,7 @@ import WhatsappIcon from "../../components/socialContact/Whatsapp";
 
 // import courseImages from "../../assets/courses/index";
 const courseImages: Record<string, { default: string }> = import.meta.glob(
-  "../../assets/courses/*.png",
+  "../../assets/courses/*.webp",
   { eager: true }
 );
 const internshipImages: Record<string, { default: string }> = import.meta.glob(
@@ -29,6 +29,7 @@ const Profile = () => {
     email: "",
     enrollments: [],
   });
+  // console.log("userInfo: ", userInfo)
   const [loading, setLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -77,13 +78,20 @@ const Profile = () => {
   const getCourseNumber = (orderType: any, courseName: any) => {
     if (orderType === "course") {
       if (courseName === "MERN Full-Stack Development") return "1";
-      else if (courseName === "Web Development") return "2";
+      else if (courseName === "Frontend Development") return "2";
       else if (courseName == "Data Analytics") return "3";
-      else if (courseName == "Java Programming") return "4";
+      else if (courseName == "Java Full Stack Development") return "4";
       else if (courseName == "MEAN Full-Stack Development") return "5";
-      else if (courseName == "C/C++ Programming") return "6";
-      else if (courseName == "Python Programming") return "7";
-      else if (courseName == "Graphic Design") return "8";
+      else if (courseName == "Graphic Design") return "6";
+      else if (courseName == "Full Stack Development") return "7";
+      else if (courseName == "React Development") return "8";
+      else if (courseName == "Angular Development") return "9";
+      else if (courseName == "Data Science") return "10";
+      else if (courseName == "Digital Marketing") return "11";
+      else if (courseName == "UI UX Designing") return "12";
+      else if (courseName == "Machine Learning") return "13";
+      else if (courseName == "Artificial Intelligence") return "14";
+      else if (courseName == "Advanced Python") return "15";
     } else if (orderType === "internship") {
       if (courseName === "Python Developer") return "1";
       else if (courseName === "C/C++ Programming") return "2";
@@ -287,7 +295,7 @@ const Profile = () => {
                                       `../../assets/courses/course${getCourseNumber(
                                         enrollment.item.orderType,
                                         enrollment.item.courseName
-                                      )}.png`
+                                      )}.webp`
                                     ]?.default
                                   }
                                   alt={enrollment.item?.courseTitle}

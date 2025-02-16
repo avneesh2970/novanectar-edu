@@ -15,6 +15,7 @@ const courseEnrollmentSequence = new mongoose.Schema(
       type: Number,
       default: 1000,
       required: true,
+      unique:true,
     },
   },
   {
@@ -23,7 +24,7 @@ const courseEnrollmentSequence = new mongoose.Schema(
 );
 
 // Create a compound index to ensure uniqueness of prefix and month combination
-courseEnrollmentSequence.index({ prefix: 1, month: 1 }, { unique: true });
+// courseEnrollmentSequence.index({ currentNumber: 1 }, { unique: true });
 
 const CourseEnrollmentSequence = mongoose.model(
   "CourseEnrollmentSequence",

@@ -4,6 +4,7 @@ import crypto from "crypto";
 import User from "../user/user.model.js";
 import EnrollmentSequence from "./enrollmentSequence.model.js";
 import CourseEnrollmentSequence from "./courseEnrollmentSeq.model.js";
+import nodemailer from "nodemailer";
 
 // Function to generate enrollment ID
 const generateEnrollmentId = async (prefix = "NN") => {
@@ -74,6 +75,18 @@ const generateCourseEnrollmentId = async (prefix = "TR") => {
     )}`;
   }
 };
+
+// Create a transporter using SMTP
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 // Create order endpoint
 const createOrder = async (req, res) => {
@@ -178,11 +191,10 @@ const verifyPayment = async (req, res) => {
         { new: true }
       );
 
+      let updatedUser = null;
       if (updatedOrder) {
         // Add the enrollment to the user's schema
-        // const itemId = updatedOrder.courseId;
-
-        await User.findByIdAndUpdate(
+        updatedUser = await User.findByIdAndUpdate(
           updatedOrder.userId,
           {
             $push: {
@@ -194,6 +206,31 @@ const verifyPayment = async (req, res) => {
           },
           { new: true }
         );
+      }
+
+      // Add logic to send custom email
+      try {
+        // console.log("updatedUser: ", updatedUser);
+        // console.log("updatedOrder: ", updatedOrder);
+        if (updatedUser) {
+          await transporter.sendMail({
+            from: '"Novanectar" <ravishbisht86@gmail.com>',
+            to: updatedUser.email,
+            subject: `${updatedOrder.orderType} enrollment confirmation`,
+            html: `
+              <h1>Thank you for your purchase!</h1>
+              <p>Your payment of ${updatedOrder.amount} Rs has been successfully processed.</p>
+              <p>Order ID: ${updatedOrder.razorpayOrderId}</p>
+              <p>Payment ID: ${updatedOrder.razorpayPaymentId}</p>
+              <p>You have been enrolled in: ${updatedOrder.courseTitle}.</p>
+              <p>Enrollment id: ${updatedOrder.courseId}</p>
+              <p>Thank you for choosing our service!</p>
+            `
+          });
+          // console.log('Email sent successfully');
+        }
+      } catch (error) {
+        console.log("error in sending mail: ", error);
       }
 
       res.json({ success: true });
