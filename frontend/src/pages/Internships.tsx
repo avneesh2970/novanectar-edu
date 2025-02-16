@@ -1,5 +1,5 @@
 import { useState } from "react";
-import internship from "../assets/internship.png";
+import internship from "../assets/internship.webp";
 import Footer from "../components/Footer";
 import { internshipData } from "../data/courses";
 import { useNavigate } from "react-router-dom";
