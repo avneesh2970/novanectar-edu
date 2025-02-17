@@ -38,7 +38,7 @@ const generateEnrollmentId = async (prefix = "NN") => {
     await sequenceTracker.save();
 
     // Generate the enrollment ID
-    return `${prefix}/${monthStr}/${yearStr}${sequenceTracker.currentNumber}`;
+    return `${prefix}/${monthStr}/${yearStr}/${sequenceTracker.currentNumber}`;
   } catch (error) {
     console.error("Error generating enrollment ID:", error);
     // Fallback to a random number if generation fails
