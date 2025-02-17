@@ -5,6 +5,7 @@ import User from "../user/user.model.js";
 import EnrollmentSequence from "./enrollmentSequence.model.js";
 import CourseEnrollmentSequence from "./courseEnrollmentSeq.model.js";
 import nodemailer from "nodemailer";
+import PDFDocument from "pdfkit";
 
 // Function to generate enrollment ID
 const generateEnrollmentId = async (prefix = "NN") => {
@@ -41,6 +42,7 @@ const generateEnrollmentId = async (prefix = "NN") => {
     )}`;
   }
 };
+
 const generateCourseEnrollmentId = async (prefix = "TR") => {
   try {
     // Get current month (zero-padded)
@@ -77,11 +79,20 @@ const generateCourseEnrollmentId = async (prefix = "TR") => {
 };
 
 // Create a transporter using SMTP
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   host: "smtp.gmail.com", //comment it
+//   port: 587,   //comment it
+//   secure: false,   //comment it
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  host: "smtp.gmail.com", //comment it
+  port: 465, //comment it
+  secure: true, //comment it
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -167,6 +178,65 @@ const createOrder = async (req, res) => {
   }
 };
 
+//generate pdf function
+async function generatePDF(updatedOrder, updatedUser) {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create a new PDF document
+      const doc = new PDFDocument();
+      const chunks = [];
+
+      // Collect PDF data chunks
+      doc.on("data", (chunk) => chunks.push(chunk));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+
+      // Add content to PDF
+      doc
+        .fontSize(20)
+        .text("Enrollment Confirmation", { align: "center" })
+        .moveDown();
+
+      doc
+        .fontSize(14)
+        // .text(`Order Type: ${orderData.orderType}`)
+        .text(`Subject: Enrollment Confirmation – ${updatedOrder.courseTitle}`)
+        .moveDown()
+        // .text(`Amount Paid: ${orderData.amount} Rs`)
+        .text(`Dear: ${updatedUser.firstName}`)
+
+        .moveDown()
+        // .text(`Order ID: ${orderData.razorpayOrderId}`)
+        .text(
+          `Congratulations! 🎉 You have successfully enrolled in ${updatedOrder.courseTitle}.`
+        )
+        .moveDown()
+        // .text(`Payment ID: ${orderData.razorpayPaymentId}`)
+        .text(`Your Unique Enrollment ID: ${updatedOrder.courseId}`)
+        .moveDown()
+        // .text(`Course Title: ${orderData.courseTitle}`)
+        .text(
+          `If you have any questions, feel free to contact us at info@novanectar.co.in`
+        )
+        .moveDown()
+        // .text(`Enrollment ID: ${orderData.courseId}`)
+        .text(`Best Regards,`)
+        .moveDown()
+        .text(`Novanectar`)
+        .moveDown()
+        .moveDown()
+        .fontSize(12)
+        .text("Thank you for choosing our service!", { align: "center" });
+
+      // Add company logo or additional styling as needed
+      // doc.image('path/to/logo.png', 50, 45, { width: 50 });
+
+      doc.end();
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 // Verify payment endpoint
 const verifyPayment = async (req, res) => {
   try {
@@ -210,24 +280,33 @@ const verifyPayment = async (req, res) => {
 
       // Add logic to send custom email
       try {
-        // console.log("updatedUser: ", updatedUser);
-        // console.log("updatedOrder: ", updatedOrder);
+        console.log("testing email send process 1");
+
+        // Generate PDF
+        const pdfBuffer = await generatePDF(updatedOrder, updatedUser);
+
         if (updatedUser) {
           await transporter.sendMail({
-            from: '"Novanectar" <ravishbisht86@gmail.com>',
+            from: '"Novanectar" <internship.novanectar@gmail.com>',
             to: updatedUser.email,
             subject: `${updatedOrder.orderType} enrollment confirmation`,
             html: `
               <h1>Thank you for your purchase!</h1>
-              <p>Your payment of ${updatedOrder.amount} Rs has been successfully processed.</p>
-              <p>Order ID: ${updatedOrder.razorpayOrderId}</p>
-              <p>Payment ID: ${updatedOrder.razorpayPaymentId}</p>
-              <p>You have been enrolled in: ${updatedOrder.courseTitle}.</p>
+              <h1>Congratulations! 🎉 You have successfully enrolled in ${updatedOrder.courseTitle}.</h1>
               <p>Enrollment id: ${updatedOrder.courseId}</p>
-              <p>Thank you for choosing our service!</p>
-            `
+              <p>Thank you for choosing our service!</p>            
+              <p>Best Regards,</p>            
+              <p>Novanectar</p>            `,
+
+            attachments: [
+              {
+                filename: "enrollment-confirmation.pdf",
+                content: pdfBuffer,
+                contentType: "application/pdf",
+              },
+            ],
           });
-          // console.log('Email sent successfully');
+          console.log("Email sent successfully with pdf attachment");
         }
       } catch (error) {
         console.log("error in sending mail: ", error);
