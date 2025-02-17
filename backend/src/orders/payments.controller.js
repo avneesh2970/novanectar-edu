@@ -14,17 +14,22 @@ const generateEnrollmentId = async (prefix = "NN") => {
     const currentMonth = new Date().getMonth() + 1;
     const monthStr = currentMonth.toString().padStart(2, "0");
 
+    const currentYear = new Date().getFullYear();
+    const yearStr = currentYear.toString().slice(-2);
+
     // Find or create sequence for the current month
     let sequenceTracker = await EnrollmentSequence.findOne({
       prefix,
       month: monthStr,
+      year:yearStr,
     });
 
     if (!sequenceTracker) {
       sequenceTracker = new EnrollmentSequence({
         prefix,
         month: monthStr,
-        currentNumber: 1000,
+        year:yearStr,
+        currentNumber: 2500,
       });
     } else {
       sequenceTracker.currentNumber += 1;
@@ -33,7 +38,7 @@ const generateEnrollmentId = async (prefix = "NN") => {
     await sequenceTracker.save();
 
     // Generate the enrollment ID
-    return `${prefix}/${monthStr}/${sequenceTracker.currentNumber}`;
+    return `${prefix}/${monthStr}/${yearStr}${sequenceTracker.currentNumber}`;
   } catch (error) {
     console.error("Error generating enrollment ID:", error);
     // Fallback to a random number if generation fails
@@ -49,16 +54,21 @@ const generateCourseEnrollmentId = async (prefix = "TR") => {
     const currentMonth = new Date().getMonth() + 1;
     const monthStr = currentMonth.toString().padStart(2, "0");
 
+    const currentYear = new Date().getFullYear();
+    const yearStr = currentYear.toString().slice(-2);
+
     // Find or create sequence for the current month
     let sequenceTracker = await CourseEnrollmentSequence.findOne({
       prefix,
       month: monthStr,
+      year:yearStr,
     });
 
     if (!sequenceTracker) {
       sequenceTracker = new CourseEnrollmentSequence({
         prefix,
         month: monthStr,
+        year:yearStr,
         currentNumber: 1000,
       });
     } else {
@@ -68,7 +78,7 @@ const generateCourseEnrollmentId = async (prefix = "TR") => {
     await sequenceTracker.save();
 
     // Generate the enrollment ID
-    return `${prefix}/${monthStr}/${sequenceTracker.currentNumber}`;
+    return `${prefix}/${monthStr}/${yearStr}/${sequenceTracker.currentNumber}`;
   } catch (error) {
     console.error("Error generating enrollment ID:", error);
     // Fallback to a random number if generation fails

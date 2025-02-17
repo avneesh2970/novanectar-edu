@@ -11,11 +11,15 @@ const enrollmentSequenceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    year: {
+      type: String,
+      required: true,
+    },
     currentNumber: {
       type: Number,
-      default: 1000,
+      default: 2500,
       required: true,
-      unique:true,
+      unique: true,
     },
   },
   {
