@@ -4,8 +4,9 @@ import crypto from "crypto";
 import User from "../user/user.model.js";
 import EnrollmentSequence from "./enrollmentSequence.model.js";
 import CourseEnrollmentSequence from "./courseEnrollmentSeq.model.js";
-import nodemailer from "nodemailer";
-import PDFDocument from "pdfkit";
+
+import { sendEmail } from "../utils/email.config.js";
+import { generateEnrollmentPDF } from "../utils/pdf.generator.js";
 
 // Function to generate enrollment ID
 const generateEnrollmentId = async (prefix = "NN") => {
@@ -21,14 +22,14 @@ const generateEnrollmentId = async (prefix = "NN") => {
     let sequenceTracker = await EnrollmentSequence.findOne({
       prefix,
       month: monthStr,
-      year:yearStr,
+      year: yearStr,
     });
 
     if (!sequenceTracker) {
       sequenceTracker = new EnrollmentSequence({
         prefix,
         month: monthStr,
-        year:yearStr,
+        year: yearStr,
         currentNumber: 2500,
       });
     } else {
@@ -61,14 +62,14 @@ const generateCourseEnrollmentId = async (prefix = "TR") => {
     let sequenceTracker = await CourseEnrollmentSequence.findOne({
       prefix,
       month: monthStr,
-      year:yearStr,
+      year: yearStr,
     });
 
     if (!sequenceTracker) {
       sequenceTracker = new CourseEnrollmentSequence({
         prefix,
         month: monthStr,
-        year:yearStr,
+        year: yearStr,
         currentNumber: 1000,
       });
     } else {
@@ -88,27 +89,6 @@ const generateCourseEnrollmentId = async (prefix = "TR") => {
   }
 };
 
-// Create a transporter using SMTP
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   host: "smtp.gmail.com", //comment it
-//   port: 587,   //comment it
-//   secure: false,   //comment it
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// });
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", //comment it
-  port: 465, //comment it
-  secure: true, //comment it
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 // Create order endpoint
 const createOrder = async (req, res) => {
   try {
@@ -124,8 +104,7 @@ const createOrder = async (req, res) => {
       phone,
       orderType,
     } = req.body;
-    const userId = req.user._id;
-    // console.log("order-type:", orderType);
+    const userId = req?.user?._id;
 
     let generatedCourseId;
     if (orderType === "course") {
@@ -188,65 +167,6 @@ const createOrder = async (req, res) => {
   }
 };
 
-//generate pdf function
-async function generatePDF(updatedOrder, updatedUser) {
-  return new Promise((resolve, reject) => {
-    try {
-      // Create a new PDF document
-      const doc = new PDFDocument();
-      const chunks = [];
-
-      // Collect PDF data chunks
-      doc.on("data", (chunk) => chunks.push(chunk));
-      doc.on("end", () => resolve(Buffer.concat(chunks)));
-
-      // Add content to PDF
-      doc
-        .fontSize(20)
-        .text("Enrollment Confirmation", { align: "center" })
-        .moveDown();
-
-      doc
-        .fontSize(14)
-        // .text(`Order Type: ${orderData.orderType}`)
-        .text(`Subject: Enrollment Confirmation – ${updatedOrder.courseTitle}`)
-        .moveDown()
-        // .text(`Amount Paid: ${orderData.amount} Rs`)
-        .text(`Dear: ${updatedUser.firstName}`)
-
-        .moveDown()
-        // .text(`Order ID: ${orderData.razorpayOrderId}`)
-        .text(
-          `Congratulations! 🎉 You have successfully enrolled in ${updatedOrder.courseTitle}.`
-        )
-        .moveDown()
-        // .text(`Payment ID: ${orderData.razorpayPaymentId}`)
-        .text(`Your Unique Enrollment ID: ${updatedOrder.courseId}`)
-        .moveDown()
-        // .text(`Course Title: ${orderData.courseTitle}`)
-        .text(
-          `If you have any questions, feel free to contact us at info@novanectar.co.in`
-        )
-        .moveDown()
-        // .text(`Enrollment ID: ${orderData.courseId}`)
-        .text(`Best Regards,`)
-        .moveDown()
-        .text(`Novanectar`)
-        .moveDown()
-        .moveDown()
-        .fontSize(12)
-        .text("Thank you for choosing our service!", { align: "center" });
-
-      // Add company logo or additional styling as needed
-      // doc.image('path/to/logo.png', 50, 45, { width: 50 });
-
-      doc.end();
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
 // Verify payment endpoint
 const verifyPayment = async (req, res) => {
   try {
@@ -271,57 +191,54 @@ const verifyPayment = async (req, res) => {
         { new: true }
       );
 
-      let updatedUser = null;
-      if (updatedOrder) {
-        // Add the enrollment to the user's schema
-        updatedUser = await User.findByIdAndUpdate(
-          updatedOrder.userId,
-          {
-            $push: {
-              enrollments: {
-                type: updatedOrder.orderType,
-                item: updatedOrder._id,
-              },
+      // Add the enrollment to the user's schema
+      const updatedUser = await User.findByIdAndUpdate(
+        updatedOrder.userId,
+        {
+          $push: {
+            enrollments: {
+              type: updatedOrder.orderType,
+              item: updatedOrder._id,
             },
           },
-          { new: true }
+        },
+        { new: true }
+      );
+
+      if (updatedUser) {
+        const pdfBuffer = await generateEnrollmentPDF(
+          updatedOrder,
+          updatedUser
+        );
+
+        // Send email with new utility
+        await sendEmail(
+          updatedUser.email,
+          `${updatedOrder.orderType} enrollment confirmation`,
+          `
+                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1 style="color: #333;">Thank you for your enrollment!</h1>
+                    <h2 style="color: #0066cc;">Congratulations! 🎉</h2>
+                    <p>You have successfully enrolled in ${updatedOrder.courseTitle}.</p>
+                    <p>Your Enrollment ID: <strong>${updatedOrder.courseId}</strong></p>
+                    <hr style="border: 1px solid #eee;">
+                    <p style="color: #666;">If you have any questions, please contact us at:</p>
+                    <p><a href="mailto:info@novanectar.co.in">info@novanectar.co.in</a></p>
+                    <div style="margin-top: 30px;">
+                      <p>Best Regards,</p>
+                      <p><strong>Novanectar Team</strong></p>
+                    </div>
+                  </div>
+                  `,
+          [
+            {
+              filename: "enrollment-confirmation.pdf",
+              content: pdfBuffer,
+              contentType: "application/pdf",
+            },
+          ]
         );
       }
-
-      // Add logic to send custom email
-      try {
-        console.log("testing email send process 1");
-
-        // Generate PDF
-        const pdfBuffer = await generatePDF(updatedOrder, updatedUser);
-
-        if (updatedUser) {
-          await transporter.sendMail({
-            from: '"Novanectar" <internship.novanectar@gmail.com>',
-            to: updatedUser.email,
-            subject: `${updatedOrder.orderType} enrollment confirmation`,
-            html: `
-              <h1>Thank you for your purchase!</h1>
-              <h1>Congratulations! 🎉 You have successfully enrolled in ${updatedOrder.courseTitle}.</h1>
-              <p>Enrollment id: ${updatedOrder.courseId}</p>
-              <p>Thank you for choosing our service!</p>            
-              <p>Best Regards,</p>            
-              <p>Novanectar</p>            `,
-
-            attachments: [
-              {
-                filename: "enrollment-confirmation.pdf",
-                content: pdfBuffer,
-                contentType: "application/pdf",
-              },
-            ],
-          });
-          console.log("Email sent successfully with pdf attachment");
-        }
-      } catch (error) {
-        console.log("error in sending mail: ", error);
-      }
-
       res.json({ success: true });
     } else {
       res.status(400).json({ error: "Invalid signature" });

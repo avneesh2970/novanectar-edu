@@ -119,11 +119,10 @@ const InternshipEnrollmentModal = ({
   } else if (selectedDuration === "1") {
     price = 99;
   } else if (selectedDuration === "6") {
-    price = 699;
+    price = 999;
   } else {
     throw new Error("Invalid duration");
   }
-
 
   const handlePayment = async () => {
     try {

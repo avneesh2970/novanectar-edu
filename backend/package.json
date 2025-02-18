@@ -21,6 +21,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.2",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.10.0",
     "pdfkit": "^0.16.0",
     "razorpay": "^2.9.5",
