@@ -36,10 +36,14 @@ async function generateEnrollmentPDF(orderData, userData) {
         getImageBuffer("https://edu.novanectar.co.in/iso.png"),
       ]);
 
-      // Create PDF document
+      // Create PDF document with better margins
       const doc = new PDFDocument({
         size: "A4",
         margin: 50,
+        info: {
+          Title: "Enrollment Confirmation",
+          Author: "Novanectar Services Private Limited",
+        },
       });
 
       // Collect PDF chunks
@@ -49,46 +53,51 @@ async function generateEnrollmentPDF(orderData, userData) {
       doc.on("error", reject);
 
       try {
-        // Add company logo using buffer
+        // Add company logo using buffer with better positioning
         if (logoBuffer) {
           doc.image(logoBuffer, 50, 45, {
-            width: 150,
+            width: 140,
+            fit: [140, 70],
+            align: 'left',
+            valign: 'center',
             fallback: () => {
-              doc.fontSize(12).text("Novanectar", 50, 45);
+              doc.fontSize(14).text("Novanectar", 50, 45);
             },
           });
         } else {
-          doc.fontSize(12).text("Novanectar", 50, 45);
+          doc.fontSize(14).text("Novanectar", 50, 45);
         }
 
-        // Add geometric pattern background
+        // Add geometric pattern background with better opacity
         doc
           .save()
           .fillColor("#f0f6ff")
-          .opacity(0.1)
+          .opacity(0.08)
           .translate(0, 0)
           .scale(1)
           .restore();
 
-        // Header
+        // Header with better spacing
         doc
           .moveDown(4)
           .font("Helvetica-Bold")
-          .fontSize(16)
+          .fontSize(18)
           .fillColor("#000")
           .text("ENROLLMENT CONFIRMATION", { align: "center" });
 
-        // ID and Date
+        // ID and Date with better formatting
         doc
           .moveDown()
-          .fontSize(12)
+          .fontSize(11)
+          .font("Helvetica")
           .text(`ID - ${orderData?.courseId}`, { align: "left" })
           .text(`Date: ${new Date().toLocaleDateString()}`, { align: "left" });
 
-        // Main content
+        // Main content with improved spacing and font
         doc
           .moveDown()
-          .fontSize(12)
+          .fontSize(11)
+          .font("Helvetica")
           .text(`Dear ${userData?.firstName || "sir"},`, { align: "left" })
           .moveDown()
           .text(
@@ -97,12 +106,12 @@ async function generateEnrollmentPDF(orderData, userData) {
             }, for the role of ${
               orderData.courseName
             }. The date of commencement of your internship is ${new Date().toLocaleDateString()}`,
-            { align: "left" }
+            { align: "left", lineGap: 2 }
           )
           .moveDown()
           .text(
             `As an enrolle, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality`,
-            { align: "left" }
+            { align: "left", lineGap: 2 }
           )
           .moveDown()
           .text(
@@ -110,111 +119,122 @@ async function generateEnrollmentPDF(orderData, userData) {
             {
               align: "left",
               width: 500,
+              lineGap: 2,
             }
           );
 
-        // Footer with signature
-        doc.moveDown(2).text("Regards,", { align: "left" }).moveDown();
+        // Footer with signature and improved spacing
+        doc.moveDown(2)
+          .text("Regards,", { align: "left" })
+          .moveDown();
 
-        // Add signature image
+        // Add signature image with better positioning
         if (signatureBuffer) {
           doc.image(signatureBuffer, 50, doc.y, {
-            width: 100,
+            width: 90,
+            height: 45,
+            fit: [90, 45],
+            align: 'left',
+            valign: 'center',
             fallback: () => {
               doc.fontSize(10).text("[Signature]", 50, doc.y);
             },
           });
         }
 
+        // Name and designation with better spacing
         doc
           .moveDown(2)
+          .font("Helvetica-Bold")
+          .fontSize(11)
           .text("Shivam Rai,", { align: "left" })
+          .font("Helvetica")
           .text("CEO", { align: "left" });
 
-        // Add stamp at the bottom right
+        // Add stamp with better positioning
         if (stampBuffer) {
           doc.image(stampBuffer, 450, doc.y - 80, {
-            width: 80,
+            width: 70,
+            height: 70,
+            fit: [70, 70],
+            align: 'right',
+            valign: 'center',
             fallback: () => {
               doc.fontSize(10).text("[Company Stamp]", 450, doc.y - 80);
             },
           });
         }
 
-        // Add certification logos
+        // Add certification logos with improved layout
         doc.moveDown(4);
 
-        // Calculate center position for logos
+        // Calculate center position for logos with better spacing
         const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-        const logoWidth = 80; // Uniform size for all logos
-        const logoSpacing = 20;
+        const logoWidth = 85;
+        const logoHeight = 45;
+        const logoSpacing = 25;
         const totalLogosWidth = (logoWidth * 4) + (logoSpacing * 3);
         const startX = doc.page.margins.left + (pageWidth - totalLogosWidth) / 2;
         const logoY = doc.y;
 
-        // Add certification logos in a centered row with uniform size
+        // Add certification logos with controlled dimensions
+        const logoOptions = {
+          fit: [logoWidth, logoHeight],
+          align: 'center',
+          valign: 'center'
+        };
+
         if (startupBuffer) {
-          doc.image(startupBuffer, startX, logoY, { 
-            width: logoWidth,
-            height: logoWidth // Make it square
-          });
+          doc.image(startupBuffer, startX, logoY, { ...logoOptions });
         }
         if (msmeBuffer) {
-          doc.image(msmeBuffer, startX + logoWidth + logoSpacing, logoY, {
-            width: logoWidth,
-            height: logoWidth
-          });
+          doc.image(msmeBuffer, startX + logoWidth + logoSpacing, logoY, { ...logoOptions });
         }
         if (governmentBuffer) {
-          doc.image(governmentBuffer, startX + (logoWidth + logoSpacing) * 2, logoY, {
-            width: logoWidth,
-            height: logoWidth
-          });
+          doc.image(governmentBuffer, startX + (logoWidth + logoSpacing) * 2, logoY, { ...logoOptions });
         }
         if (isoBuffer) {
-          doc.image(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, {
-            width: logoWidth,
-            height: logoWidth
-          });
+          doc.image(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, { ...logoOptions });
         }
 
-        // Move down after logos
-        doc.moveDown(4);
+        // Move down for contact section
+        doc.moveDown(3);
 
-        // Add contact information with styled background and icons
+        // Add contact information with improved styling
         const contactY = doc.y;
-        const contactWidth = 500;
+        const contactWidth = pageWidth;
         const contactX = doc.page.margins.left;
+        const contactPadding = 15;
 
-        // Draw light blue background
+        // Draw light blue background with rounded corners
         doc
           .save()
           .fillColor('#f0f6ff')
-          .rect(contactX, contactY, contactWidth, 100)
+          .roundedRect(contactX, contactY, contactWidth, 100, 5)
           .fill()
           .restore();
 
-        // Add contact information with icons
+        // Add contact information with better formatting
         doc
-          .fontSize(11)
-          .font('Helvetica')
+          .font("Helvetica")
+          .fontSize(10)
           .fillColor('#000');
 
-        // Location
-        doc.text('🏢', contactX + 15, contactY + 15);
-        doc.text('GMS Road Dehradun, Uttarakhand, India', contactX + 40, contactY + 15);
+        // Contact details with bullet points
+        const bulletPoint = '•';
+        const textX = contactX + 25;
+        const lineHeight = 20;
 
-        // Email
-        doc.text('✉️', contactX + 15, contactY + 35);
-        doc.text('Info@novanectar.co.in', contactX + 40, contactY + 35);
-
-        // Website
-        doc.text('🌐', contactX + 15, contactY + 55);
-        doc.text('www.novanectar.co.in', contactX + 40, contactY + 55);
-
-        // Phone
-        doc.text('📞', contactX + 15, contactY + 75);
-        doc.text('8979891703 / 8979891705', contactX + 40, contactY + 75);
+        [
+          ['GMS Road Dehradun, Uttarakhand, India'],
+          ['Info@novanectar.co.in'],
+          ['www.novanectar.co.in'],
+          ['8979891703 / 8979891705']
+        ].forEach((item, index) => {
+          doc
+            .text(bulletPoint, contactX + 10, contactY + contactPadding + (index * lineHeight))
+            .text(item[0], textX, contactY + contactPadding + (index * lineHeight));
+        });
 
         // End the document
         doc.end();
