@@ -82,18 +82,9 @@ async function generateEnrollmentPDF(orderData, userData) {
           });
         }
 
-        // Company name below logo
-        doc
-          .moveDown(4)
-          .font("Helvetica-Bold")
-          .fontSize(14)
-          .text("NOVANECTAR", { align: "left" })
-          .fontSize(12)
-          .text("SERVICES PVT. LTD.", { align: "left" });
-
         // Header
         doc
-          .moveDown(2)
+          .moveDown(4)
           .fontSize(16)
           .text("ENROLLMENT CONFIRMATION", { align: "center" });
 
@@ -156,7 +147,7 @@ async function generateEnrollmentPDF(orderData, userData) {
         });
 
         // Move down after signature and stamp
-        doc.moveDown(6);
+        doc.moveDown(8);
 
         // Add certification logos
         const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
@@ -180,8 +171,8 @@ async function generateEnrollmentPDF(orderData, userData) {
         safelyAddImage(governmentBuffer, startX + (logoWidth + logoSpacing) * 2, logoY, certLogoOptions);
         safelyAddImage(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, certLogoOptions);
 
-        // Move down for contact section
-        doc.moveDown(3);
+        // Move down for contact section with increased margin
+        doc.moveDown(5);
 
         // Add contact information with light blue background
         const contactY = doc.y;
