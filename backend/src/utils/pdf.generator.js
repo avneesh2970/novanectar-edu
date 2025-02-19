@@ -1,7 +1,6 @@
 import PDFDocument from "pdfkit";
-import fetch from "node-fetch"; // Make sure to import fetch
+import fetch from "node-fetch";
 
-// Helper function to fetch image and convert to buffer
 async function getImageBuffer(url) {
   try {
     const response = await fetch(url);
@@ -11,17 +10,19 @@ async function getImageBuffer(url) {
     return Buffer.from(arrayBuffer);
   } catch (error) {
     console.error("Error fetching image:", error);
-    throw error;
+    return null; // Return null instead of throwing to handle gracefully
   }
 }
 
 async function generateEnrollmentPDF(orderData, userData) {
   return new Promise(async (resolve, reject) => {
     try {
-      // Fetch images first
-      const logoBuffer = await getImageBuffer(
-        "https://novanectar.co.in/logo.png"
-      );
+      // Fetch all images first
+      const [logoBuffer, signatureBuffer, stampBuffer] = await Promise.all([
+        getImageBuffer("https://novanectar.co.in/logo.png"),
+        getImageBuffer("https://edu.novanectar.co.in/signature.png"),
+        getImageBuffer("https://edu.novanectar.co.in/stamp.png")
+      ]);
 
       // Create PDF document
       const doc = new PDFDocument({
@@ -42,13 +43,16 @@ async function generateEnrollmentPDF(orderData, userData) {
 
       try {
         // Add company logo using buffer
-        doc.image(logoBuffer, 50, 45, {
-          width: 150,
-          // Add fallback in case image fails
-          fallback: () => {
-            doc.fontSize(12).text("Novanectar", 50, 45);
-          },
-        });
+        if (logoBuffer) {
+          doc.image(logoBuffer, 50, 45, {
+            width: 150,
+            fallback: () => {
+              doc.fontSize(12).text("Novanectar", 50, 45);
+            },
+          });
+        } else {
+          doc.fontSize(12).text("Novanectar", 50, 45);
+        }
 
         // Add geometric pattern background
         doc
@@ -88,48 +92,59 @@ async function generateEnrollmentPDF(orderData, userData) {
             }. The date of commencement of your internship is ${new Date().toLocaleDateString()}`,
             { align: "left" }
           )
-          // .text(`Duration: 3 months`, { align: 'left' })
           .moveDown()
           .text(
-            `
-As an enrolle, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality`,
+            `As an enrolle, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality`,
             { align: "left" }
           )
           .moveDown()
           .text(
-            `As we welcome you onboard, we assure you that your internship with Novanectar Services Private Limited will be rewarding and fruitful. Wishing you all the very best.
-`,
+            `As we welcome you onboard, we assure you that your internship with Novanectar Services Private Limited will be rewarding and fruitful. Wishing you all the very best.`,
             {
               align: "left",
               width: 500,
             }
           );
-        // Footer
+
+        // Footer with signature
         doc
           .moveDown(2)
           .text("Regards,", { align: "left" })
-          .moveDown()
+          .moveDown();
+
+        // Add signature image
+        if (signatureBuffer) {
+          doc.image(signatureBuffer, 50, doc.y, {
+            width: 100,
+            fallback: () => {
+              doc.fontSize(10).text("[Signature]", 50, doc.y);
+            },
+          });
+        }
+
+        doc
+          .moveDown(2)
           .text("Shivam Rai,", { align: "left" })
           .text("CEO", { align: "left" });
 
-        // Add company seal/logo at the bottom using same buffer
-        doc.image(logoBuffer, 450, doc.y - 50, {
-          width: 80,
-          fallback: () => {
-            doc.fontSize(10).text("Company Seal", 450, doc.y - 50);
-          },
-        });
+        // Add stamp at the bottom right
+        if (stampBuffer) {
+          doc.image(stampBuffer, 450, doc.y - 80, {
+            width: 80,
+            fallback: () => {
+              doc.fontSize(10).text("[Company Stamp]", 450, doc.y - 80);
+            },
+          });
+        }
 
         // End the document
         doc.end();
       } catch (error) {
-        // Handle any errors during PDF generation
         console.error("Error generating PDF content:", error);
-        doc.end(); // Make sure to end the document even if there's an error
+        doc.end();
         reject(error);
       }
     } catch (error) {
-      // Handle any errors during initial setup
       console.error("Error in PDF generation setup:", error);
       reject(error);
     }
