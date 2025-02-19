@@ -10,7 +10,7 @@ async function getImageBuffer(url) {
     return Buffer.from(arrayBuffer);
   } catch (error) {
     console.error("Error fetching image:", error);
-    return null; // Return null instead of throwing to handle gracefully
+    return null;
   }
 }
 
@@ -18,10 +18,22 @@ async function generateEnrollmentPDF(orderData, userData) {
   return new Promise(async (resolve, reject) => {
     try {
       // Fetch all images first
-      const [logoBuffer, signatureBuffer, stampBuffer] = await Promise.all([
+      const [
+        logoBuffer,
+        signatureBuffer,
+        stampBuffer,
+        startupBuffer,
+        msmeBuffer,
+        governmentBuffer,
+        isoBuffer,
+      ] = await Promise.all([
         getImageBuffer("https://novanectar.co.in/logo.png"),
         getImageBuffer("https://edu.novanectar.co.in/signature.png"),
-        getImageBuffer("https://edu.novanectar.co.in/stamp.png")
+        getImageBuffer("https://edu.novanectar.co.in/stamp.png"),
+        getImageBuffer("https://edu.novanectar.co.in/startup.png"),
+        getImageBuffer("https://edu.novanectar.co.in/msme.png"),
+        getImageBuffer("https://edu.novanectar.co.in/government.png"),
+        getImageBuffer("https://edu.novanectar.co.in/iso.png"),
       ]);
 
       // Create PDF document
@@ -34,12 +46,7 @@ async function generateEnrollmentPDF(orderData, userData) {
       const chunks = [];
       doc.on("data", (chunk) => chunks.push(chunk));
       doc.on("end", () => resolve(Buffer.concat(chunks)));
-
-      // Error handling
-      doc.on("error", (error) => {
-        console.error("PDF generation error:", error);
-        reject(error);
-      });
+      doc.on("error", reject);
 
       try {
         // Add company logo using buffer
@@ -107,10 +114,7 @@ async function generateEnrollmentPDF(orderData, userData) {
           );
 
         // Footer with signature
-        doc
-          .moveDown(2)
-          .text("Regards,", { align: "left" })
-          .moveDown();
+        doc.moveDown(2).text("Regards,", { align: "left" }).moveDown();
 
         // Add signature image
         if (signatureBuffer) {
@@ -136,6 +140,50 @@ async function generateEnrollmentPDF(orderData, userData) {
             },
           });
         }
+
+        // Add certification logos
+        doc.moveDown(4);
+
+        // Create a row for certification logos
+        const startX = 50;
+        const logoWidth = 100;
+        const logoSpacing = 20;
+        const logoY = doc.y;
+
+        // Add certification logos in a row
+        if (startupBuffer) {
+          doc.image(startupBuffer, startX, logoY, { width: logoWidth });
+        }
+        if (msmeBuffer) {
+          doc.image(msmeBuffer, startX + logoWidth + logoSpacing, logoY, {
+            width: logoWidth,
+          });
+        }
+        if (governmentBuffer) {
+          doc.image(
+            governmentBuffer,
+            startX + (logoWidth + logoSpacing) * 2,
+            logoY,
+            { width: logoWidth }
+          );
+        }
+        if (isoBuffer) {
+          doc.image(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, {
+            width: logoWidth,
+          });
+        }
+
+        // Add contact information
+        doc
+          .moveDown(4)
+          .fontSize(10)
+          .fillColor("#000")
+          .text("GMS Road Dehradun", { align: "left" })
+          .text("Uttarakhand, India", { align: "left" })
+          .moveDown()
+          .text("Info@novanectar.co.in", { align: "left" })
+          .text("www.novanectar.co.in", { align: "left" })
+          .text("8979891703 / 8979891705", { align: "left" });
 
         // End the document
         doc.end();
