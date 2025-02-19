@@ -144,46 +144,77 @@ async function generateEnrollmentPDF(orderData, userData) {
         // Add certification logos
         doc.moveDown(4);
 
-        // Create a row for certification logos
-        const startX = 50;
-        const logoWidth = 100;
+        // Calculate center position for logos
+        const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+        const logoWidth = 80; // Uniform size for all logos
         const logoSpacing = 20;
+        const totalLogosWidth = (logoWidth * 4) + (logoSpacing * 3);
+        const startX = doc.page.margins.left + (pageWidth - totalLogosWidth) / 2;
         const logoY = doc.y;
 
-        // Add certification logos in a row
+        // Add certification logos in a centered row with uniform size
         if (startupBuffer) {
-          doc.image(startupBuffer, startX, logoY, { width: logoWidth });
+          doc.image(startupBuffer, startX, logoY, { 
+            width: logoWidth,
+            height: logoWidth // Make it square
+          });
         }
         if (msmeBuffer) {
           doc.image(msmeBuffer, startX + logoWidth + logoSpacing, logoY, {
             width: logoWidth,
+            height: logoWidth
           });
         }
         if (governmentBuffer) {
-          doc.image(
-            governmentBuffer,
-            startX + (logoWidth + logoSpacing) * 2,
-            logoY,
-            { width: logoWidth }
-          );
+          doc.image(governmentBuffer, startX + (logoWidth + logoSpacing) * 2, logoY, {
+            width: logoWidth,
+            height: logoWidth
+          });
         }
         if (isoBuffer) {
           doc.image(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, {
             width: logoWidth,
+            height: logoWidth
           });
         }
 
-        // Add contact information
+        // Move down after logos
+        doc.moveDown(4);
+
+        // Add contact information with styled background and icons
+        const contactY = doc.y;
+        const contactWidth = 500;
+        const contactX = doc.page.margins.left;
+
+        // Draw light blue background
         doc
-          .moveDown(4)
-          .fontSize(10)
-          .fillColor("#000")
-          .text("GMS Road Dehradun", { align: "left" })
-          .text("Uttarakhand, India", { align: "left" })
-          .moveDown()
-          .text("Info@novanectar.co.in", { align: "left" })
-          .text("www.novanectar.co.in", { align: "left" })
-          .text("8979891703 / 8979891705", { align: "left" });
+          .save()
+          .fillColor('#f0f6ff')
+          .rect(contactX, contactY, contactWidth, 100)
+          .fill()
+          .restore();
+
+        // Add contact information with icons
+        doc
+          .fontSize(11)
+          .font('Helvetica')
+          .fillColor('#000');
+
+        // Location
+        doc.text('🏢', contactX + 15, contactY + 15);
+        doc.text('GMS Road Dehradun, Uttarakhand, India', contactX + 40, contactY + 15);
+
+        // Email
+        doc.text('✉️', contactX + 15, contactY + 35);
+        doc.text('Info@novanectar.co.in', contactX + 40, contactY + 35);
+
+        // Website
+        doc.text('🌐', contactX + 15, contactY + 55);
+        doc.text('www.novanectar.co.in', contactX + 40, contactY + 55);
+
+        // Phone
+        doc.text('📞', contactX + 15, contactY + 75);
+        doc.text('8979891703 / 8979891705', contactX + 40, contactY + 75);
 
         // End the document
         doc.end();
