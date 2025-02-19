@@ -17,7 +17,7 @@ async function getImageBuffer(url) {
 async function generateEnrollmentPDF(orderData, userData) {
   return new Promise(async (resolve, reject) => {
     try {
-      // Fetch all images first
+      // Fetch all images including company logo
       const [
         logoBuffer,
         signatureBuffer,
@@ -40,6 +40,10 @@ async function generateEnrollmentPDF(orderData, userData) {
       const doc = new PDFDocument({
         size: "A4",
         margin: 50,
+        info: {
+          Title: "Enrollment Confirmation",
+          Author: "Novanectar Services Private Limited",
+        },
       });
 
       // Collect PDF chunks
@@ -49,60 +53,71 @@ async function generateEnrollmentPDF(orderData, userData) {
       doc.on("error", reject);
 
       try {
-        // Add company logo using buffer
+        // Helper function to safely add images
+        const safelyAddImage = (buffer, x, y, options) => {
+          if (
+            buffer &&
+            typeof x === "number" &&
+            !isNaN(x) &&
+            typeof y === "number" &&
+            !isNaN(y)
+          ) {
+            try {
+              doc.image(buffer, x, y, options);
+            } catch (error) {
+              console.error("Error adding image:", error);
+              doc.text(options.fallback || "[Image]", x, y);
+            }
+          } else {
+            doc.text(options.fallback || "[Image]", x || 50, y || doc.y);
+          }
+        };
+
+        // Add company logo at top
         if (logoBuffer) {
-          doc.image(logoBuffer, 50, 45, {
-            width: 150,
-            fallback: () => {
-              doc.fontSize(12).text("Novanectar", 50, 45);
-            },
+          safelyAddImage(logoBuffer, 50, 45, {
+            width: 80,
+            height: 80,
+            fallback: "NOVANECTAR",
           });
-        } else {
-          doc.fontSize(12).text("Novanectar", 50, 45);
         }
 
-        // Add geometric pattern background
-        doc
-          .save()
-          .fillColor("#f0f6ff")
-          .opacity(0.1)
-          .translate(0, 0)
-          .scale(1)
-          .restore();
-
-        // Header
+        // Company name below logo
         doc
           .moveDown(4)
           .font("Helvetica-Bold")
+          .fontSize(14)
+          .text("NOVANECTAR", { align: "left" })
+          .fontSize(12)
+          .text("SERVICES PVT. LTD.", { align: "left" });
+
+        // Header
+        doc
+          .moveDown(2)
           .fontSize(16)
-          .fillColor("#000")
           .text("ENROLLMENT CONFIRMATION", { align: "center" });
 
         // ID and Date
         doc
           .moveDown()
-          .fontSize(12)
-          .text(`ID - ${orderData?.courseId}`, { align: "left" })
-          .text(`Date: ${new Date().toLocaleDateString()}`, { align: "left" });
+          .fontSize(11)
+          .font("Helvetica")
+          .text(`ID - ${orderData?.courseId || "NN/08/0113"}`, { align: "left" })
+          .moveDown()
+          .text(`Dear ${userData?.firstName || "Aman Singh"},`, { align: "left" });
 
         // Main content
         doc
           .moveDown()
-          .fontSize(12)
-          .text(`Dear ${userData?.firstName || "sir"},`, { align: "left" })
-          .moveDown()
+          .fontSize(11)
           .text(
-            `Congratulations! We are pleased to offer you online ${
-              orderData?.orderType
-            }, for the role of ${
-              orderData.courseName
-            }. The date of commencement of your internship is ${new Date().toLocaleDateString()}`,
-            { align: "left" }
+            `Congratulations! We are pleased to offer you offline internship for 3 months, for the role of Full-Stack Development intern. The date of commencement of your internship is 20th November,2024.`,
+            { align: "left", lineGap: 2 }
           )
           .moveDown()
           .text(
-            `As an enrolle, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality`,
-            { align: "left" }
+            `As an intern, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality.`,
+            { align: "left", lineGap: 2 }
           )
           .moveDown()
           .text(
@@ -110,80 +125,95 @@ async function generateEnrollmentPDF(orderData, userData) {
             {
               align: "left",
               width: 500,
+              lineGap: 2,
             }
           );
 
         // Footer with signature
         doc.moveDown(2).text("Regards,", { align: "left" }).moveDown();
 
-        // Add signature image
-        if (signatureBuffer) {
-          doc.image(signatureBuffer, 50, doc.y, {
-            width: 100,
-            fallback: () => {
-              doc.fontSize(10).text("[Signature]", 50, doc.y);
-            },
-          });
-        }
+        // Calculate positions for signature and stamp
+        const signatureY = doc.y;
 
+        // Add signature image
+        safelyAddImage(signatureBuffer, 50, signatureY, {
+          width: 100,
+          height: 40,
+          fallback: "[Signature]",
+        });
+
+        // Add name and designation
         doc
           .moveDown(2)
           .text("Shivam Rai,", { align: "left" })
           .text("CEO", { align: "left" });
 
-        // Add stamp at the bottom right
-        if (stampBuffer) {
-          doc.image(stampBuffer, 450, doc.y - 80, {
-            width: 80,
-            fallback: () => {
-              doc.fontSize(10).text("[Company Stamp]", 450, doc.y - 80);
-            },
-          });
-        }
+        // Add stamp
+        safelyAddImage(stampBuffer, 450, signatureY - 20, {
+          width: 80,
+          height: 80,
+          fallback: "[Company Stamp]",
+        });
+
+        // Move down after signature and stamp
+        doc.moveDown(6);
 
         // Add certification logos
-        doc.moveDown(4);
-
-        // Create a row for certification logos
-        const startX = 50;
+        const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
         const logoWidth = 100;
+        const logoHeight = 50;
         const logoSpacing = 20;
+        const totalLogosWidth = logoWidth * 4 + logoSpacing * 3;
+        const startX = doc.page.margins.left + (pageWidth - totalLogosWidth) / 2;
         const logoY = doc.y;
 
-        // Add certification logos in a row
-        if (startupBuffer) {
-          doc.image(startupBuffer, startX, logoY, { width: logoWidth });
-        }
-        if (msmeBuffer) {
-          doc.image(msmeBuffer, startX + logoWidth + logoSpacing, logoY, {
-            width: logoWidth,
-          });
-        }
-        if (governmentBuffer) {
-          doc.image(
-            governmentBuffer,
-            startX + (logoWidth + logoSpacing) * 2,
-            logoY,
-            { width: logoWidth }
-          );
-        }
-        if (isoBuffer) {
-          doc.image(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, {
-            width: logoWidth,
-          });
-        }
+        // Add certification logos with uniform size
+        const certLogoOptions = {
+          width: logoWidth,
+          height: logoHeight,
+          align: 'center',
+          valign: 'center'
+        };
+
+        safelyAddImage(startupBuffer, startX, logoY, certLogoOptions);
+        safelyAddImage(msmeBuffer, startX + logoWidth + logoSpacing, logoY, certLogoOptions);
+        safelyAddImage(governmentBuffer, startX + (logoWidth + logoSpacing) * 2, logoY, certLogoOptions);
+        safelyAddImage(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, certLogoOptions);
+
+        // Move down for contact section
+        doc.moveDown(3);
+
+        // Add contact information with light blue background
+        const contactY = doc.y;
+        const contactWidth = pageWidth;
+        const contactX = doc.page.margins.left;
+        const contactPadding = 15;
+
+        // Draw light blue background
+        doc
+          .save()
+          .fillColor("#f0f6ff")
+          .rect(contactX, contactY, contactWidth, 100)
+          .fill()
+          .restore();
 
         // Add contact information
-        doc
-          .moveDown(4)
-          .fontSize(10)
-          .fillColor("#000")
-          .text("GMS Road Dehradun", { align: "left" })
-          .text("Uttarakhand, India", { align: "left" })
-          .moveDown()
-          .text("Info@novanectar.co.in", { align: "left" })
-          .text("www.novanectar.co.in", { align: "left" })
-          .text("8979891703 / 8979891705", { align: "left" });
+        doc.font("Helvetica").fontSize(10).fillColor("#000");
+
+        const contactInfo = [
+          "GMS Road Dehradun, Uttarakhand, India",
+          "Info@novanectar.co.in",
+          "www.novanectar.co.in",
+          "8979891703 / 8979891705",
+        ];
+
+        contactInfo.forEach((info, index) => {
+          doc.text(
+            info,
+            contactX + contactPadding,
+            contactY + contactPadding + index * 20
+          );
+        });
 
         // End the document
         doc.end();
