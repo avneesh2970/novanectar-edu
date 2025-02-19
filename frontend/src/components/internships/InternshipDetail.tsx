@@ -4,15 +4,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { internshipData } from "../../data/courses";
 import InternshipEnrollmentModal from "./InternshipEnrollmentModal";
-import { useAuth } from "../../hooks/useAuth";
-import toast from "react-hot-toast";
+// import { useAuth } from "../../hooks/useAuth";
+// import toast from "react-hot-toast";
 
 const InternshipDetail = () => {
   const { internshipId } = useParams();
   const navigate = useNavigate();
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState("6");
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -84,12 +84,12 @@ const InternshipDetail = () => {
   ];
 
   const handleSelectedInternship = (month: any) => {
-    if (isAuthenticated) {
+    // if (isAuthenticated) {
       setSelectedDuration(month);
       setIsEnrollModalOpen(true);
-    } else {
-      toast.error("please log in first to enroll");
-    }
+    // } else {
+      // toast.error("please log in first to enroll");
+    // }
   };
 
   const internship = internshipData.find(

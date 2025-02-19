@@ -119,7 +119,7 @@ const InternshipEnrollmentModal = ({
   } else if (selectedDuration === "1") {
     price = 99;
   } else if (selectedDuration === "6") {
-    price = 999;
+    price = 1;
   } else {
     throw new Error("Invalid duration");
   }
@@ -186,6 +186,7 @@ const InternshipEnrollmentModal = ({
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
+                  email: formData.email,
                 }),
               }
             );

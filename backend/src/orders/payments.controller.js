@@ -7,6 +7,7 @@ import CourseEnrollmentSequence from "./courseEnrollmentSeq.model.js";
 
 import { sendEmail } from "../utils/email.config.js";
 import { generateEnrollmentPDF } from "../utils/pdf.generator.js";
+import mongoose from "mongoose";
 
 // Function to generate enrollment ID
 const generateEnrollmentId = async (prefix = "NN") => {
@@ -104,7 +105,8 @@ const createOrder = async (req, res) => {
       phone,
       orderType,
     } = req.body;
-    const userId = req?.user?._id;
+
+    let userId = req.user && req.user._id ? req.user._id : null;
 
     let generatedCourseId;
     if (orderType === "course") {
@@ -122,7 +124,7 @@ const createOrder = async (req, res) => {
       payment_capture: 1,
       notes: {
         courseId: generatedCourseId, //using generated it
-        userId: userId,
+        userId: userId || "",
       },
     };
 
@@ -134,7 +136,7 @@ const createOrder = async (req, res) => {
       courseTitle,
       courseDescription,
       courseImage,
-      userId,
+      userId: userId,
       orderType,
       amount,
       razorpayOrderId: razorpayOrder.id,
@@ -170,8 +172,12 @@ const createOrder = async (req, res) => {
 // Verify payment endpoint
 const verifyPayment = async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-      req.body;
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      email,
+    } = req.body;
 
     // Verify payment signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -191,21 +197,24 @@ const verifyPayment = async (req, res) => {
         { new: true }
       );
 
-      // Add the enrollment to the user's schema
-      const updatedUser = await User.findByIdAndUpdate(
-        updatedOrder.userId,
-        {
-          $push: {
-            enrollments: {
-              type: updatedOrder.orderType,
-              item: updatedOrder._id,
+      // Only update user if userId exists and is valid
+      let updatedUser = null;
+      if (updatedOrder.userId && updatedOrder.userId !== "") {
+        updatedUser = await User.findByIdAndUpdate(
+          updatedOrder.userId,
+          {
+            $push: {
+              enrollments: {
+                type: updatedOrder.orderType,
+                item: updatedOrder._id,
+              },
             },
           },
-        },
-        { new: true }
-      );
+          { new: true }
+        );
+      }
 
-      if (updatedUser) {
+      if (updatedUser || updatedUser === null) {
         const pdfBuffer = await generateEnrollmentPDF(
           updatedOrder,
           updatedUser
@@ -213,7 +222,7 @@ const verifyPayment = async (req, res) => {
 
         // Send email with new utility
         await sendEmail(
-          updatedUser.email,
+          updatedUser?.email || email,
           `${updatedOrder.orderType} enrollment confirmation`,
           `
                   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

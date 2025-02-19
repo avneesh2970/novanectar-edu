@@ -7,7 +7,7 @@ import paymentRouter from "./src/orders/order.route.js";
 import contactRouter from "./src/contacts/contacts.route.js";
 import authRoutes from "./src/user/user.route.js";
 import cookieParser from "cookie-parser";
-import adminRoutes from "./src/admin/admin.route.js"
+import adminRoutes from "./src/admin/admin.route.js";
 import bookRouter from "./src/oneTwoOne/book.route.js";
 
 dotenv.config();

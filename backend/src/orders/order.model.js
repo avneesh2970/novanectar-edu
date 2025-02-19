@@ -18,12 +18,25 @@ const orderSchema = new mongoose.Schema({
     type: String,
   },
   // userId: {
-  //   type: String,
-  //   required: true,
+  //   type: mongoose.Schema.Types.Mixed,
+  //   ref: "User",
+  //   default: "",
+  //   set: (v) => (v === "" ? v : mongoose.Types.ObjectId(v)),
   // },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     ref: "User",
+    set: function(v) {
+      if (v === null || v === "") return null;
+      if (typeof v === 'object' && v._id) return v._id;
+      if (mongoose.Types.ObjectId.isValid(v)) return mongoose.Types.ObjectId(v);
+      return v;
+    },
+    get: function(v) {
+      if (v === null || v === "") return null;
+      if (mongoose.Types.ObjectId.isValid(v)) return v.toString();
+      return v;
+    }
   },
   orderType: {
     type: String,

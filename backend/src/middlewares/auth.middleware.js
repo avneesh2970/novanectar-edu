@@ -31,3 +31,43 @@ export const protectRoute = async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const protectRouteForPayment = async (req, res, next) => {
+  try {
+    const token = req.cookies.jwt;
+
+    // if (!token) {
+    //   return res
+    //     .status(401)
+    //     .json({ message: "Unauthorized - No Token Provided" });
+    // }
+
+    let decoded;
+    if (token) {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    }
+
+    // if (!decoded) {
+    //   return res.status(401).json({ message: "Unauthorized - Invalid Token" });
+    // }
+
+    let user;
+    if (decoded) {
+      user = await User.findById(decoded.userId).select("-password");
+    }
+
+    // if (!user) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
+    if (user) {
+      req.user = user;
+    } else {
+      req.user = "";
+    }
+    // req.user = user;
+    next();
+  } catch (error) {
+    console.log("Error in protectRoute middleware: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -4,8 +4,8 @@ import { coursesCards } from "../data/courses";
 import EnrollmentModal from "./EnrollmentModal";
 import { useState } from "react";
 import CourseSlip from "./CourseSlip";
-import toast from "react-hot-toast";
-import { useAuth } from "../hooks/useAuth";
+// import toast from "react-hot-toast";
+// import { useAuth } from "../hooks/useAuth";
 // import { Course } from '../types';
 
 interface OpenSections {
@@ -16,7 +16,7 @@ export default function CourseDetails() {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
 
   const [openSections, setOpenSections] = useState<OpenSections>({});
 
@@ -28,11 +28,11 @@ export default function CourseDetails() {
   };
 
   const handleEnrollmentModal = () => {
-    if (isAuthenticated) {
+    // if (isAuthenticated) {
       setIsEnrollModalOpen(true);
-    } else {
-      toast.error("please log in first");
-    }
+    // } else {
+      // toast.error("please log in first");
+    // }
   };
 
   // const course = coursesCards.find((course) => course.id === courseId) as Course;

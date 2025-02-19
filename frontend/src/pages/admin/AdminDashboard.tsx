@@ -176,7 +176,7 @@ const AdminDashboard: React.FC = () => {
     ];
     const tableRows = enrollments.map((enrollment: any) => [
       enrollment.courseId,
-      `${enrollment.userId.firstName} ${enrollment.userId.lastName}`,
+      `${enrollment.userId?.firstName} ${enrollment.userId?.lastName}`,
       enrollment.name,
       `$${enrollment.amount.toFixed(2)}`,
       new Date(enrollment.createdAt).toLocaleDateString(),
@@ -220,10 +220,10 @@ const AdminDashboard: React.FC = () => {
       // CSV data rows
       ...enrollments.map((enrollment: any) => [
         enrollment.courseId,
-        `${enrollment.userId.firstName} ${enrollment.userId.lastName}`,
-        enrollment.userId.email,
+        `${enrollment.userId?.firstName} ${enrollment.userId?.lastName}`,
+        enrollment.userId?.email,
         enrollment.name,
-        enrollment.email,
+        enrollment?.email,
         enrollment.phone,
         enrollment.amount.toFixed(2),
         new Date(enrollment.createdAt).toLocaleDateString(),
@@ -252,14 +252,14 @@ const AdminDashboard: React.FC = () => {
   const filteredQueries = queries.filter(
     (query) =>
       query.fullName.toLowerCase().includes(queryFilter.toLowerCase()) ||
-      query.email.toLowerCase().includes(queryFilter.toLowerCase()) ||
+      query?.email.toLowerCase().includes(queryFilter.toLowerCase()) ||
       query.phoneNumber.includes(queryFilter)
   );
 
   const filteredContacts = contacts.filter(
     (contact) =>
       contact.fullName.toLowerCase().includes(contactFilter.toLowerCase()) ||
-      contact.email.toLowerCase().includes(contactFilter.toLowerCase()) ||
+      contact?.email.toLowerCase().includes(contactFilter.toLowerCase()) ||
       contact.phoneNumber.includes(contactFilter) ||
       contact.course.toLowerCase().includes(contactFilter.toLowerCase()) ||
       contact.city.toLowerCase().includes(contactFilter.toLowerCase())
@@ -270,7 +270,7 @@ const AdminDashboard: React.FC = () => {
       bookings.fullName.toLowerCase().includes(bookingFilter.toLowerCase()) ||
       bookings.domain.toLowerCase().includes(bookingFilter.toLowerCase()) ||
       bookings.date.includes(bookingFilter) ||
-      bookings.email.toLowerCase().includes(bookingFilter.toLowerCase()) ||
+      bookings?.email.toLowerCase().includes(bookingFilter.toLowerCase()) ||
       bookings.message.toLowerCase().includes(bookingFilter.toLowerCase()) ||
       bookings.phoneNumber
         .toLowerCase()
@@ -367,18 +367,18 @@ const AdminDashboard: React.FC = () => {
                   {enrollment.courseId} <br />{" "}
                   <span>
                     userName:{" "}
-                    {enrollment.userId.firstName +
+                    {enrollment.userId?.firstName +
                       " " +
-                      enrollment.userId.lastName}
+                      enrollment.userId?.lastName}
                   </span>{" "}
                   <br />
-                  <span>LoggedIn email: {enrollment.userId.email}</span>
+                  <span>LoggedIn email: {enrollment.userId?.email}</span>
                 </td>
                 <td className="border p-2">
                   {enrollment.name}
                   <br />
                   <span className="text-sm text-gray-600">
-                    {enrollment.email}
+                    {enrollment?.email}
                   </span>
                   <br />
                   <span className="text-sm text-gray-600">
@@ -435,7 +435,7 @@ const AdminDashboard: React.FC = () => {
                 const tableRows = filteredQueries.map((query) => [
                   query.fullName,
                   query.phoneNumber,
-                  query.email,
+                  query?.email,
                   new Date(query.createdAt).toLocaleDateString(),
                 ]);
 
@@ -492,7 +492,7 @@ const AdminDashboard: React.FC = () => {
                 const csvData = filteredQueries.map((query) => [
                   query.fullName,
                   query.phoneNumber,
-                  query.email,
+                  query?.email,
                   new Date(query.createdAt).toLocaleDateString(),
                 ]);
 
@@ -539,7 +539,7 @@ const AdminDashboard: React.FC = () => {
               <tr key={query._id}>
                 <td className="border p-2">{query.fullName}</td>
                 <td className="border p-2">{query.phoneNumber}</td>
-                <td className="border p-2">{query.email}</td>
+                <td className="border p-2">{query?.email}</td>
                 <td className="border p-2">
                   {new Date(query.createdAt).toLocaleDateString()}
                 </td>
@@ -591,7 +591,7 @@ const AdminDashboard: React.FC = () => {
                   contact.course,
                   contact.city,
                   contact.phoneNumber,
-                  contact.email,
+                  contact?.email,
                   new Date(contact.createdAt).toLocaleDateString(),
                 ]);
 
@@ -657,7 +657,7 @@ const AdminDashboard: React.FC = () => {
                   contact.course,
                   contact.city,
                   contact.phoneNumber,
-                  contact.email,
+                  contact?.email,
                   new Date(contact.createdAt).toLocaleDateString(),
                 ]);
 
@@ -708,7 +708,7 @@ const AdminDashboard: React.FC = () => {
                 <td className="border p-2">{contact.course}</td>
                 <td className="border p-2">{contact.city}</td>
                 <td className="border p-2">{contact.phoneNumber}</td>
-                <td className="border p-2">{contact.email}</td>
+                <td className="border p-2">{contact?.email}</td>
                 <td className="border p-2">
                   {new Date(contact.createdAt).toLocaleDateString()}
                 </td>
@@ -762,7 +762,7 @@ const AdminDashboard: React.FC = () => {
                   booking.fullName,
                   booking.domain,
                   booking.bookingDate,
-                  booking.email,
+                  booking?.email,
                   booking.message,
                   booking.phoneNumber,
                   booking.time,
@@ -833,7 +833,7 @@ const AdminDashboard: React.FC = () => {
                   booking.fullName,
                   booking.domain,
                   booking.bookingDate,
-                  booking.email,
+                  booking?.email,
                   booking.message,
                   booking.phoneNumber,
                   booking.time,
@@ -887,7 +887,7 @@ const AdminDashboard: React.FC = () => {
                 <td className="border p-2">{booking.fullName}</td>
                 <td className="border p-2">{booking.domain}</td>
                 <td className="border p-2">{booking.date}</td>
-                <td className="border p-2">{booking.email}</td>
+                <td className="border p-2">{booking?.email}</td>
                 <td className="border p-2">{booking.message}</td>
                 <td className="border p-2">{booking.phoneNumber}</td>
                 <td className="border p-2">{booking.time}</td>

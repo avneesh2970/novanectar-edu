@@ -338,7 +338,7 @@ export const coursesCards = [
       "Novanectar's Graphic Design course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
     description_:
       "Novanectar's Graphic Design course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
-    image: courseImages.course8,
+    image: courseImages.course6,
     features: [
       "Creative Curriculum",
       "Certificate of Completion",

@@ -23,6 +23,7 @@ export const getEnrollmentStats = async (req, res) => {
 export const getFilteredEnrollments = async (req, res) => {
   try {
     const { startDate, endDate, orderType } = req.query;
+    console.log("DATES", startDate, endDate, orderType);
 
     const query = { status: "paid" };
 
@@ -33,14 +34,23 @@ export const getFilteredEnrollments = async (req, res) => {
     if (orderType) {
       query.orderType = orderType;
     }
+    console.log("query: ", query);
 
-    const enrollments = await Order.find(query)
-      .populate("userId", "firstName lastName email")
-      .sort({ createdAt: -1 });
+    const enrollmentsQuery = Order.find(query);
+    // Check if UserId exists and is valid before populating
+    if (
+      req.query.UserId &&
+      typeof req.query.UserId === "string" &&
+      req.query.UserId.trim() !== ""
+    ) {
+      enrollmentsQuery.populate("UserId", "firstName lastName email");
+    }
+
+    const enrollments = await enrollmentsQuery.sort({ createdAt: -1 });
+
     res.json(enrollments);
   } catch (error) {
     console.error("Error in getFilteredEnrollments:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-

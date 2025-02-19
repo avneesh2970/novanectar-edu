@@ -112,7 +112,7 @@ export const getUser = async (req, res) => {
 export const getAllUser = async (req, res) => {
   try {
     const user = await User.find().sort({ createdAt: -1 });
-    console.log("all users: ", user);
+    // console.log("all users: ", user);
     res.status(200).json(user);
   } catch (error) {
     console.log("Error in getAllUser controller", error.message);
