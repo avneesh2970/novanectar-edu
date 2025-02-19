@@ -95,19 +95,19 @@ async function generateEnrollmentPDF(orderData, userData) {
           .font("Helvetica")
           .text(`ID - ${orderData?.courseId || "NN/08/0113"}`, { align: "left" })
           .moveDown()
-          .text(`Dear ${userData?.firstName || "Aman Singh"},`, { align: "left" });
+          .text(`Dear ${userData?.firstName || "Sir"},`, { align: "left" });
 
         // Main content
         doc
           .moveDown()
           .fontSize(11)
           .text(
-            `Congratulations! We are pleased to offer you offline internship for 3 months, for the role of Full-Stack Development intern. The date of commencement of your internship is 20th November,2024.`,
+            `Congratulations! We are pleased to offer you offline internship, for the role of ${orderData.courseName}. The date of commencement of your internship is ${new Date().toLocaleDateString()}`,
             { align: "left", lineGap: 2 }
           )
           .moveDown()
           .text(
-            `As an intern, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality.`,
+            `As an enrolee, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality.`,
             { align: "left", lineGap: 2 }
           )
           .moveDown()
