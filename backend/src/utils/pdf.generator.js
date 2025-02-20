@@ -83,34 +83,38 @@ async function generateEnrollmentPDF(orderData, userData) {
         }
 
         // Header
-        doc
-          .moveDown(4)
-          .fontSize(16)
-          .text("ENROLLMENT CONFIRMATION", { align: "center" });
+        // doc
+        //   .moveDown(4)
+        //   .fontSize(16)
+        //   .text("ENROLLMENT CONFIRMATION", { align: "center" });
 
         // ID and Date
         doc
           .moveDown()
-          .fontSize(11)
+          .fontSize(13)
           .font("Helvetica")
-          .text(`ID - ${orderData?.courseId || "NN/08/0113"}`, { align: "left" })
+          .text(`ID - ${orderData?.courseId}`, { align: "left" })
           .moveDown()
           .text(`Dear ${userData?.firstName || "Sir"},`, { align: "left" });
 
         // Main content
         doc
           .moveDown()
-          .fontSize(11)
+          .fontSize(13)
           .text(
-            `Congratulations! We are pleased to offer you offline internship, for the role of ${orderData.courseName}. The date of commencement of your internship is ${new Date().toLocaleDateString()}`,
+            `Congratulations! We are pleased to offer you offline internship, for the role of ${
+              orderData.courseName
+            }. The date of commencement of your internship is ${new Date().toLocaleDateString()}`,
             { align: "left", lineGap: 2 }
           )
           .moveDown()
+          .fontSize(13)
           .text(
             `As an enrolee, you will get the opportunity to gain valuable and hands-on experience. Please note that as a temporary employee, you will not be eligible for the benefits that our regular employees receive. We expect you to comply with our company policies and practices including those related to code of conduct, safety and confidentiality.`,
             { align: "left", lineGap: 2 }
           )
           .moveDown()
+          .fontSize(13)
           .text(
             `As we welcome you onboard, we assure you that your internship with Novanectar Services Private Limited will be rewarding and fruitful. Wishing you all the very best.`,
             {
@@ -136,6 +140,7 @@ async function generateEnrollmentPDF(orderData, userData) {
         // Add name and designation
         doc
           .moveDown(2)
+          .fontSize(13)
           .text("Shivam Rai,", { align: "left" })
           .text("CEO", { align: "left" });
 
@@ -147,29 +152,46 @@ async function generateEnrollmentPDF(orderData, userData) {
         });
 
         // Move down after signature and stamp
-        doc.moveDown(8);
+        doc.moveDown(5);
 
         // Add certification logos
-        const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+        const pageWidth =
+          doc.page.width - doc.page.margins.left - doc.page.margins.right;
         const logoWidth = 100;
         const logoHeight = 50;
         const logoSpacing = 20;
         const totalLogosWidth = logoWidth * 4 + logoSpacing * 3;
-        const startX = doc.page.margins.left + (pageWidth - totalLogosWidth) / 2;
+        const startX =
+          doc.page.margins.left + (pageWidth - totalLogosWidth) / 2;
         const logoY = doc.y;
 
         // Add certification logos with uniform size
         const certLogoOptions = {
           width: logoWidth,
           height: logoHeight,
-          align: 'center',
-          valign: 'center'
+          align: "center",
+          valign: "center",
         };
 
         safelyAddImage(startupBuffer, startX, logoY, certLogoOptions);
-        safelyAddImage(msmeBuffer, startX + logoWidth + logoSpacing, logoY, certLogoOptions);
-        safelyAddImage(governmentBuffer, startX + (logoWidth + logoSpacing) * 2, logoY, certLogoOptions);
-        safelyAddImage(isoBuffer, startX + (logoWidth + logoSpacing) * 3, logoY, certLogoOptions);
+        safelyAddImage(
+          msmeBuffer,
+          startX + logoWidth + logoSpacing,
+          logoY,
+          certLogoOptions
+        );
+        safelyAddImage(
+          governmentBuffer,
+          startX + (logoWidth + logoSpacing) * 2,
+          logoY,
+          certLogoOptions
+        );
+        safelyAddImage(
+          isoBuffer,
+          startX + (logoWidth + logoSpacing) * 3,
+          logoY,
+          certLogoOptions
+        );
 
         // Move down for contact section with increased margin
         doc.moveDown(5);

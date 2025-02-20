@@ -152,7 +152,7 @@ export default function Internships() {
                         {domain.logos?.slice(0, 2).map((logo, index) => (
                           <div
                             key={index}
-                            className="w-16 h-16 relative overflow-hidden rounded-full border border-gray-200 bg-white"
+                            className="w-16 h-16 relative overflow-hidden rounded-full"
                           >
                             <img
                               src={logo || "/placeholder.svg"}
