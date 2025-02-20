@@ -132,19 +132,37 @@ export default function Internships() {
 
                   {/* Card Content */}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3">{domain.title}</h3>
+                    <div className="flex">
+                      <h3 className="text-xl font-bold mb-3">{domain.title}</h3>
+                    </div>
                     <p className="text-gray-600 text-sm mb-4">
                       {domain.description}
                     </p>
-                    <button
-                      className={`px-6 py-2 rounded-full text-sm font-medium text-white transition-all duration-300 ${
-                        hoveredCard === domain.id
-                          ? "bg-blue-600 hover:bg-blue-700"
-                          : "bg-blue-500"
-                      }`}
-                    >
-                      Register Now
-                    </button>
+                    <div className="flex justify-between items-center">
+                      <button
+                        className={`px-6 py-2 rounded-full text-sm font-medium text-white transition-all duration-300 ${
+                          hoveredCard === domain.id
+                            ? "bg-blue-600 hover:bg-blue-700"
+                            : "bg-blue-500 hover:bg-blue-600"
+                        }`}
+                      >
+                        Register Now
+                      </button>
+                      <div className="flex gap-3">
+                        {domain.logos?.slice(0, 2).map((logo, index) => (
+                          <div
+                            key={index}
+                            className="w-16 h-16 relative overflow-hidden rounded-full border border-gray-200 bg-white"
+                          >
+                            <img
+                              src={logo || "/placeholder.svg"}
+                              alt={`Logo ${index + 1}`}
+                              className="absolute inset-0 w-full h-full object-contain p-1"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Hover Effect Overlay */}

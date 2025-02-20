@@ -1154,7 +1154,8 @@ export const internshipData = [
     bgColor: "bg-blue-50",
     iconBg: "bg-blue-500",
     hoverColor: "hover:bg-blue-100",
-    image: internImages.intern1,
+    image: internImages[0].internImage,
+    logos: internImages[0].logo0,
 
     category: "Technology",
 
@@ -1225,7 +1226,8 @@ export const internshipData = [
     bgColor: "bg-gray-50",
     iconBg: "bg-gray-800",
     hoverColor: "hover:bg-gray-100",
-    image: internImages.intern2,
+    image: internImages[1].internImage,
+    logos: internImages[1].logo1,
 
     category: "Technology",
 
@@ -1296,7 +1298,8 @@ export const internshipData = [
     bgColor: "bg-purple-50",
     iconBg: "bg-purple-600",
     hoverColor: "hover:bg-purple-100",
-    image: internImages.intern3,
+    image: internImages[2].internImage,
+    logos: internImages[2].logo2,
 
     category: "Technology",
 
@@ -1367,7 +1370,8 @@ export const internshipData = [
     bgColor: "bg-cyan-50",
     iconBg: "bg-cyan-600",
     hoverColor: "hover:bg-cyan-100",
-    image: internImages.intern4,
+    image: internImages[3].internImage,
+    logos:internImages[3].logo3,
     category: "Technology",
 
     title_: "Data Analytics Internship",
@@ -1437,7 +1441,8 @@ export const internshipData = [
     bgColor: "bg-blue-50",
     iconBg: "bg-blue-600",
     hoverColor: "hover:bg-blue-100",
-    image: internImages.intern5,
+    image: internImages[4].internImage,
+    logos: internImages[4].logo4,
     category: "Technology",
 
     title_: "Web Developer Internship",
@@ -1507,7 +1512,8 @@ export const internshipData = [
     bgColor: "bg-indigo-50",
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-indigo-100",
-    image: internImages.intern6,
+    image: internImages[5].internImage,
+    logos: internImages[5].logo5,
     category: "Technology",
 
     title_: "Artieficial Intlligence Internship",
@@ -1577,7 +1583,8 @@ export const internshipData = [
     bgColor: "bg-indigo-50",
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-indigo-100",
-    image: internImages.intern7,
+    image: internImages[6].internImage,
+    logos: internImages[6].logo6,
     category: "Technology",
 
     title_: "Machine Learning Internship",
@@ -1647,7 +1654,8 @@ export const internshipData = [
     bgColor: "bg-indigo-50",
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-blue-100",
-    image: internImages.intern8,
+    image: internImages[7].internImage,
+    logos: internImages[7].logo7,
     category: "Technology",
 
     title_: "Java Programming Internship",
@@ -1717,7 +1725,8 @@ export const internshipData = [
     bgColor: "bg-indigo-50",
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-gray-100",
-    image: internImages.intern9,
+    image: internImages[8].internImage,
+    logos:internImages[8].logo8,
     category: "Technology",
 
     title_: "Full Stack Developer Internship",
@@ -1787,7 +1796,8 @@ export const internshipData = [
     bgColor: "bg-indigo-50",
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-indigo-100",
-    image: internImages.intern10,
+    image: internImages[9].internImage,
+    logos: internImages[9].logo9,
     category: "Technology",
 
     title_: "App Development Internship",
@@ -1857,7 +1867,8 @@ export const internshipData = [
     bgColor: "bg-indigo-50",
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-purple-100",
-    image: internImages.intern11,
+    image: internImages[10].internImage,
+    logos: internImages[10].logo10,
     category: "Technology",
 
     title_: "Data Science Internship",
@@ -1925,7 +1936,8 @@ export const internshipData = [
     description:
       "Design interfaces for live projects,balancing aesthetics and usability, refining user-centered design skills and adapting to project requirements for optimal user experience.",
     hoverColor: "hover:bg-blue-100",
-    image: internImages.intern12,
+    image: internImages[11].internImage,
+    logos: internImages[11].logo11,
     category: "Technology",
 
     title_: "UI/UX Designer Internship",
@@ -1993,7 +2005,8 @@ export const internshipData = [
     description:
       "Address real security challenges, detecting vulnerabilities and implementing countermeasures, developing a proactive mindset and hands-on experience in protecting digital assets",
     hoverColor: "hover:bg-gray-100",
-    image: internImages.intern13,
+    image: internImages[12].internImage,
+    logos: internImages[12].logo12,
     category: "Technology",
 
     title_: "Cybersecurity Internship",
@@ -2061,7 +2074,8 @@ export const internshipData = [
     description:
       "Implement strategies on live campaigns, optimizing SEO, SEM, and social media channels, refining marketing skills and understanding audience engagement for measurable results",
     hoverColor: "hover:bg-blue-100",
-    image: internImages.intern14,
+    image: internImages[13].internImage,
+    logos: internImages[13].logo13,
     category: "Technology",
 
     title_: "Digital Marketing Internship",
@@ -2129,7 +2143,8 @@ export const internshipData = [
     description:
       "Hone your writing skills through real-world projects, crafting compelling content across various platforms. Learn industry standards, techniques, and strategies for effective communication and engagement",
     hoverColor: "hover:bg-gray-100",
-    image: internImages.intern15,
+    image: internImages[14].internImage,
+    logos: internImages[14].logo14,
     category: "Technology",
 
     title_: "Content Writing Internship",
@@ -2197,7 +2212,8 @@ export const internshipData = [
     description:
       "Immerse yourself in the world of WordPress, tackling real projects to master customization, plugin development, and advanced techniques. Elevate skills with industry-relevant experience and expert guidance",
     hoverColor: "hover:bg-purple-100",
-    image: internImages.intern16,
+    image: internImages[15].internImage,
+    logos: internImages[15].logo15,
     category: "Technology",
 
     title_: "WordPress Internship",
