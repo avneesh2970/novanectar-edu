@@ -994,7 +994,7 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 1,
+    price: 4999,
     regularPrice: 11999,
   },
 ];
