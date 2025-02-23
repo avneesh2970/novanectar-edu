@@ -242,17 +242,17 @@ async function generateEnrollmentPDF(orderData, userData) {
       );
 
       // ============= CERTIFICATION LOGOS SECTION =============
-      doc.moveDown(3);
+      doc.moveDown(1);
 
       // Add a border for certification section
       const certSectionY = doc.y;
-      doc
-        .roundedRect(doc.page.margins.left, certSectionY - 5, pageWidth, 70, 3)
-        .fillAndStroke("#F8F9FA", "#E0E0E0");
+      // doc
+      //   .roundedRect(doc.page.margins.left, certSectionY - 5, pageWidth, 70, 3)
+      //   .fillAndStroke("#F8F9FA", "#E0E0E0");
 
       const logoY = certSectionY + 20;
-      const logoWidth = 80;
-      const logoHeight = 40;
+      const logoWidth = 100;
+      const logoHeight = 60;
       const logoSpacing = 30;
       const totalLogosWidth = logoWidth * 4 + logoSpacing * 3;
       const startX = doc.page.margins.left + (pageWidth - totalLogosWidth) / 2;
