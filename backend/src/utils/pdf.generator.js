@@ -25,6 +25,10 @@ async function generateEnrollmentPDF(orderData, userData) {
         msmeBuffer,
         governmentBuffer,
         isoBuffer,
+        addressIconBuffer,
+        emailIconBuffer,
+        phoneIconBuffer,
+        websiteIconBuffer,
       ] = await Promise.all([
         getImageBuffer("https://novanectar.co.in/logo.png"),
         getImageBuffer("https://edu.novanectar.co.in/signature.png"),
@@ -33,6 +37,10 @@ async function generateEnrollmentPDF(orderData, userData) {
         getImageBuffer("https://edu.novanectar.co.in/msme.png"),
         getImageBuffer("https://edu.novanectar.co.in/government.png"),
         getImageBuffer("https://edu.novanectar.co.in/iso.png"),
+        getImageBuffer("https://edu.novanectar.co.in/location.png"),
+        getImageBuffer("https://edu.novanectar.co.in/email.png"),
+        getImageBuffer("https://edu.novanectar.co.in/phone.png"),
+        getImageBuffer("https://edu.novanectar.co.in/website.png"),
       ]);
 
       // Create PDF with improved margins and metadata
@@ -301,34 +309,63 @@ async function generateEnrollmentPDF(orderData, userData) {
       doc.font("Helvetica").fontSize(9).fillColor("#000000");
       // Format contact data with icon prefixes
       const contactInfo = [
-        { icon: "Address:", text: "GMS Road Dehradun, Uttarakhand, India" },
-        { icon: "Email:", text: "internship@novanectar.co.in" },
-        { icon: "Website:", text: "www.novanectar.co.in" },
-        { icon: "Phone:", text: "8979891703 / 8979891705" },
+        {
+          icon: addressIconBuffer,
+          text: "GMS Road Dehradun, Uttarakhand, India",
+        },
+        { icon: emailIconBuffer, text: "internship@novanectar.co.in" },
+        { icon: websiteIconBuffer, text: "www.novanectar.co.in" },
+        { icon: phoneIconBuffer, text: "8979891703 / 8979891705" },
       ];
 
       // Two-column layout for contact information
       const colWidth = pageWidth / 2;
       const col1X = doc.page.margins.left;
       const col2X = doc.page.margins.left + colWidth;
+      const iconSize = 12;
+      const iconTextGap = 5;
 
       // First column
-      // First column
-      doc
-        .text(contactInfo[0].icon, col1X, footerY + 5, { continued: true })
-        .text(` ${contactInfo[0].text}`, { continued: false });
-      doc
-        .text(contactInfo[1].icon, col1X, footerY + 20, { continued: true })
-        .text(` ${contactInfo[1].text}`, { continued: false });
+      safelyAddImage(contactInfo[0].icon, col1X, footerY + 5, {
+        width: iconSize,
+        height: iconSize,
+      });
+      doc.text(
+        contactInfo[0].text,
+        col1X + iconSize + iconTextGap,
+        footerY + 5
+      );
+
+      safelyAddImage(contactInfo[1].icon, col1X, footerY + 20, {
+        width: iconSize,
+        height: iconSize,
+      });
+      doc.text(
+        contactInfo[1].text,
+        col1X + iconSize + iconTextGap,
+        footerY + 20
+      );
 
       // Second column
-      doc
-        .text(contactInfo[2].icon, col2X, footerY + 5, { continued: true })
-        .text(` ${contactInfo[2].text}`, { continued: false });
-      doc
-        .text(contactInfo[3].icon, col2X, footerY + 20, { continued: true })
-        .text(` ${contactInfo[3].text}`, { continued: false });
+      safelyAddImage(contactInfo[2].icon, col2X, footerY + 5, {
+        width: iconSize,
+        height: iconSize,
+      });
+      doc.text(
+        contactInfo[2].text,
+        col2X + iconSize + iconTextGap,
+        footerY + 5
+      );
 
+      safelyAddImage(contactInfo[3].icon, col2X, footerY + 20, {
+        width: iconSize,
+        height: iconSize,
+      });
+      doc.text(
+        contactInfo[3].text,
+        col2X + iconSize + iconTextGap,
+        footerY + 20
+      );
       doc.end();
     } catch (error) {
       console.error("Error in PDF generation:", error);
