@@ -5,6 +5,13 @@ export default function PaymentSuccess() {
   const location = useLocation();
   const paymentData = location.state;
   const navigate = useNavigate();
+  
+  function generateInvoiceNumber() {
+    const randomNum = Math.floor(Math.random() * 1000); // Generates a number between 0 and 999
+    const formattedNum = String(randomNum).padStart(3, "0"); // Ensures it's always three digits
+    return `INV-2025-${formattedNum}`;
+  }
+  console.log("paymentData: ", paymentData);
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-blue-400">
       <div className="text-center bg-white shadow-lg rounded-lg p-6 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 animate-fade-in">
@@ -39,7 +46,7 @@ export default function PaymentSuccess() {
         <CourseInvoice
           courseData={paymentData?.courseData}
           billingDetails={paymentData?.billingDetails}
-          invoiceNumber="INV-2024-001"
+          invoiceNumber={generateInvoiceNumber()}
           purchaseDate={new Date().toLocaleDateString()}
         />
         <button

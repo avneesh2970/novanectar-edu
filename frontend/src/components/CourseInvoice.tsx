@@ -11,10 +11,7 @@ const safeText = (text: any): string => {
 
 // Utility function to format currency
 const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('en-IN', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
+  return `${amount.toLocaleString('en-IN')} Rs`;
 };
 
 const CourseInvoice: React.FC<any> = ({
@@ -95,9 +92,9 @@ const CourseInvoice: React.FC<any> = ({
     });
 
   // Calculate Totals
-  const subtotal = amount;
-  const gst = subtotal * 0.18; // 18% GST
-  const total = subtotal + gst;
+  // const subtotal = amount;
+  // const gst = subtotal * 0.18; 
+  // const total = subtotal + gst;
   
   // Add Totals
   const startY = (doc as any).lastAutoTable.finalY + 10;
@@ -105,9 +102,7 @@ const CourseInvoice: React.FC<any> = ({
   autoTable(doc, {
     startY: startY,
     body: [
-      ['Subtotal', `₹${formatCurrency(subtotal)}`],
-      ['GST (18%)', `₹${formatCurrency(gst)}`],
-      ['Total', `₹${formatCurrency(total)}`]
+      ['Total (including GST)', formattedAmount]
     ],
     theme: 'plain',
     styles: { fontSize: 10 },

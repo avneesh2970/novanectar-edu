@@ -164,7 +164,7 @@ async function generateEnrollmentPDF(orderData, userData) {
 
       doc
         .font("Helvetica-Bold")
-        .fillColor("#16A085")
+        .fillColor("#0000FF")
         .text(`${orderData?.courseName}`, { continued: true });
 
       doc
@@ -200,7 +200,7 @@ async function generateEnrollmentPDF(orderData, userData) {
 
       doc
         .font("Helvetica-Bold")
-        .fillColor("#16A085")
+        .fillColor("#0000FF")
         .text("Novanectar Services Private Limited", { continued: true });
 
       doc
