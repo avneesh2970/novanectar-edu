@@ -85,16 +85,28 @@ const InternshipDetail = () => {
 
   const handleSelectedInternship = (month: any) => {
     // if (isAuthenticated) {
-      setSelectedDuration(month);
-      setIsEnrollModalOpen(true);
+    setSelectedDuration(month);
+    setIsEnrollModalOpen(true);
     // } else {
-      // toast.error("please log in first to enroll");
+    // toast.error("please log in first to enroll");
     // }
   };
 
   const internship = internshipData.find(
     (course) => course.id === internshipId
   );
+
+  if (internship) {
+    if (selectedDuration == "1") {
+      internship.price = 99;
+    } else if (selectedDuration == "3") {
+      internship.price = 299;
+    } else if (selectedDuration == "6") {
+      internship.price = 699;
+    }
+  }
+  console.log("internship", internship);
+
   // internshipData.find((intern) => {
   //   console.log("test", intern.id);
   //   console.log("testpp", internshipId);

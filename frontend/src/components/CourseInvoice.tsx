@@ -11,7 +11,10 @@ const safeText = (text: any): string => {
 
 // Utility function to format currency
 const formatCurrency = (amount: number): string => {
-  return `${amount.toLocaleString('en-IN')} Rs`;
+  return `Rs ${amount.toLocaleString("en-IN", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })}`;
 };
 
 const CourseInvoice: React.FC<any> = ({
@@ -70,12 +73,12 @@ const CourseInvoice: React.FC<any> = ({
     const formattedAmount = formatCurrency(amount);
 
     const courseDetails = [
-      ['Description', 'Duration', 'Amount'],
+      ["Description", "Duration", "Amount"],
       [
-        courseData?.title_ || courseData?.title || 'Course',
-        courseData?.duration || '',
-        `₹${formattedAmount}`
-      ]
+        courseData?.title_ || courseData?.title || "Course",
+        courseData?.duration || "",
+        `${formattedAmount}`,
+      ],
     ];
 
     autoTable(doc, {
@@ -91,26 +94,24 @@ const CourseInvoice: React.FC<any> = ({
       },
     });
 
-  // Calculate Totals
-  // const subtotal = amount;
-  // const gst = subtotal * 0.18; 
-  // const total = subtotal + gst;
-  
-  // Add Totals
-  const startY = (doc as any).lastAutoTable.finalY + 10;
+    // Calculate Totals
+    // const subtotal = amount;
+    // const gst = subtotal * 0.18;
+    // const total = subtotal + gst;
 
-  autoTable(doc, {
-    startY: startY,
-    body: [
-      ['Total (including GST)', formattedAmount]
-    ],
-    theme: 'plain',
-    styles: { fontSize: 10 },
-    columnStyles: {
-      0: { cellWidth: 140 },
-      1: { cellWidth: 50, halign: 'right' }
-    }
-  });
+    // Add Totals
+    const startY = (doc as any).lastAutoTable.finalY + 10;
+
+    autoTable(doc, {
+      startY: startY,
+      body: [["Total (including GST)", formattedAmount]],
+      theme: "plain",
+      styles: { fontSize: 10 },
+      columnStyles: {
+        0: { cellWidth: 140 },
+        1: { cellWidth: 50, halign: "right" },
+      },
+    });
 
     // Terms and Conditions
     const termsY = (doc as any).lastAutoTable.finalY + 20;

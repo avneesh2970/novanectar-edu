@@ -220,33 +220,79 @@ const verifyPayment = async (req, res) => {
           updatedUser
         );
 
-        // Send email with new utility
-        await sendEmail(
-          updatedUser?.email || email,
-          `${updatedOrder.orderType} enrollment confirmation`,
-          `
-                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h1 style="color: #333;">Thank you for your enrollment!</h1>
-                    <h2 style="color: #0066cc;">Congratulations! 🎉</h2>
-                    <p>You have successfully enrolled in ${updatedOrder.courseTitle}.</p>
-                    <p>Your Enrollment ID: <strong>${updatedOrder.courseId}</strong></p>
-                    <hr style="border: 1px solid #eee;">
-                    <p style="color: #666;">If you have any questions, please contact us at:</p>
-                    <p><a href="mailto:info@novanectar.co.in">info@novanectar.co.in</a></p>
-                    <div style="margin-top: 30px;">
-                      <p>Best Regards,</p>
-                      <p><strong>Novanectar Team</strong></p>
+        if (updatedOrder.orderType !== "course") {
+          // Send email with new utility
+          await sendEmail(
+            updatedUser?.email || email,
+            `${updatedOrder.orderType} Enrollment Confirmation 🎉`,
+            `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+                <h1 style="color: #0066cc;">🎉 Congratulations! 🎉</h1>        
+                <p>We are pleased to inform you that you have been selected for the <strong>NovaNectar Services Pvt. Ltd. Internship Program</strong>! 🚀</p>
+                <p>Kindly check the attached <strong>Offer Letter</strong> for further details.</p>
+                <p><strong>Tasks will be assigned to you soon.</strong></p>
+        
+                <h3>📌 Internship Guidelines:</h3>
+                <ul>
+                    <li><strong>LinkedIn Update:</strong> Update your LinkedIn profile and share your achievements (Offer Letter/Internship Completion Certificate). Tag <strong>@NovaNectar Services Pvt. Ltd.</strong> and use relevant hashtags: <strong>#NovaNectarServices</strong>.</li>
+                    <li><strong>Task Completion Video:</strong> Share a proper video of the completed task on LinkedIn, tag <strong>@NovaNectar Services Pvt. Ltd.</strong>, and use relevant hashtags.</li>
+                    <li><strong>GitHub Repository:</strong> Create a separate repository for each completed task. Upload all relevant files and share the link in your LinkedIn post and in the task completion form (to be shared later via email).</li>
+                </ul>
+        
+                <h3 style="color: red;">⚠️ Important Notes:</h3>
+                <ul>
+                    <li>Failure to submit the <strong>elementary task</strong> will result in the <strong>cancellation of your internship</strong>.</li>
+                    <li>Failure to complete any task will be considered an <strong>incomplete internship</strong>, and the certificate will not be issued.</li>
+                    <li>Only candidates who complete all tasks within the given timeframe will receive the <strong>Internship Completion Certificate</strong>.</li>
+                </ul>
+        
+                <hr style="border: 1px solid #eee; margin: 20px 0;">
+        
+                <p style="color: #666;">If you have any questions, feel free to contact us at:</p>
+                <p><a href="mailto:info@novanectar.co.in" style="color: #0066cc;">info@novanectar.co.in</a></p>
+        
+                <div style="margin-top: 30px;">
+                    <p>Best Regards,</p>
+                    <p><strong>NovaNectar Team</strong></p>
+                </div>
+            </div>
+            `,
+            [
+              {
+                filename: "Offer_Letter.pdf",
+                content: pdfBuffer,
+                contentType: "application/pdf",
+              },
+            ]
+          );
+        } else {
+          await sendEmail(
+            updatedUser?.email || email,
+            `${updatedOrder.orderType} enrollment confirmation`,
+            `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                      <h1 style="color: #333;">Thank you for your enrollment!</h1>
+                      <h2 style="color: #0066cc;">Congratulations! 🎉</h2>
+                      <p>You have successfully enrolled in ${updatedOrder.courseTitle}.</p>
+                      <p>Your Enrollment ID: <strong>${updatedOrder.courseId}</strong></p>
+                      <hr style="border: 1px solid #eee;">
+                      <p style="color: #666;">If you have any questions, please contact us at:</p>
+                      <p><a href="mailto:info@novanectar.co.in">info@novanectar.co.in</a></p>
+                      <div style="margin-top: 30px;">
+                        <p>Best Regards,</p>
+                        <p><strong>Novanectar Team</strong></p>
+                      </div>
                     </div>
-                  </div>
-                  `,
-          [
-            {
-              filename: "enrollment-confirmation.pdf",
-              content: pdfBuffer,
-              contentType: "application/pdf",
-            },
-          ]
-        );
+                    `,
+            [
+              {
+                filename: "enrollment-confirmation.pdf",
+                content: pdfBuffer,
+                contentType: "application/pdf",
+              },
+            ]
+          );
+        }
       }
       res.json({ success: true });
     } else {

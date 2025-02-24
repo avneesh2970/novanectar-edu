@@ -156,7 +156,7 @@ async function generateEnrollmentPDF(orderData, userData) {
 
       doc
         .text(
-          `Congratulations! We are pleased to offer you offline ${orderData.orderType}, for the role of `,
+          `Congratulations! We are pleased to offer you online ${orderData.orderType}, for the role of `,
           doc.page.margins.left,
           doc.y,
           { continued: true }
