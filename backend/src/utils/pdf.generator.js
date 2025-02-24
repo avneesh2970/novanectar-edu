@@ -36,7 +36,8 @@ async function generateEnrollmentPDF(orderData, userData) {
         getImageBuffer("https://edu.novanectar.co.in/startup.png"),
         getImageBuffer("https://edu.novanectar.co.in/msme.png"),
         getImageBuffer("https://edu.novanectar.co.in/government.png"),
-        getImageBuffer("https://edu.novanectar.co.in/iso.png"),
+        // getImageBuffer("https://edu.novanectar.co.in/iso.png"),
+        getImageBuffer("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/ISO_9001-2015.svg/1200px-ISO_9001-2015.svg.png"),
         getImageBuffer("https://edu.novanectar.co.in/location.png"),
         getImageBuffer("https://edu.novanectar.co.in/email.png"),
         getImageBuffer("https://edu.novanectar.co.in/phone.png"),
@@ -164,7 +165,7 @@ async function generateEnrollmentPDF(orderData, userData) {
 
       doc
         .font("Helvetica-Bold")
-        .fillColor("#0000FF")
+        .fillColor("#51BDF9")
         .text(`${orderData?.courseName}`, { continued: true });
 
       doc
@@ -200,7 +201,7 @@ async function generateEnrollmentPDF(orderData, userData) {
 
       doc
         .font("Helvetica-Bold")
-        .fillColor("#0000FF")
+        .fillColor("#51BDF9")
         .text("Novanectar Services Private Limited", { continued: true });
 
       doc
