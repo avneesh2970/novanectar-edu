@@ -249,7 +249,7 @@ const verifyPayment = async (req, res) => {
                 <hr style="border: 1px solid #eee; margin: 20px 0;">
         
                 <p style="color: #666;">If you have any questions, feel free to contact us at:</p>
-                <p><a href="mailto:info@novanectar.co.in" style="color: #0066cc;">info@novanectar.co.in</a></p>
+                <p><a href="mailto:internship@novanectar.co.in" style="color: #0066cc;">internship@novanectar.co.in</a></p>
         
                 <div style="margin-top: 30px;">
                     <p>Best Regards,</p>
@@ -270,27 +270,39 @@ const verifyPayment = async (req, res) => {
             updatedUser?.email || email,
             `${updatedOrder.orderType} enrollment confirmation`,
             `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                      <h1 style="color: #333;">Thank you for your enrollment!</h1>
-                      <h2 style="color: #0066cc;">Congratulations! 🎉</h2>
-                      <p>You have successfully enrolled in ${updatedOrder.courseTitle}.</p>
-                      <p>Your Enrollment ID: <strong>${updatedOrder.courseId}</strong></p>
-                      <hr style="border: 1px solid #eee;">
-                      <p style="color: #666;">If you have any questions, please contact us at:</p>
-                      <p><a href="mailto:info@novanectar.co.in">info@novanectar.co.in</a></p>
-                      <div style="margin-top: 30px;">
-                        <p>Best Regards,</p>
-                        <p><strong>Novanectar Team</strong></p>
-                      </div>
-                    </div>
-                    `,
-            [
-              {
-                filename: "enrollment-confirmation.pdf",
-                content: pdfBuffer,
-                contentType: "application/pdf",
-              },
-            ]
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+    <h1 style="color: #0066cc;">🎉 Congratulations! 🎉</h1>        
+    <p>We are thrilled to welcome you to <strong>${updatedOrder.courseTitle}</strong> at <strong>NovaNectar Services Private Limited</strong>! 🚀</p>
+    
+    <p>This course is designed to provide you with valuable knowledge and skills, and we are confident that you will have an enriching and rewarding experience.</p>
+
+    <h3>📌 What to Expect:</h3>
+    <ul>
+        <li><strong>Comprehensive Learning:</strong> Engage in structured lessons and hands-on exercises tailored to enhance your skills.</li>
+        <li><strong>Support & Guidance:</strong> Our team is here to assist you throughout the course whenever needed.</li>
+        <li><strong>Exciting Opportunities:</strong> Apply your learning to real-world projects and build a strong foundation for your career.</li>
+    </ul>
+
+    <h3 style="color: red;">⚠️ Important Notes:</h3>
+    <ul>
+        <li>Stay committed and complete all modules within the given timeframe.</li>
+        <li>Make sure to participate actively in discussions and assignments.</li>
+        <li>Upon successful completion, you will receive a <strong>Certificate of Completion</strong>.</li>
+    </ul>
+
+    <hr style="border: 1px solid #eee; margin: 20px 0;">
+
+    <p style="color: #666;">If you have any questions or need assistance, feel free to contact us at:</p>
+    <p><a href="mailto:info@novanectar.co.in" style="color: #0066cc;">info@novanectar.co.in</a></p>
+
+    <div style="margin-top: 30px;">
+        <p>We’re excited to have you on board and look forward to seeing you succeed! 🚀</p>
+        <p><strong>Best Regards,</strong></p>
+        <p><strong>NovaNectar Team</strong></p>
+    </div>
+</div>
+
+                    `
           );
         }
       }
