@@ -251,6 +251,21 @@ const verifyPayment = async (req, res) => {
                 <p style="color: #666;">If you have any questions, feel free to contact us at:</p>
                 <p><a href="mailto:internship@novanectar.co.in" style="color: #0066cc;">internship@novanectar.co.in</a></p>
         
+              <div style="text-align: center; margin-top: 20px;">
+                  <p style="font-size: 16px;"><strong>Follow us on:</strong></p>
+                  <a href="https://www.facebook.com/share/a6ob9vX4d6uEAd3B/?mibextid=qi2Omg" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="30" style="vertical-align: middle;">
+                  </a>
+                  <a href="https://youtube.com/@novanectarservicespvt.ltd.?si=NVJY1MQc_NfoVoSi" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube" width="30" style="vertical-align: middle;">
+                  </a>
+                  <a href="https://www.linkedin.com/company/novanectar/" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="30" style="vertical-align: middle;">
+                  </a>
+                  <a href="https://www.instagram.com/novanectar_services_pvt.ltd?igsh=MXRoaHN3MGM5czYxZw==" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="30" style="vertical-align: middle;">
+                  </a>
+              </div>
                 <div style="margin-top: 30px;">
                     <p>Best Regards,</p>
                     <p><strong>NovaNectar Team</strong></p>
@@ -300,9 +315,22 @@ const verifyPayment = async (req, res) => {
         <p><strong>Best Regards,</strong></p>
         <p><strong>NovaNectar Team</strong></p>
     </div>
-</div>
-
-                    `
+    <div style="text-align: center; margin-top: 20px;">
+                  <p style="font-size: 16px;"><strong>Follow us on:</strong></p>
+                  <a href="https://www.facebook.com/share/a6ob9vX4d6uEAd3B/?mibextid=qi2Omg" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="30" style="vertical-align: middle;">
+                  </a>
+                  <a href="https://youtube.com/@novanectarservicespvt.ltd.?si=NVJY1MQc_NfoVoSi" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube" width="30" style="vertical-align: middle;">
+                  </a>
+                  <a href="https://www.linkedin.com/company/novanectar/" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="30" style="vertical-align: middle;">
+                  </a>
+                  <a href="https://www.instagram.com/novanectar_services_pvt.ltd?igsh=MXRoaHN3MGM5czYxZw==" target="_blank" style="margin: 0 10px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="30" style="vertical-align: middle;">
+                  </a>
+              </div>
+</div>                   `
           );
         }
       }
