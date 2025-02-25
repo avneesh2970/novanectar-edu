@@ -151,7 +151,7 @@ export default function EnrollmentModal({
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
-                  email:formData.email,
+                  email: formData.email,
                 }),
               }
             );
@@ -164,7 +164,7 @@ export default function EnrollmentModal({
             onClose();
             navigate("/payment/success");
             const paymentData = {
-              courseData: {...course, id:data.courseId},
+              courseData: { ...course, id: data.courseId },
               billingDetails: formData,
               invoiceNumber: "INV-2024-001",
               purchaseDate: new Date().toLocaleDateString(),
@@ -315,6 +315,13 @@ export default function EnrollmentModal({
               </button>
             </div>
           </form>
+
+          <div className="mt-4 text-sm text-gray-600">
+            18% GST will include.{" "}
+            <span className="font-semibold">
+              Total Price: {course.price} INR
+            </span>
+          </div>
         </div>
 
         {error && <div className="text-red-600 mb-4">{error}</div>}

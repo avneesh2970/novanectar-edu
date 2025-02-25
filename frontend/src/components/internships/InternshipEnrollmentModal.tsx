@@ -176,6 +176,7 @@ const InternshipEnrollmentModal = ({
         order_id: data.orderId,
         notes: data.notes,
         handler: async function (response: any) {
+          console.log("Payment response:", response);
           try {
             // Verify payment
             const verifyResponse = await fetch(
@@ -193,7 +194,7 @@ const InternshipEnrollmentModal = ({
                 }),
               }
             );
-
+            console.log("verifyResponse: ", verifyResponse);
             if (!verifyResponse.ok) {
               throw new Error("Payment verification failed");
             }
@@ -207,6 +208,7 @@ const InternshipEnrollmentModal = ({
               invoiceNumber: "INV-2024-001",
               purchaseDate: new Date().toLocaleDateString(),
             };
+            console.log("lets navigate to downl")
             navigate("/payment/success", { state: paymentData });
           } catch (error) {
             console.error("Payment verification error:", error);

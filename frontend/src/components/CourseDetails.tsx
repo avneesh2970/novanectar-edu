@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/CourseDetails.tsx
 import { useParams, useNavigate } from "react-router-dom";
 import { coursesCards } from "../data/courses";
@@ -29,14 +30,22 @@ export default function CourseDetails() {
 
   const handleEnrollmentModal = () => {
     // if (isAuthenticated) {
-      setIsEnrollModalOpen(true);
+    setIsEnrollModalOpen(true);
     // } else {
-      // toast.error("please log in first");
+    // toast.error("please log in first");
     // }
   };
 
   // const course = coursesCards.find((course) => course.id === courseId) as Course;
-  const course = coursesCards.find((course) => course.id === courseId);
+  const course: any = coursesCards.find((course) => course.id === courseId);
+
+  let updatedCourse:any = null;
+
+  if (course) {
+    updatedCourse = { ...course, price: Math.round(course.price * 1.18) };
+  }
+  console.log("Updated course:", updatedCourse);
+
   if (!course) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -59,7 +68,7 @@ export default function CourseDetails() {
         <h1 className="text-3xl font-semibold mb-4">{course.title_}</h1>
         <p className="text-gray-600 mb-6 text-sm">{course.description_}</p>
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {course.features.map((feature, index) => (
+          {updatedCourse.features.map((feature:any, index:any) => (
             <p key={index} className="text-sm text-gray-700 flex items-center">
               ✅ {feature}
             </p>
@@ -68,17 +77,17 @@ export default function CourseDetails() {
         <div className="p-4 rounded-lg mb-6">
           <h2 className="text-lg font-semibold mb-2">This Course Includes:</h2>
           <ul className="text-gray-700 text-sm">
-            <li>🎥 {course.courseIncludes.videoHours}</li>
-            <li>📚 {course.courseIncludes.resources}</li>
-            <li>💻 {course.courseIncludes.codingExercises}</li>
-            <li>📰 {course.courseIncludes.articles}</li>
-            <li>🏆 {course.courseIncludes.certificate}</li>
-            <li>📱 {course.courseIncludes.access}</li>
+            <li>🎥 {updatedCourse.courseIncludes.videoHours}</li>
+            <li>📚 {updatedCourse.courseIncludes.resources}</li>
+            <li>💻 {updatedCourse.courseIncludes.codingExercises}</li>
+            <li>📰 {updatedCourse.courseIncludes.articles}</li>
+            <li>🏆 {updatedCourse.courseIncludes.certificate}</li>
+            <li>📱 {updatedCourse.courseIncludes.access}</li>
           </ul>
           <div className="pt-6 font-semibold text-gray-700 text-lg flex items-center">
             <span className="mr-2">Price:</span>
             <span className="text-green-600 text-xl font-bold">
-              {course.price} Rs
+              {course.price} Rs + GST
             </span>
           </div>
         </div>
@@ -92,36 +101,36 @@ export default function CourseDetails() {
         <EnrollmentModal
           isOpen={isEnrollModalOpen}
           onClose={() => setIsEnrollModalOpen(false)}
-          course={course}
+          course={updatedCourse}
         />
         <div className="flex justify-between text-sm text-gray-900 max-w-lg mb-6">
           <p className="font-semibold text-balck">
             Number of learners:{" "}
-            <span className="block">{course.stats.learners}</span>
+            <span className="block">{updatedCourse.stats.learners}</span>
           </p>
           <p className="font-semibold text-balck">
             Hands-on practices:{" "}
-            <span className="block">{course.stats.practices}</span>
+            <span className="block">{updatedCourse.stats.practices}</span>
           </p>
           <p className="font-semibold text-balck">
-            Rating: <span className="block">{course.stats.rating} ⭐</span>
+            Rating: <span className="block">{updatedCourse.stats.rating} ⭐</span>
           </p>
         </div>
         <div>
           <div className="max-w-4xl mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Course Content</h1>
             <p className="mb-4 text-gray-600">
-              {course.content.length} sections ·{" "}
-              {course.content.reduce((total, item) => total + item.lectures, 0)}{" "}
+              {updatedCourse.content.length} sections ·{" "}
+              {updatedCourse.content.reduce((total:any, item:any) => total + item.lectures, 0)}{" "}
               lectures ·{" "}
-              {course.content.reduce((total, item) => {
+              {updatedCourse.content.reduce((total:any, item:any) => {
                 const [hours, minutes] = item.duration.split(" ").map(Number);
                 return total + (hours * 60 + minutes);
               }, 0)}{" "}
               minutes total length
             </p>
             <div className="bg-white shadow rounded-lg divide-y">
-              {course.content.map((section, index) => (
+              {updatedCourse.content.map((section:any, index:any) => (
                 <div key={index}>
                   <div
                     className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100"
@@ -137,7 +146,7 @@ export default function CourseDetails() {
                   </div>
                   {openSections[index] && (
                     <ul className="p-4 bg-gray-50">
-                      {section.content.map((lecture, lectureIndex) => (
+                      {section.content.map((lecture:any, lectureIndex:any) => (
                         <li key={lectureIndex} className="py-1 text-gray-600">
                           {lecture}
                         </li>

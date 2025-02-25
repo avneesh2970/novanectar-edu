@@ -69,11 +69,13 @@ const CourseInvoice: React.FC<any> = ({
     }
 
     // Course Details Table
-    const amount = courseData?.price || 0;
-    const formattedAmount = formatCurrency(amount);
+    const totalAmount = courseData?.price || 0;
+    const subtotal = totalAmount / 1.18;
+    const gst = totalAmount - subtotal;
+    const formattedAmount = formatCurrency(totalAmount);
 
     const courseDetails = [
-      ["Description", "Duration", "Amount"],
+      ["Description", "Duration", "Amount (incl. GST)"],
       [
         courseData?.title_ || courseData?.title || "Course",
         courseData?.duration || "",
@@ -104,7 +106,11 @@ const CourseInvoice: React.FC<any> = ({
 
     autoTable(doc, {
       startY: startY,
-      body: [["Total (including GST)", formattedAmount]],
+      body: [
+        ["Subtotal", formatCurrency(subtotal)],
+        ["GST (18%)", formatCurrency(gst)],
+        ["Total", formatCurrency(totalAmount)],
+      ],
       theme: "plain",
       styles: { fontSize: 10 },
       columnStyles: {
