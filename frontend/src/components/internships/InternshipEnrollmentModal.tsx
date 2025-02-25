@@ -124,6 +124,9 @@ const InternshipEnrollmentModal = ({
     throw new Error("Invalid duration");
   }
 
+  const gstRate = 0.18;
+  price = Math.round(price * (1 + gstRate));
+
   const handlePayment = async () => {
     try {
       setIsProcessing(true);
@@ -385,6 +388,12 @@ const InternshipEnrollmentModal = ({
                   Selected Duration:{" "}
                   <span className="font-semibold">
                     {selectedDuration} Month{selectedDuration !== "1" && "s"}
+                  </span>
+                </div>
+                <div className="mt-4 text-sm text-gray-600">
+                  18% GST will include.{" "}
+                  <span className="font-semibold">
+                    Total Price: {price} INR
                   </span>
                 </div>
               </div>

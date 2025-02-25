@@ -147,7 +147,7 @@ async function generateEnrollmentPDF(orderData, userData) {
         .fontSize(13)
         .font("Helvetica-Bold")
         .fillColor("#000000")
-        .text(`Dear ${userData?.firstName || "Sir/Madam"},`, { align: "left" })
+        .text(`Dear ${userData?.firstName || orderData?.name || "Sir/Madam"},`, { align: "left" })
         .moveDown(2);
 
       // ============= CONTENT SECTION =============
