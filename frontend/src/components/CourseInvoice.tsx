@@ -138,9 +138,14 @@ const CourseInvoice: React.FC<any> = ({
 
     // Footer
     doc.setFontSize(8);
+    const pageWidth = doc.internal.pageSize.width; // Get PDF page width
+    const textWidth = doc.getTextWidth(
+      "This is a system-generated invoice and does not required a physical signature."
+    );
+    const xPosition = (pageWidth - textWidth) / 2; // Calculate centered X position
     doc.text(
-      "Thank you for choosing Novanectar for your learning journey!",
-      20,
+      "This is a system-generated invoice and does not required a physical signature.",
+      xPosition, // Dynamically centered X position
       280
     );
 

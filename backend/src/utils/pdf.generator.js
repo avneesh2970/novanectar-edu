@@ -14,6 +14,26 @@ async function getImageBuffer(url) {
   }
 }
 
+function getCommencementDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth(); // 0-based index (0 = Jan, 11 = Dec)
+  const date = today.getDate();
+
+  let commencementDate;
+
+  if (date <= 15) {
+    // If today is on or before the 15th, choose 15th of the current month
+    commencementDate = new Date(year, month, 15);
+  } else {
+    // If today is after the 15th, choose 1st of the next month
+    commencementDate = new Date(year, month + 1, 1);
+  }
+
+  // Format date as DD/MM/YYYY (en-GB format)
+  return commencementDate.toLocaleDateString("en-GB");
+}
+
 async function generateEnrollmentPDF(orderData, userData) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -37,7 +57,9 @@ async function generateEnrollmentPDF(orderData, userData) {
         getImageBuffer("https://edu.novanectar.co.in/msme.png"),
         getImageBuffer("https://edu.novanectar.co.in/government.png"),
         // getImageBuffer("https://edu.novanectar.co.in/iso.png"),
-        getImageBuffer("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/ISO_9001-2015.svg/1200px-ISO_9001-2015.svg.png"),
+        getImageBuffer(
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/ISO_9001-2015.svg/1200px-ISO_9001-2015.svg.png"
+        ),
         getImageBuffer("https://edu.novanectar.co.in/location.png"),
         getImageBuffer("https://edu.novanectar.co.in/email.png"),
         getImageBuffer("https://edu.novanectar.co.in/phone.png"),
@@ -147,7 +169,10 @@ async function generateEnrollmentPDF(orderData, userData) {
         .fontSize(13)
         .font("Helvetica-Bold")
         .fillColor("#000000")
-        .text(`Dear ${userData?.firstName || orderData?.name || "Sir/Madam"},`, { align: "left" })
+        .text(
+          `Dear ${userData?.firstName || orderData?.name || "Sir/Madam"},`,
+          { align: "left" }
+        )
         .moveDown(2);
 
       // ============= CONTENT SECTION =============
@@ -172,9 +197,7 @@ async function generateEnrollmentPDF(orderData, userData) {
         .font("Helvetica")
         .fillColor("#000000")
         .text(
-          `. The date of commencement of your internship is ${new Date().toLocaleDateString(
-            "en-GB"
-          )}.`,
+          `. The date of commencement of your internship is ${getCommencementDate()}.`,
           { align: "left" }
         );
 
