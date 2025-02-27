@@ -159,8 +159,8 @@ async function generateEnrollmentPDF(orderData, userData) {
         .fillColor("#000000")
         .text(
           `Date: ${new Date().toLocaleDateString("en-GB")}`,
-          doc.page.width - doc.page.margins.right - 101,
-          doc.y - 20,
+          doc.page.margins.left,
+          doc.y - 6,
           { align: "right" }
         );
 
