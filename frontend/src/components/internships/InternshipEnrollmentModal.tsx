@@ -119,7 +119,7 @@ const InternshipEnrollmentModal = ({
   } else if (selectedDuration === "1") {
     price = 99;
   } else if (selectedDuration === "6") {
-    price = 1;
+    price = 699;
   } else {
     throw new Error("Invalid duration");
   }
@@ -165,7 +165,7 @@ const InternshipEnrollmentModal = ({
       }
 
       const data = await response.json();
-
+      console.log("data:", data);
       // Initialize Razorpay payment
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -176,7 +176,14 @@ const InternshipEnrollmentModal = ({
         order_id: data.orderId,
         notes: data.notes,
         handler: async function (response: any) {
-          console.log("Payment response:", response);
+          console.log("Full Payment Response:", response);
+
+          if (!response.razorpay_order_id) {
+            console.error("razorpay_order_id is missing!");
+          }
+          if (!response.razorpay_signature) {
+            console.error("razorpay_signature is missing!");
+          }
           try {
             // Verify payment
             const verifyResponse = await fetch(
@@ -187,7 +194,7 @@ const InternshipEnrollmentModal = ({
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_order_id: data.orderId,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
                   email: formData.email,
@@ -201,14 +208,14 @@ const InternshipEnrollmentModal = ({
 
             // Handle successful payment
             setIsEnrollModalOpen();
-            navigate("/payment/success");
+            // navigate("/payment/success");
             const paymentData = {
               courseData: internship,
               billingDetails: formData,
               invoiceNumber: "INV-2024-001",
               purchaseDate: new Date().toLocaleDateString(),
             };
-            console.log("lets navigate to downl")
+            console.log("lets navigate to download");
             navigate("/payment/success", { state: paymentData });
           } catch (error) {
             console.error("Payment verification error:", error);
