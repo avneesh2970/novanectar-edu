@@ -179,7 +179,9 @@ const verifyPayment = async (req, res) => {
       razorpay_signature,
       email,
     } = req.body;
-
+    console.log("razorpay_order_id", razorpay_order_id);
+    console.log("razorpay_payment_id", razorpay_payment_id);
+    console.log("razorpay_signature", razorpay_signature);
     // Verify payment signature
     // const body = razorpay_order_id + "|" + razorpay_payment_id;
     // const expectedSignature = crypto
@@ -267,7 +269,7 @@ const verifyPayment = async (req, res) => {
                 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="30" style="vertical-align: middle;">
                   </a>
                   <a href="https://youtube.com/@novanectarservicespvt.ltd.?si=NVJY1MQc_NfoVoSi" target="_blank" style="margin: 0 10px; text-decoration: none;">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube" width="30" style="vertical-align: middle;">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="30" style="vertical-align: middle;">
                   </a>
                   <a href="https://www.linkedin.com/company/novanectar/" target="_blank" style="margin: 0 10px; text-decoration: none;">
                 <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="30" style="vertical-align: middle;">
@@ -331,7 +333,7 @@ const verifyPayment = async (req, res) => {
                 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="30" style="vertical-align: middle;">
                   </a>
                   <a href="https://youtube.com/@novanectarservicespvt.ltd.?si=NVJY1MQc_NfoVoSi" target="_blank" style="margin: 0 10px; text-decoration: none;">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube" width="30" style="vertical-align: middle;">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="30" style="vertical-align: middle;">
                   </a>
                   <a href="https://www.linkedin.com/company/novanectar/" target="_blank" style="margin: 0 10px; text-decoration: none;">
                 <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="30" style="vertical-align: middle;">

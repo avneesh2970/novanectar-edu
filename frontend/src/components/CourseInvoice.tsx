@@ -107,9 +107,9 @@ const CourseInvoice: React.FC<any> = ({
     autoTable(doc, {
       startY: startY,
       body: [
-        ["Subtotal", formatCurrency(subtotal)],
-        ["GST (18%)", formatCurrency(gst)],
-        ["Total", formatCurrency(totalAmount)],
+        ["Subtotal", formatCurrency(Math.floor(subtotal))],
+        ["GST (18%)", formatCurrency(Math.floor(gst))],
+        ["Total", formatCurrency(Math.floor(totalAmount))],
       ],
       theme: "plain",
       styles: { fontSize: 10 },

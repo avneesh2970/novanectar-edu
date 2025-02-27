@@ -127,7 +127,7 @@ export default function EnrollmentModal({
       }
 
       const data = await response.json();
-
+      console.log("create order response data: ", data);
       // Initialize Razorpay payment
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -148,7 +148,7 @@ export default function EnrollmentModal({
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_order_id: data.orderId,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
                   email: formData.email,
@@ -159,10 +159,10 @@ export default function EnrollmentModal({
             if (!verifyResponse.ok) {
               throw new Error("Payment verification failed");
             }
-
+            console.log("verifyResponse: ", verifyResponse);
             // Handle successful payment
             onClose();
-            navigate("/payment/success");
+            // navigate("/payment/success");
             const paymentData = {
               courseData: { ...course, id: data.courseId },
               billingDetails: formData,
@@ -227,7 +227,7 @@ export default function EnrollmentModal({
           color: "#3B82F6",
         },
       };
-
+      console.log("options: ", options);
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
