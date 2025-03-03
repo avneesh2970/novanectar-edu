@@ -8,6 +8,8 @@ import {
   FiCalendar,
   FiBook,
   FiBriefcase,
+  FiChevronLeft,
+  FiChevronRight,
 } from "react-icons/fi";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -15,6 +17,10 @@ import "jspdf-autotable";
 const UserInfo = ({ allUser }: any) => {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState<any>(false);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage, setUsersPerPage] = useState(5); // Default 10 users per page
 
   const formatDate = (dateString: any) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -24,8 +30,53 @@ const UserInfo = ({ allUser }: any) => {
     });
   };
 
+  // Calculate pagination values
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = allUser.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(allUser.length / usersPerPage);
+
+  // Pagination navigation functions
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  // Generate page numbers for pagination controls
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPageButtons = 5; // Show max 5 page buttons at a time
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    let endPage = startPage + maxPageButtons - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxPageButtons + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  };
+
   const exportToPDF = () => {
-    const doc:any = new jsPDF();
+    const doc: any = new jsPDF();
 
     // Add title
     doc.setFontSize(20);
@@ -44,7 +95,7 @@ const UserInfo = ({ allUser }: any) => {
 
     // Prepare table data
     const tableColumn = ["Name", "Email", "Join Date", "Enrollments"];
-    const tableRows = allUser.map((user:any) => [
+    const tableRows = allUser.map((user: any) => [
       `${user.firstName} ${user.lastName}`,
       user.email,
       formatDate(user.createdAt),
@@ -161,7 +212,7 @@ const UserInfo = ({ allUser }: any) => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {allUser.map((user: any) => (
+              {currentUsers.map((user: any) => (
                 <tr
                   key={user._id}
                   onClick={() => {
@@ -197,6 +248,82 @@ const UserInfo = ({ allUser }: any) => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="px-6 py-3 flex items-center justify-between border-t border-gray-200">
+          <div className="flex items-center">
+            <span className="text-sm text-gray-700">
+              Showing{" "}
+              <span className="font-medium">{indexOfFirstUser + 1}</span> to{" "}
+              <span className="font-medium">
+                {Math.min(indexOfLastUser, allUser.length)}
+              </span>{" "}
+              of <span className="font-medium">{allUser.length}</span> users
+            </span>
+
+            {/* Items per page selector */}
+            <div className="ml-4">
+              <select
+                className="border rounded px-2 py-1 text-sm"
+                value={usersPerPage}
+                onChange={(e) => {
+                  setUsersPerPage(Number(e.target.value));
+                  setCurrentPage(1); // Reset to first page when changing items per page
+                }}
+              >
+                <option value={5}>5 per page</option>
+                <option value={10}>10 per page</option>
+                <option value={25}>25 per page</option>
+                <option value={50}>50 per page</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            {/* Previous page button */}
+            <button
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+              className={`p-2 rounded ${
+                currentPage === 1
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Page number buttons */}
+            <div className="flex space-x-1">
+              {getPageNumbers().map((number) => (
+                <button
+                  key={number}
+                  onClick={() => goToPage(number)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === number
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-600 hover:bg-blue-100"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+            </div>
+
+            {/* Next page button */}
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+              className={`p-2 rounded ${
+                currentPage === totalPages
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </div>
 

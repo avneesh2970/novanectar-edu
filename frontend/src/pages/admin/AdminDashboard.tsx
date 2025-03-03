@@ -7,7 +7,7 @@ import "jspdf-autotable";
 import logo from "../../assets/nav-logo.png";
 import { useAuth } from "../../hooks/useAuth";
 import UserInfo from "./UserInfo";
-import { FiDownload } from "react-icons/fi";
+import { FiDownload, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 interface EnrollmentStats {
   _id: string;
@@ -62,6 +62,18 @@ const AdminDashboard: React.FC = () => {
   const [queryFilter, setQueryFilter] = useState("");
   const [contactFilter, setContactFilter] = useState("");
   const [bookingFilter, setBookingFilter] = useState("");
+
+  // New state for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [enrollmentsPerPage, setEnrollmentsPerPage] = useState(5);
+
+  // New state for query pagination
+  const [currentQueryPage, setCurrentQueryPage] = useState(1);
+  const [queriesPerPage, setQueriesPerPage] = useState(5);
+
+  // New state for contact pagination
+  const [currentContactPage, setCurrentContactPage] = useState(1);
+  const [contactsPerPage, setContactsPerPage] = useState(5);
 
   const [allUser, setAllUser] = useState<any>([]);
   const { getAllUsers } = useAuth();
@@ -278,6 +290,160 @@ const AdminDashboard: React.FC = () => {
       bookings.time.toLowerCase().includes(bookingFilter.toLowerCase())
   );
 
+  // Calculate pagination values
+  const indexOfLastEnrollment = currentPage * enrollmentsPerPage;
+  const indexOfFirstEnrollment = indexOfLastEnrollment - enrollmentsPerPage;
+  const currentEnrollments = enrollments.slice(
+    indexOfFirstEnrollment,
+    indexOfLastEnrollment
+  );
+  const totalPages = Math.ceil(enrollments.length / enrollmentsPerPage);
+
+  // Pagination navigation functions
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  // Generate page numbers for pagination controls
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPageButtons = 5;
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    let endPage = startPage + maxPageButtons - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxPageButtons + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  };
+
+  /////query pagination
+  // Calculate pagination values for queries
+  const indexOfLastQuery = currentQueryPage * queriesPerPage;
+  const indexOfFirstQuery = indexOfLastQuery - queriesPerPage;
+  const currentQueries = filteredQueries.slice(
+    indexOfFirstQuery,
+    indexOfLastQuery
+  );
+  const totalQueryPages = Math.ceil(filteredQueries.length / queriesPerPage);
+
+  // Pagination navigation functions for queries
+  const goToNextQueryPage = () => {
+    if (currentQueryPage < totalQueryPages) {
+      setCurrentQueryPage(currentQueryPage + 1);
+    }
+  };
+
+  const goToPreviousQueryPage = () => {
+    if (currentQueryPage > 1) {
+      setCurrentQueryPage(currentQueryPage - 1);
+    }
+  };
+
+  const goToQueryPage = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalQueryPages) {
+      setCurrentQueryPage(pageNumber);
+    }
+  };
+
+  // Generate page numbers for query pagination controls
+  const getQueryPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPageButtons = 5;
+
+    let startPage = Math.max(
+      1,
+      currentQueryPage - Math.floor(maxPageButtons / 2)
+    );
+    let endPage = startPage + maxPageButtons - 1;
+
+    if (endPage > totalQueryPages) {
+      endPage = totalQueryPages;
+      startPage = Math.max(1, endPage - maxPageButtons + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  };
+
+  //contact pagination
+  // Calculate pagination values for contacts
+  const indexOfLastContact = currentContactPage * contactsPerPage;
+  const indexOfFirstContact = indexOfLastContact - contactsPerPage;
+  const currentContacts = filteredContacts.slice(
+    indexOfFirstContact,
+    indexOfLastContact
+  );
+  const totalContactPages = Math.ceil(
+    filteredContacts.length / contactsPerPage
+  );
+
+  // Pagination navigation functions for contacts
+  const goToNextContactPage = () => {
+    if (currentContactPage < totalContactPages) {
+      setCurrentContactPage(currentContactPage + 1);
+    }
+  };
+
+  const goToPreviousContactPage = () => {
+    if (currentContactPage > 1) {
+      setCurrentContactPage(currentContactPage - 1);
+    }
+  };
+
+  const goToContactPage = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalContactPages) {
+      setCurrentContactPage(pageNumber);
+    }
+  };
+
+  // Generate page numbers for contact pagination controls
+  const getContactPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPageButtons = 5;
+
+    let startPage = Math.max(
+      1,
+      currentContactPage - Math.floor(maxPageButtons / 2)
+    );
+    let endPage = startPage + maxPageButtons - 1;
+
+    if (endPage > totalContactPages) {
+      endPage = totalContactPages;
+      startPage = Math.max(1, endPage - maxPageButtons + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <nav className="flex justify-center items-center gap-2">
@@ -286,7 +452,7 @@ const AdminDashboard: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Enrollment Statistics</h2>
+        {/* <h2 className="text-2xl font-semibold mb-4">Enrollment Statistics</h2> */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {stats.map((stat) => (
             <div key={stat._id} className="bg-white p-4 rounded-lg shadow">
@@ -297,6 +463,7 @@ const AdminDashboard: React.FC = () => {
           ))}
         </div>
         <div className="bg-white p-4 rounded-lg shadow">
+          <h2 className="text-2xl font-semibold mt-4">All Registered Users</h2>
           <div className="p-4">
             <UserInfo allUser={allUser} />
           </div>
@@ -361,7 +528,7 @@ const AdminDashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {enrollments.map((enrollment: any) => (
+            {currentEnrollments.map((enrollment: any) => (
               <tr key={enrollment._id}>
                 <td className="border p-2">
                   {enrollment.courseId} <br />{" "}
@@ -395,6 +562,83 @@ const AdminDashboard: React.FC = () => {
             ))}
           </tbody>
         </table>
+        {/* Pagination Controls */}
+        <div className="mt-4 flex items-center justify-between">
+          <div>
+            <span className="text-sm text-gray-700">
+              Showing{" "}
+              <span className="font-medium">{indexOfFirstEnrollment + 1}</span>{" "}
+              to{" "}
+              <span className="font-medium">
+                {Math.min(indexOfLastEnrollment, enrollments.length)}
+              </span>{" "}
+              of <span className="font-medium">{enrollments.length}</span>{" "}
+              enrollments
+            </span>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            {/* Previous page button */}
+            <button
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+              className={`p-2 rounded ${
+                currentPage === 1
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Page numbers */}
+            <div className="flex space-x-1">
+              {getPageNumbers().map((number) => (
+                <button
+                  key={number}
+                  onClick={() => goToPage(number)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === number
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-600 hover:bg-blue-100"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+            </div>
+
+            {/* Next page button */}
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+              className={`p-2 rounded ${
+                currentPage === totalPages
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Items per page selector */}
+        <div className="mt-2 flex justify-end">
+          <select
+            value={enrollmentsPerPage}
+            onChange={(e) => {
+              setEnrollmentsPerPage(Number(e.target.value));
+              setCurrentPage(1); // Reset to first page when changing items per page
+            }}
+            className="border rounded px-2 py-1 text-sm"
+          >
+            <option value={5}>5 per page</option>
+            <option value={10}>10 per page</option>
+            <option value={25}>25 per page</option>
+            <option value={50}>50 per page</option>
+          </select>
+        </div>
       </div>
 
       {/* query form submission  */}
@@ -404,7 +648,7 @@ const AdminDashboard: React.FC = () => {
           <div className="flex gap-4">
             <button
               onClick={() => {
-                const doc:any = new jsPDF();
+                const doc: any = new jsPDF();
 
                 // Add title
                 doc.setFontSize(20);
@@ -535,7 +779,7 @@ const AdminDashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredQueries.map((query) => (
+            {currentQueries.map((query) => (
               <tr key={query._id}>
                 <td className="border p-2">{query.fullName}</td>
                 <td className="border p-2">{query.phoneNumber}</td>
@@ -547,6 +791,82 @@ const AdminDashboard: React.FC = () => {
             ))}
           </tbody>
         </table>
+        {/* Pagination Controls for Queries */}
+        <div className="mt-4 flex items-center justify-between">
+          <div>
+            <span className="text-sm text-gray-700">
+              Showing{" "}
+              <span className="font-medium">{indexOfFirstQuery + 1}</span> to{" "}
+              <span className="font-medium">
+                {Math.min(indexOfLastQuery, filteredQueries.length)}
+              </span>{" "}
+              of <span className="font-medium">{filteredQueries.length}</span>{" "}
+              queries
+            </span>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            {/* Previous page button */}
+            <button
+              onClick={goToPreviousQueryPage}
+              disabled={currentQueryPage === 1}
+              className={`p-2 rounded ${
+                currentQueryPage === 1
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Page numbers */}
+            <div className="flex space-x-1">
+              {getQueryPageNumbers().map((number) => (
+                <button
+                  key={number}
+                  onClick={() => goToQueryPage(number)}
+                  className={`px-3 py-1 rounded ${
+                    currentQueryPage === number
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-600 hover:bg-blue-100"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+            </div>
+
+            {/* Next page button */}
+            <button
+              onClick={goToNextQueryPage}
+              disabled={currentQueryPage === totalQueryPages}
+              className={`p-2 rounded ${
+                currentQueryPage === totalQueryPages
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Items per page selector for Queries */}
+        <div className="mt-2 flex justify-end">
+          <select
+            value={queriesPerPage}
+            onChange={(e) => {
+              setQueriesPerPage(Number(e.target.value));
+              setCurrentQueryPage(1);
+            }}
+            className="border rounded px-2 py-1 text-sm"
+          >
+            <option value={5}>5 per page</option>
+            <option value={10}>10 per page</option>
+            <option value={25}>25 per page</option>
+            <option value={50}>50 per page</option>
+          </select>
+        </div>
       </div>
 
       {/* contact form submission  */}
@@ -556,7 +876,7 @@ const AdminDashboard: React.FC = () => {
           <div className="flex gap-4">
             <button
               onClick={() => {
-                const doc:any = new jsPDF();
+                const doc: any = new jsPDF();
 
                 // Add title
                 doc.setFontSize(20);
@@ -702,7 +1022,7 @@ const AdminDashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredContacts.map((contact) => (
+            {currentContacts.map((contact) => (
               <tr key={contact._id}>
                 <td className="border p-2">{contact.fullName}</td>
                 <td className="border p-2">{contact.course}</td>
@@ -716,6 +1036,81 @@ const AdminDashboard: React.FC = () => {
             ))}
           </tbody>
         </table>
+        <div className="mt-4 flex items-center justify-between">
+          <div>
+            <span className="text-sm text-gray-700">
+              Showing{" "}
+              <span className="font-medium">{indexOfFirstContact + 1}</span> to{" "}
+              <span className="font-medium">
+                {Math.min(indexOfLastContact, filteredContacts.length)}
+              </span>{" "}
+              of <span className="font-medium">{filteredContacts.length}</span>{" "}
+              contacts
+            </span>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            {/* Previous page button */}
+            <button
+              onClick={goToPreviousContactPage}
+              disabled={currentContactPage === 1}
+              className={`p-2 rounded ${
+                currentContactPage === 1
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Page numbers */}
+            <div className="flex space-x-1">
+              {getContactPageNumbers().map((number) => (
+                <button
+                  key={number}
+                  onClick={() => goToContactPage(number)}
+                  className={`px-3 py-1 rounded ${
+                    currentContactPage === number
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-600 hover:bg-blue-100"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+            </div>
+
+            {/* Next page button */}
+            <button
+              onClick={goToNextContactPage}
+              disabled={currentContactPage === totalContactPages}
+              className={`p-2 rounded ${
+                currentContactPage === totalContactPages
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-blue-100"
+              }`}
+            >
+              <FiChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Items per page selector for Contacts */}
+        <div className="mt-2 flex justify-end">
+          <select
+            value={contactsPerPage}
+            onChange={(e) => {
+              setContactsPerPage(Number(e.target.value));
+              setCurrentContactPage(1);
+            }}
+            className="border rounded px-2 py-1 text-sm"
+          >
+            <option value={5}>5 per page</option>
+            <option value={10}>10 per page</option>
+            <option value={25}>25 per page</option>
+            <option value={50}>50 per page</option>
+          </select>
+        </div>
       </div>
 
       {/* one two one form submission */}
@@ -724,143 +1119,139 @@ const AdminDashboard: React.FC = () => {
           One To One Form Submissions
         </h2>
         <div className="flex gap-4">
-            <button
-              onClick={() => {
-                const doc:any = new jsPDF();
+          <button
+            onClick={() => {
+              const doc: any = new jsPDF();
 
-                // Add title
-                doc.setFontSize(20);
-                doc.setTextColor(40, 40, 40);
-                doc.text("One To One Form Submissions Report", 20, 20);
+              // Add title
+              doc.setFontSize(20);
+              doc.setTextColor(40, 40, 40);
+              doc.text("One To One Form Submissions Report", 20, 20);
 
-                // Add generation date
+              // Add generation date
+              doc.setFontSize(10);
+              doc.setTextColor(100, 100, 100);
+              doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 30);
+
+              // Add summary
+              doc.setFontSize(12);
+              doc.setTextColor(40, 40, 40);
+              doc.text(`Total submissons: ${filteredContacts.length}`, 20, 40);
+
+              // Prepare table data
+              const tableColumn = [
+                "Full Name",
+                "Domain",
+                "Booking Date",
+                "Email",
+                "Message",
+                "Phone Number",
+                "Time",
+                "Date",
+              ];
+              const tableRows = filteredBookings.map((booking: any) => [
+                booking.fullName,
+                booking.domain,
+                booking.bookingDate,
+                booking?.email,
+                booking.message,
+                booking.phoneNumber,
+                booking.time,
+                booking.date,
+                new Date(booking.createdAt).toLocaleDateString(),
+              ]);
+
+              // Add table
+              doc.autoTable({
+                startY: 50,
+                head: [tableColumn],
+                body: tableRows,
+                theme: "grid",
+                headStyles: {
+                  fillColor: [51, 122, 183],
+                  textColor: 255,
+                  fontSize: 12,
+                  halign: "center",
+                },
+                bodyStyles: {
+                  fontSize: 10,
+                },
+                alternateRowStyles: {
+                  fillColor: [245, 245, 245],
+                },
+                margin: { top: 50 },
+                styles: {
+                  cellPadding: 3,
+                  fontSize: 10,
+                  valign: "middle",
+                  overflow: "linebreak",
+                  cellWidth: "auto",
+                },
+              });
+
+              // Add footer with page numbers
+              const pageCount = doc.internal.getNumberOfPages();
+              for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
                 doc.setFontSize(10);
                 doc.setTextColor(100, 100, 100);
                 doc.text(
-                  `Generated on: ${new Date().toLocaleString()}`,
-                  20,
-                  30
+                  `Page ${i} of ${pageCount}`,
+                  doc.internal.pageSize.getWidth() - 30,
+                  doc.internal.pageSize.getHeight() - 10
                 );
+              }
 
-                // Add summary
-                doc.setFontSize(12);
-                doc.setTextColor(40, 40, 40);
-                doc.text(`Total submissons: ${filteredContacts.length}`, 20, 40);
+              doc.save("bookings-submissions.pdf");
+            }}
+            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          >
+            <FiDownload /> Export as PDF
+          </button>
+          <button
+            onClick={() => {
+              const headers = [
+                "Full Name",
+                "Domain",
+                "Booking Date",
+                "Email",
+                "Message",
+                "Phone Number",
+                "Time",
+                "Date",
+              ];
+              const csvData = filteredBookings.map((booking: any) => [
+                booking.fullName,
+                booking.domain,
+                booking.bookingDate,
+                booking?.email,
+                booking.message,
+                booking.phoneNumber,
+                booking.time,
+                booking.date,
+                new Date(booking.createdAt).toLocaleDateString(),
+              ]);
 
-                // Prepare table data
-                const tableColumn = [
-                  "Full Name",
-                  "Domain",
-                  "Booking Date",
-                  "Email",
-                  "Message",
-                  "Phone Number",
-                  "Time",
-                  "Date"
-                ];
-                const tableRows = filteredBookings.map((booking:any) => [
-                  booking.fullName,
-                  booking.domain,
-                  booking.bookingDate,
-                  booking?.email,
-                  booking.message,
-                  booking.phoneNumber,
-                  booking.time,
-                  booking.date,
-                  new Date(booking.createdAt).toLocaleDateString(),
-                ]);
+              const csvContent = [
+                headers.join(","),
+                ...csvData.map((row: any) => row.join(",")),
+              ].join("\n");
 
-                // Add table
-                doc.autoTable({
-                  startY: 50,
-                  head: [tableColumn],
-                  body: tableRows,
-                  theme: "grid",
-                  headStyles: {
-                    fillColor: [51, 122, 183],
-                    textColor: 255,
-                    fontSize: 12,
-                    halign: "center",
-                  },
-                  bodyStyles: {
-                    fontSize: 10,
-                  },
-                  alternateRowStyles: {
-                    fillColor: [245, 245, 245],
-                  },
-                  margin: { top: 50 },
-                  styles: {
-                    cellPadding: 3,
-                    fontSize: 10,
-                    valign: "middle",
-                    overflow: "linebreak",
-                    cellWidth: "auto",
-                  },
-                });
-
-                // Add footer with page numbers
-                const pageCount = doc.internal.getNumberOfPages();
-                for (let i = 1; i <= pageCount; i++) {
-                  doc.setPage(i);
-                  doc.setFontSize(10);
-                  doc.setTextColor(100, 100, 100);
-                  doc.text(
-                    `Page ${i} of ${pageCount}`,
-                    doc.internal.pageSize.getWidth() - 30,
-                    doc.internal.pageSize.getHeight() - 10
-                  );
-                }
-
-                doc.save("bookings-submissions.pdf");
-              }}
-              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-            >
-              <FiDownload /> Export as PDF
-            </button>
-            <button
-              onClick={() => {
-                const headers = [
-                  "Full Name",
-                  "Domain",
-                  "Booking Date",
-                  "Email",
-                  "Message",
-                  "Phone Number",
-                  "Time",
-                  "Date"
-                ];
-                const csvData = filteredBookings.map((booking:any) => [
-                  booking.fullName,
-                  booking.domain,
-                  booking.bookingDate,
-                  booking?.email,
-                  booking.message,
-                  booking.phoneNumber,
-                  booking.time,
-                  booking.date,
-                  new Date(booking.createdAt).toLocaleDateString(),
-                ]);
-
-                const csvContent = [
-                  headers.join(","),
-                  ...csvData.map((row:any) => row.join(",")),
-                ].join("\n");
-
-                const blob = new Blob([csvContent], { type: "text/csv" });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "booking-submissions.csv";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-              }}
-              className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-            >
-              <FiDownload /> Export as CSV
-            </button>
-          </div>
+              const blob = new Blob([csvContent], { type: "text/csv" });
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "booking-submissions.csv";
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              window.URL.revokeObjectURL(url);
+            }}
+            className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+          >
+            <FiDownload /> Export as CSV
+          </button>
+        </div>
         <input
           type="text"
           placeholder="Filter contacts..."
