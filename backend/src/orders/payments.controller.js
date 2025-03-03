@@ -243,7 +243,15 @@ const verifyPayment = async (req, res) => {
                 <p>We are pleased to inform you that you have been selected for the <strong>NovaNectar Services Pvt. Ltd. Internship Program</strong>! 🚀</p>
                 <p>Kindly check the attached <strong>Offer Letter</strong> for further details.</p>
                 <p><strong>Tasks will be assigned to you soon.</strong></p>
-        
+                <div style="background-color: #25D366; color: white; padding: 15px; border-radius: 8px; margin: 20px 0;">
+        <h3 style="margin-top: 0;">📱 JOIN OUR WHATSAPP CHANNEL (COMPULSORY)</h3>
+        <p>It is <strong>mandatory</strong> to join our official WhatsApp channel for important updates and announcements:</p>
+        <!-- Styled button-like link for easy access -->
+        <a href="https://whatsapp.com/channel/0029VatOLnTLCoX6Ut8Lca2L" 
+           style="background-color: white; color: #25D366; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold; margin-top: 5px;">
+           Join NovaNectar WhatsApp Channel
+        </a>
+        </div>
                 <h3>📌 Internship Guidelines:</h3>
                 <ul>
                     <li><strong>LinkedIn Update:</strong> Update your LinkedIn profile and share your achievements (Offer Letter/Internship Completion Certificate). Tag <strong>@NovaNectar Services Pvt. Ltd.</strong> and use relevant hashtags: <strong>#NovaNectarServices</strong>.</li>

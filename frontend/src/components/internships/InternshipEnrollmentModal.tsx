@@ -117,7 +117,7 @@ const InternshipEnrollmentModal = ({
   if (selectedDuration === "3") {
     price = 299;
   } else if (selectedDuration === "1") {
-    price = 99;
+    price = 1;
   } else if (selectedDuration === "6") {
     price = 699;
   } else {
