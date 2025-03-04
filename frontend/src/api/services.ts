@@ -1,4 +1,5 @@
-// src/api/services/authService.js
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import api from "./axios";
 import { QueryFormData } from "../types";
 import toast from "react-hot-toast";
@@ -17,7 +18,6 @@ export const queyForm = {
 };
 
 export const contactForm = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submitForm: async (data: any) => {
     try {
       const response = await api.post("/api/contacts", data);
@@ -31,7 +31,6 @@ export const contactForm = {
 };
 
 export const bookingForm = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submitForm: async (data: any) => {
     try {
       const response = await api.post("/api/book-session", data);
@@ -45,18 +44,26 @@ export const bookingForm = {
 };
 
 export const updateProfile = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submitForm: async (data: any) => {
     try {
       await api.put("/api/auth/update-profile", data, {
         withCredentials: true,
       });
-     
+
       toast.success("Profile Updated successfully");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error.response.data.message || "error in updating profile");
       console.log("error in updating profile: ", error);
+    }
+  },
+};
+
+export const generateCertificate = {
+  submitForm: async (data: any) => {
+    try {
+      return await api.post("/api/get-certificate", { uniqueId: data });
+    } catch (error: any) {
+      toast.error("error in getting certificate", error);
     }
   },
 };

@@ -128,9 +128,7 @@ const createOrder = async (req, res) => {
       },
     };
 
-    const razorpayOrder = await razorpay.orders.create(options);
-    console.log("razorpay order:", razorpayOrder);
-    // Create order in database
+    const razorpayOrder = await razorpay.orders.create(options);    // Create order in database
     const order = new Order({
       courseId: generatedCourseId, //using generated id
       courseName,
@@ -179,9 +177,6 @@ const verifyPayment = async (req, res) => {
       razorpay_signature,
       email,
     } = req.body;
-    console.log("razorpay_order_id", razorpay_order_id);
-    console.log("razorpay_payment_id", razorpay_payment_id);
-    console.log("razorpay_signature", razorpay_signature);
     // Verify payment signature
     // const body = razorpay_order_id + "|" + razorpay_payment_id;
     // const expectedSignature = crypto

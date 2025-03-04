@@ -16,6 +16,8 @@ import Profile from "../pages/profile/Profile";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminProtectedRoute from "../components/auth/AdminProtectedRoute";
+import Certificate from "../pages/certificate/Certificate";
+
 
 export const routes: RouteObject[] = [
   {
@@ -82,22 +84,13 @@ export const routes: RouteObject[] = [
         path: "payment/success",
         element: <PaymentSuccess />,
       },
-      // {
-      //   path: "admin",
-      //   element: <AdminLogin />,
-      // },
-      // {
-      //   path: "admin/dashboard",
-      //   element: (
-      //     <AdminProtectedRoute>
-      //       <AdminDashboard />
-      //     </AdminProtectedRoute>
-      //   ),
-      // },
-
       {
         path: "*",
         element: <NotFound />,
+      },
+      {
+        path: "certificate",
+        element: <Certificate />,
       },
     ],
   },

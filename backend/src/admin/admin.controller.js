@@ -23,7 +23,6 @@ export const getEnrollmentStats = async (req, res) => {
 export const getFilteredEnrollments = async (req, res) => {
   try {
     const { startDate, endDate, orderType } = req.query;
-    console.log("DATES", startDate, endDate, orderType);
 
     const query = { status: "paid" };
 
@@ -34,8 +33,6 @@ export const getFilteredEnrollments = async (req, res) => {
     if (orderType) {
       query.orderType = orderType;
     }
-    console.log("query: ", query);
-
     const enrollmentsQuery = Order.find(query);
     // Check if UserId exists and is valid before populating
     if (
