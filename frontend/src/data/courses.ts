@@ -1505,7 +1505,7 @@ export const internshipData = [
   },
   {
     id: "6",
-    title: "Artieficial Intlligence",
+    title: "Artificial Intelligence",
     icon: "ai",
     description:
       "Solve real-world problems using AI techniques, designing and implementing intelligent systems. Gain expertise in AI applications.",

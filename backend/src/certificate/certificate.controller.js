@@ -11,7 +11,16 @@ export const getCertificate = async (req, res) => {
       return res.status(404).json({ message: "No certificate found" });
     }
     console.log("order: ", order);
-    return res.status(200).json({ data: order });
+    const dummyData = {
+      id: uniqueId || "NN/IN/01/1000",
+      name: "SHIKHA YADAV",
+      course: "Web Development",
+      organization: "NovaNectar Services Pvt. Ltd.",
+      duration: "Three months Eighteen Days",
+      startDate: "NOVEMBER 10, 2024",
+      endDate: "MARCH 20, 2025",
+    }
+    return res.status(200).json({ data: dummyData });
   } catch (error) {
     console.log("error in getting certificate", error);
     return res

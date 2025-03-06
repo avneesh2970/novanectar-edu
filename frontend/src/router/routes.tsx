@@ -99,6 +99,10 @@ export const routes: RouteObject[] = [
     element: <AdminLogin />,
   },
   {
+    path: "certificate/:id",
+    element: "<div>preview page</div>",
+  },
+  {
     path: "admin/dashboard",
     element: (
       <AdminProtectedRoute>

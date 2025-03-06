@@ -3,20 +3,30 @@ import certificatePreview from "../../assets/certificate/preview.png";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { generateCertificate } from "../../api/services";
+import { useNavigate } from "react-router-dom";
 
 const Certificate: React.FC = () => {
+  const navigate = useNavigate();
   const [uniqueId, setUniqueId] = useState("");
-  const handleDownloadCertificate = async () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGenerateCertificate = async () => {
     if (uniqueId.trim() === "") {
       toast.error("please provide your unique enrollment id");
       return;
     }
+    setIsLoading(true);
     try {
-      toast.success("certificate downloaded");
       const data = await generateCertificate.submitForm(uniqueId);
-      console.log("data api response: ", data)
+      console.log("data api response: ", data);
+      // Encode the ID for URL safety
+      const encodedId = encodeURIComponent(uniqueId);
+      // Redirect to the ID page using React Router
+      navigate(`/certificate/${encodedId}`);
     } catch (error) {
       console.log("error in getting certificate:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -41,9 +51,10 @@ const Certificate: React.FC = () => {
         />
         <button
           className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md text-lg font-medium transition-colors"
-          onClick={handleDownloadCertificate}
+          onClick={handleGenerateCertificate}
+          disabled={isLoading}
         >
-          Download Certificate
+          {isLoading ? "Processing..." : "Generate Certificate"}
         </button>
       </div>
     </div>
