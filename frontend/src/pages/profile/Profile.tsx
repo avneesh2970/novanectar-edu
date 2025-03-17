@@ -109,6 +109,7 @@ const Profile = () => {
       else if (courseName === "Digital Marketing") return "14";
       else if (courseName === "Content Writing") return "15";
       else if (courseName === "WordPress") return "16";
+      else if (courseName === "Cloud Computing") return "17";
     }
   };
 

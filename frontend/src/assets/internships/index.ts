@@ -15,6 +15,10 @@ import intern13 from "./intern13.png";
 import intern14 from "./intern14.png";
 import intern15 from "./intern15.png";
 import intern16 from "./intern16.png";
+import intern17 from "./intern17.png";
+import intern18 from "./intern18.png";
+import intern19 from "./intern19.png";
+import intern20 from "./intern20.png";
 
 // intern logos
 import intern1Logo1 from "./intern1-1.png";
@@ -91,6 +95,10 @@ const internImages = [
   { internImage: intern14, logo13: [intern14Logo1, intern14Logo2, intern14Logo3] },
   { internImage: intern15, logo14: [intern15Logo1, intern15Logo2, intern15Logo3] },
   { internImage: intern16, logo15: [intern1Logo1, intern1Logo2, intern1Logo3] },
+  { internImage: intern17, logo15: [intern1Logo1, intern1Logo2, intern1Logo3] },
+  { internImage: intern18, logo15: [intern1Logo1, intern1Logo2, intern1Logo3] },
+  { internImage: intern19, logo15: [intern8Logo1, intern8Logo2, intern8Logo3] },
+  { internImage: intern20, logo15: [intern12Logo1, intern12Logo2, intern12Logo3] },
 ];
 
 export default internImages;

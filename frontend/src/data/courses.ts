@@ -1161,7 +1161,7 @@ export const internshipData = [
 
     title_: "Python Programming Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master Python programming from basics to advanced concepts, including web development, data analysis, and automation. Build real-world projects using Django, Flask, and libraries like Pandas and NumPy to boost your career opportunities as a professional Python developer.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1233,7 +1233,7 @@ export const internshipData = [
 
     title_: "C/C++ Programming Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master the fundamentals of C and C++ programming, including data structures, algorithms, and object-oriented programming. Build efficient applications, enhance problem-solving skills, and boost your career opportunities in software development and system programming.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1305,7 +1305,7 @@ export const internshipData = [
 
     title_: "Graphic Designer Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master the principles of design and learn to create stunning visuals using tools like Adobe Photoshop, Illustrator, and Canva. Build professional logos, social media graphics, and marketing materials to boost your creative skills and career opportunities in graphic design.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1371,12 +1371,12 @@ export const internshipData = [
     iconBg: "bg-cyan-600",
     hoverColor: "hover:bg-cyan-100",
     image: internImages[3].internImage,
-    logos:internImages[3].logo3,
+    logos: internImages[3].logo3,
     category: "Technology",
 
     title_: "Data Analytics Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master data analysis techniques, data visualization, and business intelligence tools like Excel, SQL, Power BI, and Tableau. Learn to interpret complex data, make data-driven decisions, and boost your career opportunities in the field of data analytics.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1447,7 +1447,7 @@ export const internshipData = [
 
     title_: "Web Developer Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Learn to build responsive and dynamic websites using HTML, CSS, JavaScript, and modern frameworks like React and Node.js. Master front-end and back-end development, work on real-world projects, and boost your career opportunities as a professional web developer.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1518,7 +1518,7 @@ export const internshipData = [
 
     title_: "Artieficial Intlligence Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Learn the fundamentals of AI, including machine learning, deep learning, and natural language processing. Build intelligent systems, work on real-world AI projects, and boost your career opportunities in the fast-growing field of artificial intelligence.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1589,7 +1589,7 @@ export const internshipData = [
 
     title_: "Machine Learning Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master machine learning algorithms, data preprocessing, and model building using Python, Scikit-learn, and TensorFlow. Learn to develop predictive models, work on real-world datasets, and boost your career opportunities in AI and data science.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1726,12 +1726,12 @@ export const internshipData = [
     iconBg: "bg-indigo-600",
     hoverColor: "hover:bg-gray-100",
     image: internImages[8].internImage,
-    logos:internImages[8].logo8,
+    logos: internImages[8].logo8,
     category: "Technology",
 
     title_: "Full Stack Developer Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master front-end and back-end development with technologies like HTML, CSS, JavaScript, React, Node.js, Express, and MongoDB. Build dynamic web applications, develop APIs, and boost your career opportunities as a versatile full stack developer.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1802,7 +1802,7 @@ export const internshipData = [
 
     title_: "App Development Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Learn to build powerful Android and iOS applications using Flutter, React Native, or native development with Kotlin and Swift. Master UI/UX design, backend integration, and publishing apps to app stores to boost your career in mobile development.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1873,7 +1873,7 @@ export const internshipData = [
 
     title_: "Data Science Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master data analysis, machine learning, and data visualization using tools like Python, R, and SQL. Build predictive models, gain insights from data, and boost your career opportunities in the high-demand field of data science.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -1942,7 +1942,7 @@ export const internshipData = [
 
     title_: "UI/UX Designer Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master user interface and user experience design to create stunning, user-friendly websites and mobile apps. Learn wireframing, prototyping, design tools like Figma and Adobe XD, and boost your career opportunities in the design industry.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -2011,7 +2011,7 @@ export const internshipData = [
 
     title_: "Cybersecurity Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Protect systems, networks, and data from cyber threats. Learn ethical hacking, network security, risk management, and boost your career opportunities in the rapidly growing cybersecurity industry.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -2080,7 +2080,7 @@ export const internshipData = [
 
     title_: "Digital Marketing Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Learn SEO, social media marketing, Google Ads, email marketing, and analytics to grow businesses online. Build in-demand skills, create effective campaigns, and boost your career opportunities in the digital marketing industry.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -2149,7 +2149,7 @@ export const internshipData = [
 
     title_: "Content Writing Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Master the art of creating engaging blogs, articles, web content, and copywriting. Enhance your writing skills, build a strong portfolio, and boost your career opportunities in digital marketing, freelancing, and content creation.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -2218,7 +2218,7 @@ export const internshipData = [
 
     title_: "WordPress Internship",
     description_:
-      "Novanectar's Java course: Develop Android apps, games, and enterprise software, enhancing job prospects and programming skills.",
+      "Design and develop professional websites, blogs, and eCommerce stores without coding. Master WordPress themes, plugins, and SEO to boost your web development skills and career opportunities.",
 
     features: [
       "In-Depth Java Curriculum",
@@ -2267,6 +2267,442 @@ export const internshipData = [
         content: [
           "Lecture 1: Mean and Median",
           "Lecture 2: Probability",
+          "...",
+        ],
+      },
+    ],
+    price: 2999,
+    duration: "6 months",
+  },
+  {
+    id: "17",
+    title: "Cloud Computing",
+    icon: "ai",
+    description:
+      "The demand for cloud expertise is skyrocketing, making it one of the most future-proof career paths. With platforms like AWS, Azure, and Google Cloud, you’ll gain hands-on experience in managing storage, security, and networking.",
+      image: internImages[16].internImage,
+      logos: internImages[11].logo11,
+    category: "Technology",
+
+    title_: "Cloud Computing Internship",
+    description_:
+      "Novanectar's Cloud Computing course: Master cloud platforms like AWS, Azure, and Google Cloud to build scalable applications, manage infrastructure, and boost your career in the ever-growing cloud industry.",
+
+    features: [
+      "Comprehensive Cloud Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-On Cloud Projects",
+      "Weekly Assignments & Quizzes",
+      "Mock Interviews & Resume Building",
+      "Real-World Case Studies",
+      "Guidance from Certified Cloud Experts",
+    ],
+    courseIncludes: {
+      videoHours: "60 hours on-demand video",
+      resources: "120 downloadable resources",
+      labs: "10 hands-on cloud labs",
+      articles: "50 in-depth articles",
+      certificate: "Certificate of completion",
+      access: "Lifetime access on mobile and TV",
+    },
+    stats: {
+      learners: "3,758,420",
+      practices: "1,850",
+      rating: "4.6",
+    },
+
+    content: [
+      {
+        title: "Introduction to Cloud Computing",
+        lectures: 3,
+        duration: "5 min",
+        content: [
+          "Lecture 1: What is Cloud Computing?",
+          "Lecture 2: Benefits of Cloud",
+          "Lecture 3: Cloud Service Models (IaaS, PaaS, SaaS)",
+        ],
+      },
+      {
+        title: "AWS Fundamentals",
+        lectures: 25,
+        duration: "4 hr 15 min",
+        content: [
+          "Lecture 1: Introduction to AWS",
+          "Lecture 2: AWS Global Infrastructure",
+          "Lecture 3: EC2 and Compute Services",
+          "Lecture 4: S3 and Storage Solutions",
+          "...",
+        ],
+      },
+      {
+        title: "Azure Essentials",
+        lectures: 20,
+        duration: "3 hr 30 min",
+        content: [
+          "Lecture 1: Introduction to Microsoft Azure",
+          "Lecture 2: Azure Resource Manager",
+          "Lecture 3: Virtual Machines in Azure",
+          "...",
+        ],
+      },
+      {
+        title: "Google Cloud Platform Basics",
+        lectures: 15,
+        duration: "2 hr 45 min",
+        content: [
+          "Lecture 1: GCP Overview",
+          "Lecture 2: Compute Engine and Storage",
+          "Lecture 3: Networking in GCP",
+          "...",
+        ],
+      },
+      {
+        title: "Cloud Security and Best Practices",
+        lectures: 10,
+        duration: "1 hr 50 min",
+        content: [
+          "Lecture 1: Shared Responsibility Model",
+          "Lecture 2: Identity and Access Management (IAM)",
+          "Lecture 3: Compliance and Security Best Practices",
+          "...",
+        ],
+      },
+      {
+        title: "Capstone Project & Labs",
+        lectures: 5,
+        duration: "3 hr 20 min",
+        content: [
+          "Lecture 1: Designing a Scalable Web App on AWS",
+          "Lecture 2: Deploying a Serverless Function on Azure",
+          "Lecture 3: Setting up Kubernetes on GCP",
+          "...",
+        ],
+      },
+    ],
+    price: 2999,
+    duration: "6 months",
+  },
+  {
+    id: "18",
+    title: "Data Visualization",
+    icon: "ai",
+    description:
+      "Data Visualization is a crucial skill in today’s data-driven world. By mastering tools like Tableau, Power BI, and Python libraries, you can uncover trends, make informed decisions, and communicate insights effectively.",
+      image: internImages[17].internImage,
+      logos: internImages[11].logo11,
+    category: "Technology",
+
+    title_: "Data Visualization Internship",
+    description_:
+      "Data Visualization is a crucial skill in today’s data-driven world. By mastering tools like Tableau, Power BI, and Python libraries, you can uncover trends, make informed decisions, and communicate insights effectively.",
+
+    features: [
+      "Comprehensive Cloud Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-On Cloud Projects",
+      "Weekly Assignments & Quizzes",
+      "Mock Interviews & Resume Building",
+      "Real-World Case Studies",
+      "Guidance from Certified Cloud Experts",
+    ],
+    courseIncludes: {
+      videoHours: "60 hours on-demand video",
+      resources: "120 downloadable resources",
+      labs: "10 hands-on cloud labs",
+      articles: "50 in-depth articles",
+      certificate: "Certificate of completion",
+      access: "Lifetime access on mobile and TV",
+    },
+    stats: {
+      learners: "3,758,420",
+      practices: "1,850",
+      rating: "4.6",
+    },
+
+    content: [
+      {
+        title: "Introduction to Cloud Computing",
+        lectures: 3,
+        duration: "5 min",
+        content: [
+          "Lecture 1: What is Cloud Computing?",
+          "Lecture 2: Benefits of Cloud",
+          "Lecture 3: Cloud Service Models (IaaS, PaaS, SaaS)",
+        ],
+      },
+      {
+        title: "AWS Fundamentals",
+        lectures: 25,
+        duration: "4 hr 15 min",
+        content: [
+          "Lecture 1: Introduction to AWS",
+          "Lecture 2: AWS Global Infrastructure",
+          "Lecture 3: EC2 and Compute Services",
+          "Lecture 4: S3 and Storage Solutions",
+          "...",
+        ],
+      },
+      {
+        title: "Azure Essentials",
+        lectures: 20,
+        duration: "3 hr 30 min",
+        content: [
+          "Lecture 1: Introduction to Microsoft Azure",
+          "Lecture 2: Azure Resource Manager",
+          "Lecture 3: Virtual Machines in Azure",
+          "...",
+        ],
+      },
+      {
+        title: "Google Cloud Platform Basics",
+        lectures: 15,
+        duration: "2 hr 45 min",
+        content: [
+          "Lecture 1: GCP Overview",
+          "Lecture 2: Compute Engine and Storage",
+          "Lecture 3: Networking in GCP",
+          "...",
+        ],
+      },
+      {
+        title: "Cloud Security and Best Practices",
+        lectures: 10,
+        duration: "1 hr 50 min",
+        content: [
+          "Lecture 1: Shared Responsibility Model",
+          "Lecture 2: Identity and Access Management (IAM)",
+          "Lecture 3: Compliance and Security Best Practices",
+          "...",
+        ],
+      },
+      {
+        title: "Capstone Project & Labs",
+        lectures: 5,
+        duration: "3 hr 20 min",
+        content: [
+          "Lecture 1: Designing a Scalable Web App on AWS",
+          "Lecture 2: Deploying a Serverless Function on Azure",
+          "Lecture 3: Setting up Kubernetes on GCP",
+          "...",
+        ],
+      },
+    ],
+    price: 2999,
+    duration: "6 months",
+  },
+  {
+    id: "19",
+    title: "HR",
+    icon: "ai",
+    description:
+      "With businesses increasingly focusing on workplace culture and compliance, HR professionals are in high demand across industries. The course offers a blend of theory and real-world applications, ensuring you're ready to handle HR challenges effectively.",
+      image: internImages[18].internImage,
+      logos: internImages[11].logo11,
+    category: "Technology",
+
+    title_: "HR Internship",
+    description_:
+      "With businesses increasingly focusing on workplace culture and compliance, HR professionals are in high demand across industries. The course offers a blend of theory and real-world applications, ensuring you're ready to handle HR challenges effectively.",
+
+    features: [
+      "Comprehensive Cloud Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-On Cloud Projects",
+      "Weekly Assignments & Quizzes",
+      "Mock Interviews & Resume Building",
+      "Real-World Case Studies",
+      "Guidance from Certified Cloud Experts",
+    ],
+    courseIncludes: {
+      videoHours: "60 hours on-demand video",
+      resources: "120 downloadable resources",
+      labs: "10 hands-on cloud labs",
+      articles: "50 in-depth articles",
+      certificate: "Certificate of completion",
+      access: "Lifetime access on mobile and TV",
+    },
+    stats: {
+      learners: "3,758,420",
+      practices: "1,850",
+      rating: "4.6",
+    },
+
+    content: [
+      {
+        title: "Introduction to Cloud Computing",
+        lectures: 3,
+        duration: "5 min",
+        content: [
+          "Lecture 1: What is Cloud Computing?",
+          "Lecture 2: Benefits of Cloud",
+          "Lecture 3: Cloud Service Models (IaaS, PaaS, SaaS)",
+        ],
+      },
+      {
+        title: "AWS Fundamentals",
+        lectures: 25,
+        duration: "4 hr 15 min",
+        content: [
+          "Lecture 1: Introduction to AWS",
+          "Lecture 2: AWS Global Infrastructure",
+          "Lecture 3: EC2 and Compute Services",
+          "Lecture 4: S3 and Storage Solutions",
+          "...",
+        ],
+      },
+      {
+        title: "Azure Essentials",
+        lectures: 20,
+        duration: "3 hr 30 min",
+        content: [
+          "Lecture 1: Introduction to Microsoft Azure",
+          "Lecture 2: Azure Resource Manager",
+          "Lecture 3: Virtual Machines in Azure",
+          "...",
+        ],
+      },
+      {
+        title: "Google Cloud Platform Basics",
+        lectures: 15,
+        duration: "2 hr 45 min",
+        content: [
+          "Lecture 1: GCP Overview",
+          "Lecture 2: Compute Engine and Storage",
+          "Lecture 3: Networking in GCP",
+          "...",
+        ],
+      },
+      {
+        title: "Cloud Security and Best Practices",
+        lectures: 10,
+        duration: "1 hr 50 min",
+        content: [
+          "Lecture 1: Shared Responsibility Model",
+          "Lecture 2: Identity and Access Management (IAM)",
+          "Lecture 3: Compliance and Security Best Practices",
+          "...",
+        ],
+      },
+      {
+        title: "Capstone Project & Labs",
+        lectures: 5,
+        duration: "3 hr 20 min",
+        content: [
+          "Lecture 1: Designing a Scalable Web App on AWS",
+          "Lecture 2: Deploying a Serverless Function on Azure",
+          "Lecture 3: Setting up Kubernetes on GCP",
+          "...",
+        ],
+      },
+    ],
+    price: 2999,
+    duration: "6 months",
+  },
+  {
+    id: "20",
+    title: "Content Creator",
+    icon: "ai",
+    description:
+      "Content Creator Course equips you with the skills to create engaging videos, blogs, and social media posts. You’ll learn storytelling, video editing, SEO, and marketing strategies to stand out in a crowded digital space. With expert guidance and hands-on projects, you’ll build a strong portfolio that attracts clients and employers.",
+      image: internImages[19].internImage,
+      logos: internImages[11].logo11,
+    category: "Technology",
+
+    title_: "Content Creator Internship",
+    description_:
+      "Content Creator Course equips you with the skills to create engaging videos, blogs, and social media posts. You’ll learn storytelling, video editing, SEO, and marketing strategies to stand out in a crowded digital space. With expert guidance and hands-on projects, you’ll build a strong portfolio that attracts clients and employers.",
+
+    features: [
+      "Comprehensive Cloud Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-On Cloud Projects",
+      "Weekly Assignments & Quizzes",
+      "Mock Interviews & Resume Building",
+      "Real-World Case Studies",
+      "Guidance from Certified Cloud Experts",
+    ],
+    courseIncludes: {
+      videoHours: "60 hours on-demand video",
+      resources: "120 downloadable resources",
+      labs: "10 hands-on cloud labs",
+      articles: "50 in-depth articles",
+      certificate: "Certificate of completion",
+      access: "Lifetime access on mobile and TV",
+    },
+    stats: {
+      learners: "3,758,420",
+      practices: "1,850",
+      rating: "4.6",
+    },
+
+    content: [
+      {
+        title: "Introduction to Cloud Computing",
+        lectures: 3,
+        duration: "5 min",
+        content: [
+          "Lecture 1: What is Cloud Computing?",
+          "Lecture 2: Benefits of Cloud",
+          "Lecture 3: Cloud Service Models (IaaS, PaaS, SaaS)",
+        ],
+      },
+      {
+        title: "AWS Fundamentals",
+        lectures: 25,
+        duration: "4 hr 15 min",
+        content: [
+          "Lecture 1: Introduction to AWS",
+          "Lecture 2: AWS Global Infrastructure",
+          "Lecture 3: EC2 and Compute Services",
+          "Lecture 4: S3 and Storage Solutions",
+          "...",
+        ],
+      },
+      {
+        title: "Azure Essentials",
+        lectures: 20,
+        duration: "3 hr 30 min",
+        content: [
+          "Lecture 1: Introduction to Microsoft Azure",
+          "Lecture 2: Azure Resource Manager",
+          "Lecture 3: Virtual Machines in Azure",
+          "...",
+        ],
+      },
+      {
+        title: "Google Cloud Platform Basics",
+        lectures: 15,
+        duration: "2 hr 45 min",
+        content: [
+          "Lecture 1: GCP Overview",
+          "Lecture 2: Compute Engine and Storage",
+          "Lecture 3: Networking in GCP",
+          "...",
+        ],
+      },
+      {
+        title: "Cloud Security and Best Practices",
+        lectures: 10,
+        duration: "1 hr 50 min",
+        content: [
+          "Lecture 1: Shared Responsibility Model",
+          "Lecture 2: Identity and Access Management (IAM)",
+          "Lecture 3: Compliance and Security Best Practices",
+          "...",
+        ],
+      },
+      {
+        title: "Capstone Project & Labs",
+        lectures: 5,
+        duration: "3 hr 20 min",
+        content: [
+          "Lecture 1: Designing a Scalable Web App on AWS",
+          "Lecture 2: Deploying a Serverless Function on Azure",
+          "Lecture 3: Setting up Kubernetes on GCP",
           "...",
         ],
       },

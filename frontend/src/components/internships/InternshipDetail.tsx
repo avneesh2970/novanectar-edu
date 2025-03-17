@@ -140,8 +140,7 @@ const InternshipDetail = () => {
             {internship.title_}
           </h1>
           <p className="text-xl sm:text-2xl text-blue-500 max-w-3xl mx-auto">
-            Transform your career with hands-on experience in Python
-            development. Learn, build, and grow with industry experts.
+            {internship.description_}
           </p>
         </div>
 

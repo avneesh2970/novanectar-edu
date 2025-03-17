@@ -44,17 +44,30 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-4">Social Network</h4>
           <ul className="flex justify-center md:justify-start space-x-4">
             <li>
-              <a href="#" className="hover:text-blue-500">
+              <a
+                href="https://www.linkedin.com/company/novanectar/"
+                className="hover:text-blue-500"
+                target="_blank"
+              >
                 LinkedIn
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-500">
+              <a
+                href="https://www.instagram.com/novanectar_services_pvt.ltd?igsh=MXRoaHN3MGM5czYxZw=="
+                className="hover:text-blue-500"
+                target="_blank"
+              >
                 Instagram
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-500">
+              <a
+                href="https://www.facebook.com/share/a6ob9vX4d6uEAd3B/?mibextid=qi2Omg
+"
+                className="hover:text-blue-500"
+                target="_blank"
+              >
                 Facebook
               </a>
             </li>

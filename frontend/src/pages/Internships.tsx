@@ -57,19 +57,19 @@ export default function Internships() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex flex-col items-center p-4 bg-white border border-blue-700 rounded-lg">
               <span className="text-2xl md:text-3xl font-bold text-blue-600">
-                5,000+
+                10,000+
               </span>
               <span className="text-gray-600">Enrolled Candidate</span>
             </div>
             <div className="flex flex-col items-center p-4 bg-white rounded-lg border border-blue-700">
               <span className="text-2xl md:text-3xl font-bold text-blue-600">
-                3,000+
+                6,000+
               </span>
               <span className="text-gray-600">Certified Candidate</span>
             </div>
             <div className="flex flex-col items-center p-4 bg-white rounded-lg border border-blue-700">
               <span className="text-2xl md:text-3xl font-bold text-blue-600">
-                20+
+                40+
               </span>
               <span className="text-gray-600">Internship Domain</span>
             </div>
