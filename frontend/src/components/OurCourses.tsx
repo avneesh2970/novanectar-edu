@@ -72,36 +72,36 @@ export default function OurCourses() {
                 <img
                   src={card.image}
                   alt={card.title}
-                  className="w-full h-40 object-cover"
+                  className="w-full h-52 object-cover"
                 />
                 <div className="p-4">
-                  <h2 className="text-lg font-semibold mb-2">{card.title}</h2>
-                  <p className="text-gray-600 text-sm">{card.description}</p>
-                  <p className="text-gray-600 text-sm">
-                    <span className="font-medium">
-                      Duration: {card.duration}
-                    </span>
+                  <h2 className="text-2xl font-semibold mb-2 text-gray-900">
+                    {card.title}
+                  </h2>
+                  <p className="text-gray-400 text-sm mb-2">
+                    <span className="font-medium">{card.duration}</span>
                   </p>
-                  {/* <p className="text-gray-600 text-sm">
-                    <span className="font-medium">
-                      regular price: {card.regularPrice}
+                  <p className="text-gray-900 text-base mb-5 font-">
+                    {card.description}
+                  </p>
+                  {/* <p>
+                    <span className="font-medium text-xl">Rs.{card.price}</span>
+                    <span className="font-medium text-red-500 text-sm">
+                      Rs.<del>{card.regularPrice}</del>
                     </span>
+                    <button className="border border-blue-500 text-blue-500 rounded-md">VIEW DETAILS</button>
                   </p> */}
-                  <p>
-                    <span className="font-medium text-gray-600">
-                      Regular price: <del>{card.regularPrice} Rs</del>
-                    </span>
+                  <p className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl font-semibold">Rs.{card.price}</span>
+                      <span className="text-sm font-semibold text-red-500 line-through">
+                      Rs.{card.regularPrice}
+                      </span>
+                    </div>
+                    <button className="px-4 py-1.5 text-sm text-blue-600 border-2 border-blue-600 rounded hover:bg-blue-50 transition-colors font-semibold">
+                      VIEW DETAILS
+                    </button>
                   </p>
-
-                  <p className="text-gray-600 text-sm">
-                    <span className="font-medium">price: {card.price} Rs</span>
-                  </p>
-                  <a
-                    href="#"
-                    className="text-blue-500 text-sm mt-2 inline-block hover:underline"
-                  >
-                    Learn More →
-                  </a>
                 </div>
               </div>
             ))}
