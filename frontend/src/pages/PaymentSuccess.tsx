@@ -11,7 +11,6 @@ export default function PaymentSuccess() {
     const formattedNum = String(randomNum).padStart(3, "0"); // Ensures it's always three digits
     return `INV-2025-${formattedNum}`;
   }
-  console.log("paymentData: ", paymentData);
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-blue-400">
       <div className="text-center bg-white shadow-lg rounded-lg p-6 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 animate-fade-in">
@@ -48,6 +47,7 @@ export default function PaymentSuccess() {
           billingDetails={paymentData?.billingDetails}
           invoiceNumber={generateInvoiceNumber()}
           purchaseDate={new Date().toLocaleDateString()}
+          duration={paymentData?.duration}
         />
         <button
           onClick={() => navigate("/")}

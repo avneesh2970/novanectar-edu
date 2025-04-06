@@ -92,8 +92,8 @@ const InternshipDetail = () => {
     // }
   };
 
-  const internship:any = internshipData.find(
-    (course:any) => course.id === internshipId
+  const internship: any = internshipData.find(
+    (course: any) => course.id === internshipId
   );
 
   if (internship) {
@@ -108,8 +108,6 @@ const InternshipDetail = () => {
 
   const gstRate = 0.18;
   internship.price = Math.round(internship.price * (1 + gstRate));
-
-  console.log("internship", internship);
 
   // internshipData.find((intern) => {
   //   console.log("test", intern.id);
@@ -297,7 +295,6 @@ const InternshipDetail = () => {
           </motion.button>
         </div>
       </div>
-
       {/* Enrollment Modal */}
       <InternshipEnrollmentModal
         isEnrollModalOpen={isEnrollModalOpen}

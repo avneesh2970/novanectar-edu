@@ -165,7 +165,6 @@ const InternshipEnrollmentModal = ({
       }
 
       const data = await response.json();
-      console.log("data:", data);
       // Initialize Razorpay payment
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -176,7 +175,6 @@ const InternshipEnrollmentModal = ({
         order_id: data.orderId,
         notes: data.notes,
         handler: async function (response: any) {
-          console.log("Full Payment Response:", response);
 
           if (!response.razorpay_order_id) {
             console.error("razorpay_order_id is missing!");
@@ -201,7 +199,6 @@ const InternshipEnrollmentModal = ({
                 }),
               }
             );
-            console.log("verifyResponse: ", verifyResponse);
             if (!verifyResponse.ok) {
               throw new Error("Payment verification failed");
             }
@@ -214,8 +211,8 @@ const InternshipEnrollmentModal = ({
               billingDetails: formData,
               invoiceNumber: "INV-2024-001",
               purchaseDate: new Date().toLocaleDateString(),
+              duration: selectedDuration,
             };
-            console.log("lets navigate to download");
             navigate("/payment/success", { state: paymentData });
           } catch (error) {
             console.error("Payment verification error:", error);

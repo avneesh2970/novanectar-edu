@@ -22,6 +22,7 @@ const CourseInvoice: React.FC<any> = ({
   billingDetails,
   invoiceNumber,
   purchaseDate,
+  duration
 }) => {
   const generateInvoice = () => {
     const doc = new jsPDF();
@@ -78,7 +79,7 @@ const CourseInvoice: React.FC<any> = ({
       ["Description", "Duration", "Amount (incl. GST)"],
       [
         courseData?.title_ || courseData?.title || "Course",
-        courseData?.duration || "",
+        duration || billingDetails.duration || courseData?.duration || "",
         `${formattedAmount}`,
       ],
     ];
