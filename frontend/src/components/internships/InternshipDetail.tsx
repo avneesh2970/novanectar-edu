@@ -21,20 +21,20 @@ const InternshipDetail = () => {
   const durationOptions = [
     {
       months: "1",
-      price: "99",
-      originalPrice: "199",
+      price: "149",
+      originalPrice: "299",
       highlight: "Perfect for quick skill development",
     },
     {
       months: "3",
-      price: "299",
-      originalPrice: "599",
+      price: "599",
+      originalPrice: "1199",
       highlight: "Ideal for in-depth learning",
     },
     {
       months: "6",
-      price: "699",
-      originalPrice: "1399",
+      price: "999",
+      originalPrice: "1999",
       highlight: "Complete professional experience",
     },
   ];
@@ -98,11 +98,11 @@ const InternshipDetail = () => {
 
   if (internship) {
     if (selectedDuration == "1") {
-      internship.price = 99;
+      internship.price = 149;
     } else if (selectedDuration == "3") {
-      internship.price = 299;
+      internship.price = 599;
     } else if (selectedDuration == "6") {
-      internship.price = 699;
+      internship.price = 999;
     }
   }
 
