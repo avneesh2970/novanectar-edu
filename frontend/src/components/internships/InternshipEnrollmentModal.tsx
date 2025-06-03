@@ -21,6 +21,7 @@ const InternshipEnrollmentModal = ({
   const [errors, setErrors] = useState<any>({});
   const [touched, setTouched] = useState<any>({});
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   if (error) {
@@ -117,7 +118,6 @@ const InternshipEnrollmentModal = ({
     price = 599;
   } else if (selectedDuration === "1") {
     price = 149;
-    // price = 1;
   } else if (selectedDuration === "6") {
     price = 999;
   } else {
@@ -183,6 +183,8 @@ const InternshipEnrollmentModal = ({
             console.error("razorpay_signature is missing!");
           }
           try {
+            setIsVerifying(true);
+            setIsProcessing(false);
             // Verify payment
             const verifyResponse = await fetch(
               `${import.meta.env.VITE_API_URL}/api/verify-payment`,
@@ -204,7 +206,7 @@ const InternshipEnrollmentModal = ({
             }
 
             // Handle successful payment
-            setIsEnrollModalOpen();
+            setIsEnrollModalOpen(false);
             // navigate("/payment/success");
             const paymentData = {
               courseData: internship,
@@ -217,6 +219,8 @@ const InternshipEnrollmentModal = ({
           } catch (error) {
             console.error("Payment verification error:", error);
             setError("Payment verification failed. Please contact support.");
+          } finally {
+            setIsVerifying(false);
           }
         },
         prefill: {
@@ -260,9 +264,12 @@ const InternshipEnrollmentModal = ({
           },
         },
         modal: {
-          ondismiss: function () {
-            setIsProcessing(false);
-            setError("Payment cancelled");
+          ondismiss: () => {
+            // Only reset processing if not verifying
+            if (!isVerifying) {
+              setIsProcessing(false);
+              setError("Payment cancelled");
+            }
           },
           confirm_close: true,
           escape: true,
@@ -277,7 +284,6 @@ const InternshipEnrollmentModal = ({
     } catch (error) {
       console.error("Payment error:", error);
       setError("Failed to process payment. Please try again.");
-    } finally {
       setIsProcessing(false);
     }
   };
@@ -286,6 +292,13 @@ const InternshipEnrollmentModal = ({
     setSelectedDuration(e.target.value);
     handleChange(e);
   };
+
+  const getButtonText = () => {
+    if (isProcessing) return "Processing Payment...";
+    if (isVerifying) return "please wait...";
+    return "Proceed to Payment";
+  };
+  const isLoading = isProcessing || isVerifying;
 
   return (
     <AnimatePresence>
@@ -296,6 +309,7 @@ const InternshipEnrollmentModal = ({
           exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
         >
+          {}
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -308,120 +322,165 @@ const InternshipEnrollmentModal = ({
             <p className="text-sm text-blue-700 mb-6">
               {selectedDuration}-month {internship?.title_}
             </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  placeholder="Enter your full name"
-                />
-                {errors.name && touched.name && (
-                  <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  placeholder="Enter your email"
-                />
-                {errors.email && touched.email && (
-                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.phone ? "border-red-500" : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  placeholder="Enter your phone number"
-                />
-                {errors.phone && touched.phone && (
-                  <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-                )}
-              </div>
-
-              {/* ////////////////////////////start///////////////////////////////////// */}
-              <div>
-                <label
-                  htmlFor="duration"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Select Internship Duration
-                </label>
-                <select
-                  id="duration"
-                  name="duration"
-                  value={selectedDuration}
-                  //   onChange={handleChange}
-                  onChange={handleDurationChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                >
-                  <option value="1">1 Month</option>
-                  <option value="3">3 Months</option>
-                  <option value="6">6 Months</option>
-                </select>
-                <div className="mt-4 text-sm text-gray-600">
-                  Selected Duration:{" "}
-                  <span className="font-semibold">
-                    {selectedDuration} Month{selectedDuration !== "1" && "s"}
+            {isVerifying ? (
+              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center space-x-1">
+                  <span className="text-sm text-red-500">
+                    please wait! Generating offer letter
                   </span>
-                </div>
-                <div className="mt-4 text-sm text-gray-600">
-                  18% GST will include.{" "}
-                  <span className="font-semibold">
-                    Total Price: {price} INR
-                  </span>
+                  <svg
+                    className="w-5 h-5 text-red-500"
+                    viewBox="0 0 120 30"
+                    fill="currentColor"
+                  >
+                    <circle cx="15" cy="15" r="15">
+                      <animate
+                        attributeName="cy"
+                        values="15;5;15"
+                        dur="0.6s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                    <circle cx="60" cy="15" r="15">
+                      <animate
+                        attributeName="cy"
+                        values="15;5;15"
+                        dur="0.6s"
+                        begin="0.2s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                    <circle cx="105" cy="15" r="15">
+                      <animate
+                        attributeName="cy"
+                        values="15;5;15"
+                        dur="0.6s"
+                        begin="0.4s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </svg>
                 </div>
               </div>
-              {/* ////////////////////////////end///////////////////////////////////// */}
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    disabled={isLoading}
+                    className={`w-full px-4 py-2 rounded-lg border ${
+                      errors.name ? "border-red-500" : "border-gray-300"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
+                    placeholder="Enter your full name"
+                  />
+                  {errors.name && touched.name && (
+                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                  )}
+                </div>
 
-              <div className="flex justify-end space-x-4 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setIsEnrollModalOpen(false)}
-                  className="px-6 py-2 rounded-full bg-gray-200 text-blue-900 font-semibold hover:bg-gray-300 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isProcessing}
-                  className="px-6 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors"
-                >
-                  {isProcessing ? "Processing..." : "Proceed to Payment"}
-                </button>
-              </div>
-            </form>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    disabled={isLoading}
+                    className={`w-full px-4 py-2 rounded-lg border ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
+                    placeholder="Enter your email"
+                  />
+                  {errors.email && touched.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    disabled={isLoading}
+                    className={`w-full px-4 py-2 rounded-lg border ${
+                      errors.phone ? "border-red-500" : "border-gray-300"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
+                    placeholder="Enter your phone number"
+                  />
+                  {errors.phone && touched.phone && (
+                    <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                  )}
+                </div>
+
+                {/* ////////////////////////////start///////////////////////////////////// */}
+                <div>
+                  <label
+                    htmlFor="duration"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Select Internship Duration
+                  </label>
+                  <select
+                    id="duration"
+                    name="duration"
+                    value={selectedDuration}
+                    //   onChange={handleChange}
+                    onChange={handleDurationChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value="1">1 Month</option>
+                    <option value="3">3 Months</option>
+                    <option value="6">6 Months</option>
+                  </select>
+                  <div className="mt-4 text-sm text-gray-600">
+                    Selected Duration:{" "}
+                    <span className="font-semibold">
+                      {selectedDuration} Month{selectedDuration !== "1" && "s"}
+                    </span>
+                  </div>
+                  <div className="mt-4 text-sm text-gray-600">
+                    18% GST will include.{" "}
+                    <span className="font-semibold">
+                      Total Price: {price} INR
+                    </span>
+                  </div>
+                </div>
+                {/* ////////////////////////////end///////////////////////////////////// */}
+
+                <div className="flex justify-end space-x-4 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsEnrollModalOpen(false)}
+                    disabled={isLoading}
+                    className="px-6 py-2 rounded-full bg-gray-200 text-blue-900 font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="px-6 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  >
+                    {getButtonText()}
+                  </button>
+                </div>
+              </form>
+            )}
           </motion.div>
         </motion.div>
       )}
