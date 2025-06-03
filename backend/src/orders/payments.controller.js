@@ -104,6 +104,7 @@ const createOrder = async (req, res) => {
       email,
       phone,
       orderType,
+      duration
     } = req.body;
 
     let userId = req.user && req.user._id ? req.user._id : null;
@@ -137,6 +138,7 @@ const createOrder = async (req, res) => {
       courseImage,
       userId: userId,
       orderType,
+      duration,
       amount,
       razorpayOrderId: razorpayOrder.id,
       status: "created",

@@ -26,21 +26,24 @@ const orderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.Mixed,
     ref: "User",
-    set: function(v) {
+    set: function (v) {
       if (v === null || v === "") return null;
-      if (typeof v === 'object' && v._id) return v._id;
+      if (typeof v === "object" && v._id) return v._id;
       if (mongoose.Types.ObjectId.isValid(v)) return mongoose.Types.ObjectId(v);
       return v;
     },
-    get: function(v) {
+    get: function (v) {
       if (v === null || v === "") return null;
       if (mongoose.Types.ObjectId.isValid(v)) return v.toString();
       return v;
-    }
+    },
   },
   orderType: {
     type: String,
     required: true,
+  },
+  duration: {
+    type: String,
   },
   name: {
     type: String,

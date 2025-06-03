@@ -96,7 +96,6 @@ const InternshipEnrollmentModal = ({
     });
 
     setErrors(newErrors);
-
     // If no errors, proceed
     if (Object.keys(newErrors).length === 0) {
       // Handle payment logic here
@@ -118,6 +117,7 @@ const InternshipEnrollmentModal = ({
     price = 599;
   } else if (selectedDuration === "1") {
     price = 149;
+    // price = 1;
   } else if (selectedDuration === "6") {
     price = 999;
   } else {
@@ -156,6 +156,7 @@ const InternshipEnrollmentModal = ({
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
+            duration: selectedDuration,
           }),
         }
       );
@@ -175,7 +176,6 @@ const InternshipEnrollmentModal = ({
         order_id: data.orderId,
         notes: data.notes,
         handler: async function (response: any) {
-
           if (!response.razorpay_order_id) {
             console.error("razorpay_order_id is missing!");
           }
