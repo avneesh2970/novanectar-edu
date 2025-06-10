@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 
 import { useEffect } from 'react';
 import { logPageView } from './analytics';
@@ -10,7 +10,7 @@ function TrackPageViews({ router }: { router: any }) {
     logPageView();
 
     // Subscribe to router navigation events
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     const unsubscribe = router.subscribe(() => {
       // Log page view on route change
       logPageView();
