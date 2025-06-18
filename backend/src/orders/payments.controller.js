@@ -421,12 +421,12 @@ const handleWebhook = async (req, res) => {
       .update(JSON.stringify(req.body))
       .digest("hex");
 
-    if (receivedSignature !== generatedSignature) {
-      console.log("Invalid webhook signature");
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid webhook signature" });
-    }
+    // if (receivedSignature !== generatedSignature) {
+    //   console.log("Invalid webhook signature");
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "Invalid webhook signature" });
+    // }
 
     const payment = req.body.payload.payment.entity;
     const { order_id, id: paymentId, email } = payment;
