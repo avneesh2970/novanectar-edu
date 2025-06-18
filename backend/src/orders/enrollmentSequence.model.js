@@ -18,8 +18,7 @@ const enrollmentSequenceSchema = new mongoose.Schema(
     currentNumber: {
       type: Number,
       default: 2500,
-      required: true,
-      unique: true,
+      // unique: true,
     },
   },
   {
@@ -27,8 +26,11 @@ const enrollmentSequenceSchema = new mongoose.Schema(
   }
 );
 
-// Create a compound index to ensure uniqueness of prefix and month combination
-// enrollmentSequenceSchema.index({ currentNumber: 1 }, { unique: true });
+// 👇 This ensures one document per prefix-month-year
+enrollmentSequenceSchema.index(
+  { prefix: 1, month: 1, year: 1 },
+  { unique: true }
+);
 
 const EnrollmentSequence = mongoose.model(
   "EnrollmentSequence",
