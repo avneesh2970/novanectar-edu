@@ -1,1297 +1,2845 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-import logo from "../../assets/nav-logo.png";
-import { useAuth } from "../../hooks/useAuth";
-import UserInfo from "./UserInfo";
-import { FiDownload, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// "use client";
 
+// import type React from "react";
+// import { useState, useEffect } from "react";
+// import axios from "axios";
+// import jsPDF from "jspdf";
+// import "jspdf-autotable";
+// import toast, { Toaster } from "react-hot-toast";
+// import {
+//   FiDownload,
+//   FiChevronLeft,
+//   FiChevronRight,
+//   FiMenu,
+//   FiX,
+//   FiUser,
+//   FiMail,
+//   FiCalendar,
+//   FiBook,
+//   FiBriefcase,
+//   FiBarChart2,
+//   FiUsers,
+//   FiClipboard,
+//   FiHelpCircle,
+//   FiPhone,
+//   FiFilter,
+//   FiSearch,
+//   FiRefreshCw,
+//   FiTrendingUp,
+//   FiEye,
+// } from "react-icons/fi";
+
+// // Types
+// interface EnrollmentStats {
+//   _id: string;
+//   count: number;
+//   totalAmount: number;
+// }
+
+// interface Enrollment {
+//   _id: string;
+//   courseId: string;
+//   courseName?: string;
+//   courseTitle?: string;
+//   amount: number;
+//   createdAt: string;
+//   userId: any;
+//   name: string;
+//   email: string;
+//   phone: string;
+//   orderType: string;
+//   status: string;
+//   razorpayOrderId: string;
+//   razorpayPaymentId: string;
+// }
+
+// interface QuerySubmission {
+//   _id: string;
+//   fullName: string;
+//   phoneNumber: string;
+//   email: string;
+//   createdAt: string;
+// }
+
+// interface ContactSubmission {
+//   _id: string;
+//   fullName: string;
+//   course: string;
+//   city: string;
+//   phoneNumber: string;
+//   email: string;
+//   createdAt: string;
+// }
+
+// interface User {
+//   _id: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   enrollments: any[];
+// }
+
+// const AdminDashboard: React.FC = () => {
+//   // State management
+//   const [activeSection, setActiveSection] = useState("dashboard");
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   // Data states
+//   const [stats, setStats] = useState<EnrollmentStats[]>([]);
+//   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
+//   const [queries, setQueries] = useState<QuerySubmission[]>([]);
+//   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
+//   const [bookings, setBookings] = useState<any[]>([]);
+//   const [allUser, setAllUser] = useState<User[]>([]);
+
+//   // Filter states
+//   const [startDate, setStartDate] = useState("");
+//   const [endDate, setEndDate] = useState("");
+//   const [orderType, setOrderType] = useState("all");
+//   const [feeStatus, setFeeStatus] = useState("all");
+//   const [queryFilter, setQueryFilter] = useState("");
+//   const [contactFilter, setContactFilter] = useState("");
+//   const [bookingFilter, setBookingFilter] = useState("");
+//   const [userFilter, setUserFilter] = useState("");
+  
+
+//   // Pagination states
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [itemsPerPage, setItemsPerPage] = useState(10);
+//   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+
+//   // Remove the mock useAuth hook and replace with direct API call
+//   const fetchUsers = async () => {
+//     try {
+//       // Replace this URL with your actual users API endpoint
+//       const response = await axios.get(
+//         `${import.meta.env.VITE_API_URL}/api/auth/get-all-users`,
+//         {
+//           withCredentials: true,
+//         }
+//       );
+//       setAllUser(response.data);
+//     } catch (error) {
+//       console.error("Error fetching users:", error);
+//       toast.error("Failed to fetch users");
+//     }
+//   };
+
+//   // Update the userData function to use the new fetchUsers function
+//   const userData = async () => {
+//     try {
+//       await fetchUsers();
+//     } catch (error) {
+//       console.log("error in get user: ", error);
+//     }
+//   };
+
+//   // Sidebar navigation items
+//   const sidebarItems = [
+//     { id: "dashboard", label: "Dashboard", icon: FiBarChart2 },
+//     { id: "users", label: "Users", icon: FiUsers },
+//     { id: "enrollments", label: "Enrollments", icon: FiClipboard },
+//     { id: "queries", label: "Queries", icon: FiHelpCircle },
+//     { id: "contacts", label: "Contacts", icon: FiPhone },
+//     { id: "bookings", label: "Bookings", icon: FiCalendar },
+//   ];
+
+//   // Data fetching functions
+//   const fetchAllData = async () => {
+//     setLoading(true);
+//     try {
+//       await Promise.all([
+//         fetchStats(),
+//         fetchEnrollments(),
+//         fetchQueries(),
+//         fetchContacts(),
+//         fetchBookings(),
+//         userData(),
+//       ]);
+//       toast.success("Data refreshed successfully!");
+//     } catch (error) {
+//       console.log("error: ", error)
+//       toast.error("Failed to refresh data. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const fetchStats = async () => {
+//     try {
+//       const response = await axios.get(
+//         `${import.meta.env.VITE_API_URL}/api/admin/enrollment-stats`,
+//         {
+//           withCredentials: true,
+//         }
+//       );
+//       setStats(response.data);
+//     } catch (error) {
+//       console.error("Error fetching stats:", error);
+//     }
+//   };
+
+//   const fetchEnrollments = async () => {
+//     try {
+//       const response = await axios.get(
+//         `${import.meta.env.VITE_API_URL}/api/admin/filtered-enrollments`,
+//         {
+//           params: {
+//             startDate,
+//             endDate,
+//             orderType: orderType === "all" ? "" : orderType,
+//             status: feeStatus === "all" ? "" : feeStatus,
+//           },
+//           withCredentials: true,
+//         }
+//       );
+//       setEnrollments(response.data);
+//     } catch (error) {
+//       console.error("Error fetching enrollments:", error);
+//     }
+//   };
+
+//   const fetchQueries = async () => {
+//     try {
+//       const response = await axios.get(
+//         `${import.meta.env.VITE_API_URL}/api/all-queries`,
+//         { withCredentials: true }
+//       );
+//       setQueries(response.data);
+//     } catch (error) {
+//       console.error("Error fetching queries:", error);
+//     }
+//   };
+
+//   const fetchContacts = async () => {
+//     try {
+//       const response = await axios.get(
+//         `${import.meta.env.VITE_API_URL}/api/all-contacts`,
+//         { withCredentials: true }
+//       );
+//       setContacts(response.data);
+//     } catch (error) {
+//       console.error("Error fetching contacts:", error);
+//     }
+//   };
+
+//   const fetchBookings = async () => {
+//     try {
+//       const response = await axios.get(
+//         `${import.meta.env.VITE_API_URL}/api/get-bookings`,
+//         { withCredentials: true }
+//       );
+//       setBookings(response.data);
+//     } catch (error) {
+//       console.error("Error fetching bookings:", error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchAllData();
+//   }, []);
+
+//   // Utility functions
+//   const formatDate = (dateString: string) => {
+//     return new Date(dateString).toLocaleDateString("en-US", {
+//       year: "numeric",
+//       month: "long",
+//       day: "numeric",
+//     });
+//   };
+
+//   const formatCurrency = (amount: number) => {
+//     return new Intl.NumberFormat("en-IN", {
+//       style: "currency",
+//       currency: "INR",
+//     }).format(amount);
+//   };
+
+//   // Export functions
+//   const exportToPDF = (
+//     data: any[],
+//     filename: string,
+//     columns: string[],
+//     title: string
+//   ) => {
+//     const doc = new jsPDF();
+
+//     // Add title
+//     doc.setFontSize(20);
+//     doc.setTextColor(40, 40, 40);
+//     doc.text(title, 20, 20);
+
+//     // Add generation date
+//     doc.setFontSize(10);
+//     doc.setTextColor(100, 100, 100);
+//     doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 30);
+
+//     // Add summary
+//     doc.setFontSize(12);
+//     doc.setTextColor(40, 40, 40);
+//     doc.text(`Total Records: ${data.length}`, 20, 40);
+
+//     // Prepare table data based on data type
+//     let tableRows: any[] = [];
+
+//     if (filename.includes("user")) {
+//       tableRows = data.map((user: User) => [
+//         `${user.firstName} ${user.lastName}`,
+//         user.email,
+//         formatDate(user.createdAt),
+//         user.enrollments.length,
+//       ]);
+//     } else if (filename.includes("enrollment")) {
+//       tableRows = data.map((enrollment: Enrollment) => [
+//         enrollment.courseId,
+//         `${enrollment.userId?.firstName || ""} ${
+//           enrollment.userId?.lastName || ""
+//         }`,
+//         enrollment.name,
+//         formatCurrency(enrollment.amount),
+//         formatDate(enrollment.createdAt),
+//         enrollment.orderType,
+//         enrollment.status,
+//       ]);
+//     } else if (filename.includes("query")) {
+//       tableRows = data.map((query: QuerySubmission) => [
+//         query.fullName,
+//         query.phoneNumber,
+//         query.email || "",
+//         formatDate(query.createdAt),
+//       ]);
+//     } else if (filename.includes("contact")) {
+//       tableRows = data.map((contact: ContactSubmission) => [
+//         contact.fullName,
+//         contact.course,
+//         contact.city,
+//         contact.phoneNumber,
+//         contact.email || "",
+//         formatDate(contact.createdAt),
+//       ]);
+//     }
+//     // Add table
+//     (doc as any).autoTable({
+//       startY: 50,
+//       head: [columns],
+//       body: tableRows,
+//       theme: "grid",
+//       headStyles: {
+//         fillColor: [59, 130, 246],
+//         textColor: 255,
+//         fontSize: 12,
+//         halign: "center",
+//       },
+//       bodyStyles: {
+//         fontSize: 10,
+//       },
+//       alternateRowStyles: {
+//         fillColor: [245, 245, 245],
+//       },
+//       margin: { top: 50 },
+//       styles: {
+//         cellPadding: 3,
+//         fontSize: 10,
+//         valign: "middle",
+//         overflow: "linebreak",
+//         cellWidth: "auto",
+//       },
+//     });
+
+//     // Add footer
+//     const pageCount = doc.internal.getNumberOfPages();
+//     for (let i = 1; i <= pageCount; i++) {
+//       doc.setPage(i);
+//       doc.setFontSize(10);
+//       doc.setTextColor(100, 100, 100);
+//       doc.text(
+//         `Page ${i} of ${pageCount}`,
+//         doc.internal.pageSize.getWidth() - 30,
+//         doc.internal.pageSize.getHeight() - 10
+//       );
+//     }
+
+//     doc.save(`${filename}.pdf`);
+//     toast.success(`${title} exported as PDF successfully!`);
+//   };
+
+//   const exportToCSV = (data: any[], filename: string, columns: string[]) => {
+//     let csvData: any[] = [];
+
+//     if (filename.includes("user")) {
+//       csvData = data.map((user: User) => [
+//         `${user.firstName} ${user.lastName}`,
+//         user.email,
+//         formatDate(user.createdAt),
+//         user.enrollments.length,
+//       ]);
+//     } else if (filename.includes("enrollment")) {
+//       csvData = data.map((enrollment: Enrollment) => [
+//         enrollment.courseId,
+//         `${enrollment.userId?.firstName || ""} ${
+//           enrollment.userId?.lastName || ""
+//         }`,
+//         enrollment.userId?.email || "",
+//         enrollment.name,
+//         enrollment.email || "",
+//         enrollment.phone,
+//         enrollment.amount.toFixed(2),
+//         formatDate(enrollment.createdAt),
+//         enrollment.orderType,
+//         enrollment.status,
+//       ]);
+//     } else if (filename.includes("query")) {
+//       csvData = data.map((query: QuerySubmission) => [
+//         query.fullName,
+//         query.phoneNumber,
+//         query.email || "",
+//         formatDate(query.createdAt),
+//       ]);
+//     } else if (filename.includes("contact")) {
+//       csvData = data.map((contact: ContactSubmission) => [
+//         contact.fullName,
+//         contact.course,
+//         contact.city,
+//         contact.phoneNumber,
+//         contact.email || "",
+//         formatDate(contact.createdAt),
+//       ]);
+//     }
+
+//     const csvContent = [
+//       columns.join(","),
+//       ...csvData.map((row) => row.map((cell: any) => `"${cell}"`).join(",")),
+//     ].join("\n");
+
+//     const blob = new Blob(["\ufeff" + csvContent], {
+//       type: "text/csv;charset=utf-8;",
+//     });
+//     const url = window.URL.createObjectURL(blob);
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = `${filename}.csv`;
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//     window.URL.revokeObjectURL(url);
+
+//     toast.success("Data exported as CSV successfully!");
+//   };
+
+//   // Filter functions
+//   const getFilteredData = (section: string) => {
+//     switch (section) {
+//       case "users":
+//         return allUser.filter(
+//           (user) =>
+//             userFilter === "" ||
+//             user.firstName.toLowerCase().includes(userFilter.toLowerCase()) ||
+//             user.lastName.toLowerCase().includes(userFilter.toLowerCase()) ||
+//             user.email.toLowerCase().includes(userFilter.toLowerCase())
+//         );
+//       case "queries":
+//         return queries.filter(
+//           (query) =>
+//             queryFilter === "" ||
+//             query.fullName.toLowerCase().includes(queryFilter.toLowerCase()) ||
+//             (query.email &&
+//               query.email.toLowerCase().includes(queryFilter.toLowerCase())) ||
+//             query.phoneNumber.includes(queryFilter)
+//         );
+//       case "contacts":
+//         return contacts.filter(
+//           (contact) =>
+//             contactFilter === "" ||
+//             contact.fullName
+//               .toLowerCase()
+//               .includes(contactFilter.toLowerCase()) ||
+//             (contact.email &&
+//               contact.email
+//                 .toLowerCase()
+//                 .includes(contactFilter.toLowerCase())) ||
+//             contact.phoneNumber.includes(contactFilter) ||
+//             contact.course
+//               .toLowerCase()
+//               .includes(contactFilter.toLowerCase()) ||
+//             contact.city.toLowerCase().includes(contactFilter.toLowerCase())
+//         );
+//       case "bookings":
+//         return bookings.filter(
+//           (booking: any) =>
+//             bookingFilter === "" ||
+//             booking.fullName
+//               .toLowerCase()
+//               .includes(bookingFilter.toLowerCase()) ||
+//             booking.domain
+//               .toLowerCase()
+//               .includes(bookingFilter.toLowerCase()) ||
+//             booking.date.includes(bookingFilter) ||
+//             (booking.email &&
+//               booking.email
+//                 .toLowerCase()
+//                 .includes(bookingFilter.toLowerCase())) ||
+//             booking.message
+//               .toLowerCase()
+//               .includes(bookingFilter.toLowerCase()) ||
+//             booking.phoneNumber
+//               .toLowerCase()
+//               .includes(bookingFilter.toLowerCase()) ||
+//             booking.time.toLowerCase().includes(bookingFilter.toLowerCase())
+//         );
+//       default:
+//         return [];
+//     }
+//   };
+
+//   // Pagination logic
+//   const getPaginatedData = (data: any[]) => {
+//     const startIndex = (currentPage - 1) * itemsPerPage;
+//     const endIndex = startIndex + itemsPerPage;
+//     return data.slice(startIndex, endIndex);
+//   };
+
+//   const getTotalPages = (dataLength: number) => {
+//     return Math.ceil(dataLength / itemsPerPage);
+//   };
+
+//   // Reset pagination when section changes
+//   useEffect(() => {
+//     setCurrentPage(1);
+//   }, [activeSection]);
+
+//   // Sidebar component
+//   const Sidebar = () => (
+//     <div
+//       className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+//         sidebarOpen ? "translate-x-0" : "-translate-x-full"
+//       }`}
+//     >
+//       <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+//         <h2 className="text-xl font-semibold text-gray-800">Admin Panel</h2>
+//         <button
+//           onClick={() => setSidebarOpen(false)}
+//           className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
+//         >
+//           <FiX className="h-5 w-5" />
+//         </button>
+//       </div>
+
+//       <nav className="mt-6 px-3">
+//         {sidebarItems.map((item) => (
+//           <button
+//             key={item.id}
+//             onClick={() => {
+//               setActiveSection(item.id);
+//               setSidebarOpen(false);
+//             }}
+//             className={`w-full flex items-center px-3 py-2 mb-1 text-left rounded-lg transition-colors duration-200 ${
+//               activeSection === item.id
+//                 ? "bg-blue-50 text-blue-700 border-r-2 border-blue-700"
+//                 : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+//             }`}
+//           >
+//             <item.icon className="h-5 w-5 mr-3" />
+//             {item.label}
+//           </button>
+//         ))}
+//       </nav>
+//     </div>
+//   );
+
+//   // Header component
+//   const Header = () => (
+//     <header className="bg-white border-b border-gray-200 px-6 py-4">
+//       <div className="flex items-center justify-between">
+//         <div className="flex items-center">
+//           <button
+//             onClick={() => setSidebarOpen(true)}
+//             className="lg:hidden mr-2 p-2 rounded-md hover:bg-gray-100 transition-colors"
+//           >
+//             <FiMenu className="h-5 w-5" />
+//           </button>
+//           <h1 className="text-2xl font-bold text-gray-900 capitalize">
+//             {activeSection === "dashboard"
+//               ? "Dashboard Overview"
+//               : activeSection}
+//           </h1>
+//         </div>
+
+//         <div className="flex items-center space-x-4">
+//           <button
+//             onClick={fetchAllData}
+//             disabled={loading}
+//             className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+//           >
+//             <FiRefreshCw
+//               className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`}
+//             />
+//             Refresh
+//           </button>
+//         </div>
+//       </div>
+//     </header>
+//   );
+
+//   // Stats cards component
+//   const StatsCards = () => (
+//     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+//       {stats.map((stat) => (
+//         <div
+//           key={stat._id}
+//           className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200"
+//         >
+//           <div className="flex items-center justify-between mb-4">
+//             <h3 className="text-sm font-medium text-gray-600">{stat._id}</h3>
+//             <FiTrendingUp className="h-5 w-5 text-green-600" />
+//           </div>
+//           <div className="space-y-2">
+//             <div className="text-2xl font-bold text-gray-900">{stat.count}</div>
+//             <p className="text-sm text-gray-600">Total Enrollments</p>
+//             <div className="text-lg font-semibold text-green-600">
+//               {formatCurrency(stat.totalAmount)}
+//             </div>
+//             <p className="text-xs text-gray-500">Total Revenue</p>
+//           </div>
+//         </div>
+//       ))}
+
+//       {/* Additional summary cards */}
+//       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
+//         <div className="flex items-center justify-between mb-4">
+//           <h3 className="text-sm font-medium text-gray-600">Total Users</h3>
+//           <FiUsers className="h-5 w-5 text-blue-600" />
+//         </div>
+//         <div className="space-y-2">
+//           <div className="text-2xl font-bold text-gray-900">
+//             {allUser.length}
+//           </div>
+//           <p className="text-sm text-gray-600">Registered Users</p>
+//         </div>
+//       </div>
+
+//       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
+//         <div className="flex items-center justify-between mb-4">
+//           <h3 className="text-sm font-medium text-gray-600">Total Queries</h3>
+//           <FiHelpCircle className="h-5 w-5 text-orange-600" />
+//         </div>
+//         <div className="space-y-2">
+//           <div className="text-2xl font-bold text-gray-900">
+//             {queries.length}
+//           </div>
+//           <p className="text-sm text-gray-600">Query Submissions</p>
+//         </div>
+//       </div>
+
+//       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
+//         <div className="flex items-center justify-between mb-4">
+//           <h3 className="text-sm font-medium text-gray-600">Total Contacts</h3>
+//           <FiPhone className="h-5 w-5 text-purple-600" />
+//         </div>
+//         <div className="space-y-2">
+//           <div className="text-2xl font-bold text-gray-900">
+//             {contacts.length}
+//           </div>
+//           <p className="text-sm text-gray-600">Contact Submissions</p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+
+//   // Table header with filters and export
+//   const TableHeader = ({
+//     title,
+//     data,
+//     filename,
+//     columns,
+//     searchValue,
+//     onSearchChange,
+//     additionalFilters,
+//   }: {
+//     title: string;
+//     data: any[];
+//     filename: string;
+//     columns: string[];
+//     searchValue: string;
+//     onSearchChange: (value: string) => void;
+//     additionalFilters?: React.ReactNode;
+//   }) => (
+//     <div className="mb-6">
+//       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+//         <h2 className="text-xl font-semibold text-gray-900 mb-2 sm:mb-0">
+//           {title}
+//         </h2>
+//         <div className="flex flex-wrap gap-2">
+//           <button
+//             onClick={() => exportToPDF(data, filename, columns, title)}
+//             className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+//           >
+//             <FiDownload className="h-4 w-4 mr-2" />
+//             PDF
+//           </button>
+//           <button
+//             onClick={() => exportToCSV(data, filename, columns)}
+//             className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+//           >
+//             <FiDownload className="h-4 w-4 mr-2" />
+//             CSV
+//           </button>
+//         </div>
+//       </div>
+
+//       <div className="flex flex-col sm:flex-row gap-4 mb-4">
+//         <div className="relative flex-1">
+//           <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+//           <input
+//             type="text"
+//             placeholder={`Search ${title.toLowerCase()}...`}
+//             value={searchValue}
+//             onChange={(e) => onSearchChange(e.target.value)}
+//             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+//           />
+//         </div>
+//         {additionalFilters}
+//       </div>
+//     </div>
+//   );
+
+//   // Pagination component
+//   const Pagination = ({
+//     totalItems,
+//     section,
+//   }: {
+//     totalItems: number;
+//     section: string;
+//   }) => {
+//     const totalPages = getTotalPages(totalItems);
+//     const startIndex = (currentPage - 1) * itemsPerPage + 1;
+//     const endIndex = Math.min(currentPage * itemsPerPage, totalItems);
+
+//     return (
+//       <div className="flex flex-col sm:flex-row items-center justify-between mt-6 gap-4">
+//         <div className="flex items-center gap-4">
+//           <span className="text-sm text-gray-700">
+//             Showing {startIndex} to {endIndex} of {totalItems} entries
+//           </span>
+//           <select
+//             value={itemsPerPage.toString()}
+//             onChange={(e) => {
+//               setItemsPerPage(Number(e.target.value));
+//               setCurrentPage(1);
+//             }}
+//             className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//           >
+//             <option value="5">5 per page</option>
+//             <option value="10">10 per page</option>
+//             <option value="25">25 per page</option>
+//             <option value="50">50 per page</option>
+//           </select>
+//         </div>
+
+//         <div className="flex items-center space-x-2">
+//           <button
+//             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+//             disabled={currentPage === 1}
+//             className="p-2 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+//           >
+//             <FiChevronLeft className="h-4 w-4" />
+//           </button>
+
+//           <div className="flex space-x-1">
+//             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+//               const pageNum = i + Math.max(1, currentPage - 2);
+//               if (pageNum > totalPages) return null;
+
+//               return (
+//                 <button
+//                   key={pageNum}
+//                   onClick={() => setCurrentPage(pageNum)}
+//                   className={`w-10 h-10 rounded-md text-sm font-medium transition-colors ${
+//                     currentPage === pageNum
+//                       ? "bg-blue-600 text-white"
+//                       : "border border-gray-300 hover:bg-gray-50"
+//                   }`}
+//                 >
+//                   {pageNum}
+//                 </button>
+//               );
+//             })}
+//           </div>
+
+//           <button
+//             onClick={() =>
+//               setCurrentPage(Math.min(totalPages, currentPage + 1))
+//             }
+//             disabled={currentPage === totalPages}
+//             className="p-2 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+//           >
+//             <FiChevronRight className="h-4 w-4" />
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   };
+
+//   // User modal component
+//   const UserModal = ({
+//     user,
+//     isOpen,
+//     onClose,
+//   }: {
+//     user: User | null;
+//     isOpen: boolean;
+//     onClose: () => void;
+//   }) => {
+//     if (!isOpen || !user) return null;
+
+//     return (
+//       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+//         <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+//           <div className="p-6">
+//             <div className="flex justify-between items-center mb-6">
+//               <h2 className="text-2xl font-semibold flex items-center gap-2">
+//                 <FiUser className="h-5 w-5" />
+//                 User Details
+//               </h2>
+//               <button
+//                 onClick={onClose}
+//                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+//               >
+//                 <FiX className="w-6 h-6" />
+//               </button>
+//             </div>
+
+//             <div className="space-y-6">
+//               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                 <div className="flex items-center gap-2">
+//                   <FiUser className="text-blue-500 h-4 w-4" />
+//                   <span className="font-medium">Name:</span>
+//                   <span>
+//                     {user.firstName} {user.lastName}
+//                   </span>
+//                 </div>
+//                 <div className="flex items-center gap-2">
+//                   <FiMail className="text-blue-500 h-4 w-4" />
+//                   <span className="font-medium">Email:</span>
+//                   <span>{user.email}</span>
+//                 </div>
+//                 <div className="flex items-center gap-2">
+//                   <FiCalendar className="text-blue-500 h-4 w-4" />
+//                   <span className="font-medium">Joined:</span>
+//                   <span>{formatDate(user.createdAt)}</span>
+//                 </div>
+//               </div>
+
+//               <div>
+//                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+//                   <FiBook className="text-blue-500 h-4 w-4" />
+//                   Enrollments ({user.enrollments.length})
+//                 </h3>
+//                 {user.enrollments.length > 0 ? (
+//                   <div className="bg-gray-50 rounded-lg p-4">
+//                     <div className="space-y-3">
+//                       {user.enrollments.map((enrollment: any) => (
+//                         <div
+//                           key={enrollment._id}
+//                           className="flex items-center gap-3 p-2 bg-white rounded border"
+//                         >
+//                           {enrollment.type === "course" ? (
+//                             <FiBook className="text-blue-500 h-4 w-4" />
+//                           ) : (
+//                             <FiBriefcase className="text-green-500 h-4 w-4" />
+//                           )}
+//                           <div>
+//                             <span className="capitalize font-medium">
+//                               {enrollment.type}
+//                             </span>
+//                             <p className="text-sm text-gray-500">
+//                               ID: {enrollment.item}
+//                             </p>
+//                           </div>
+//                         </div>
+//                       ))}
+//                     </div>
+//                   </div>
+//                 ) : (
+//                   <p className="text-gray-500 bg-gray-50 rounded-lg p-4">
+//                     No enrollments yet
+//                   </p>
+//                 )}
+//               </div>
+
+//               <div className="text-sm text-gray-500 pt-4 border-t">
+//                 Last updated: {formatDate(user.updatedAt)}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   };
+
+//   // Badge component
+//   const Badge = ({
+//     children,
+//     variant = "default",
+//   }: {
+//     children: React.ReactNode;
+//     variant?: "default" | "secondary" | "destructive" | "outline";
+//   }) => {
+//     const baseClasses =
+//       "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium";
+//     const variantClasses = {
+//       default: "bg-blue-100 text-blue-800",
+//       secondary: "bg-gray-100 text-gray-800",
+//       destructive: "bg-red-100 text-red-800",
+//       outline: "border border-gray-300 text-gray-700",
+//     };
+
+//     return (
+//       <span className={`${baseClasses} ${variantClasses[variant]}`}>
+//         {children}
+//       </span>
+//     );
+//   };
+
+//   // Main content renderer
+//   const renderContent = () => {
+//     switch (activeSection) {
+//       case "dashboard":
+//         return (
+//           <div className="space-y-6">
+//             <StatsCards />
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+//               <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+//               <p className="text-gray-600">
+//                 Welcome to your admin dashboard. Use the sidebar to navigate
+//                 between different sections.
+//               </p>
+//             </div>
+//           </div>
+//         );
+
+//       case "users":
+//         const filteredUsers = getFilteredData("users") as User[];
+//         const paginatedUsers = getPaginatedData(filteredUsers);
+
+//         return (
+//           <div>
+//             <TableHeader
+//               title="Registered Users"
+//               data={filteredUsers}
+//               filename="users"
+//               columns={["Name", "Email", "Join Date", "Enrollments"]}
+//               searchValue={userFilter}
+//               onSearchChange={setUserFilter}
+//             />
+
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full divide-y divide-gray-200">
+//                   <thead className="bg-gray-50">
+//                     <tr>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         User
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Email
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Join Date
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Enrollments
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Actions
+//                       </th>
+//                     </tr>
+//                   </thead>
+//                   <tbody className="bg-white divide-y divide-gray-200">
+//                     {paginatedUsers.map((user) => (
+//                       <tr
+//                         key={user._id}
+//                         className="hover:bg-gray-50 transition-colors"
+//                       >
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <div className="flex items-center gap-3">
+//                             <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+//                               <span className="text-sm font-medium text-blue-600">
+//                                 {user.firstName.charAt(0)}
+//                               </span>
+//                             </div>
+//                             <div>
+//                               <div className="font-medium text-gray-900">
+//                                 {user.firstName} {user.lastName}
+//                               </div>
+//                             </div>
+//                           </div>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {user.email}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {formatDate(user.createdAt)}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <Badge variant="secondary">
+//                             {user.enrollments.length}
+//                           </Badge>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <button
+//                             onClick={() => {
+//                               setSelectedUser(user);
+//                               setIsModalOpen(true);
+//                             }}
+//                             className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+//                           >
+//                             <FiEye className="h-4 w-4" />
+//                           </button>
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+
+//             <Pagination totalItems={filteredUsers.length} section="users" />
+//             <UserModal
+//               user={selectedUser}
+//               isOpen={isModalOpen}
+//               onClose={() => setIsModalOpen(false)}
+//             />
+//           </div>
+//         );
+
+//       case "enrollments":
+//         const paginatedEnrollments = getPaginatedData(enrollments);
+
+//         return (
+//           <div>
+//             <TableHeader
+//               title="Enrollments"
+//               data={enrollments}
+//               filename="enrollments"
+//               columns={[
+//                 "ID",
+//                 "User Name",
+//                 "Student Name",
+//                 "Amount",
+//                 "Date",
+//                 "Type",
+//                 "Status",
+//               ]}
+//               searchValue=""
+//               onSearchChange={() => {}}
+//               additionalFilters={
+//                 <div className="flex gap-2">
+//                   <input
+//                     type="date"
+//                     value={startDate}
+//                     onChange={(e) => setStartDate(e.target.value)}
+//                     className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                   />
+//                   <input
+//                     type="date"
+//                     value={endDate}
+//                     onChange={(e) => setEndDate(e.target.value)}
+//                     className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                   />
+//                   <select
+//                     value={orderType}
+//                     onChange={(e) => setOrderType(e.target.value)}
+//                     className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                   >
+//                     <option value="all">All Types</option>
+//                     <option value="course">Course</option>
+//                     <option value="internship">Internship</option>
+//                   </select>
+//                   <select
+//                     value={feeStatus}
+//                     onChange={(e) => setFeeStatus(e.target.value)}
+//                     className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                   >
+//                     <option value="all">Status</option>
+//                     <option value="paid">Paid</option>
+//                     <option value="created">Created</option>
+//                   </select>
+//                   <button
+//                     onClick={fetchEnrollments}
+//                     className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+//                   >
+//                     <FiFilter className="h-4 w-4 mr-2" />
+//                     Filter
+//                   </button>
+//                 </div>
+//               }
+//             />
+
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full divide-y divide-gray-200">
+//                   <thead className="bg-gray-50">
+//                     <tr>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Course/Internship ID
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Student Details
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Amount
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Date
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Type
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Status
+//                       </th>
+//                     </tr>
+//                   </thead>
+//                   <tbody className="bg-white divide-y divide-gray-200">
+//                     {paginatedEnrollments.map((enrollment: any) => (
+//                       <tr
+//                         key={enrollment._id}
+//                         className="hover:bg-gray-50 transition-colors"
+//                       >
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <div>
+//                             <div className="font-medium text-gray-900">
+//                               {enrollment.courseId}
+//                             </div>
+//                             <div className="text-sm text-gray-500">
+//                               User: {enrollment.userId?.firstName}{" "}
+//                               {enrollment.userId?.lastName}
+//                             </div>
+//                             <div className="text-sm text-gray-500">
+//                               Email: {enrollment.userId?.email}
+//                             </div>
+//                           </div>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <div>
+//                             <div className="font-medium text-gray-900">
+//                               {enrollment.name}
+//                             </div>
+//                             <div className="text-sm text-gray-500">
+//                               {enrollment.email}
+//                             </div>
+//                             <div className="text-sm text-gray-500">
+//                               {enrollment.phone}
+//                             </div>
+//                           </div>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+//                           {formatCurrency(enrollment.amount)}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {formatDate(enrollment.createdAt)}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <Badge
+//                             variant={
+//                               enrollment.orderType === "course"
+//                                 ? "default"
+//                                 : "secondary"
+//                             }
+//                           >
+//                             {enrollment.orderType}
+//                           </Badge>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <Badge
+//                             variant={
+//                               enrollment.status === "paid"
+//                                 ? "default"
+//                                 : enrollment.status === "pending"
+//                                 ? "secondary"
+//                                 : "destructive"
+//                             }
+//                           >
+//                             {enrollment.status}
+//                           </Badge>
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+
+//             <Pagination totalItems={enrollments.length} section="enrollments" />
+//           </div>
+//         );
+
+//       case "queries":
+//         const filteredQueries = getFilteredData("queries") as QuerySubmission[];
+//         const paginatedQueries = getPaginatedData(filteredQueries);
+
+//         return (
+//           <div>
+//             <TableHeader
+//               title="Query Submissions"
+//               data={filteredQueries}
+//               filename="queries"
+//               columns={["Full Name", "Phone Number", "Email", "Date"]}
+//               searchValue={queryFilter}
+//               onSearchChange={setQueryFilter}
+//             />
+
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full divide-y divide-gray-200">
+//                   <thead className="bg-gray-50">
+//                     <tr>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Full Name
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Phone Number
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Email
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Date
+//                       </th>
+//                     </tr>
+//                   </thead>
+//                   <tbody className="bg-white divide-y divide-gray-200">
+//                     {paginatedQueries.map((query) => (
+//                       <tr
+//                         key={query._id}
+//                         className="hover:bg-gray-50 transition-colors"
+//                       >
+//                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+//                           {query.fullName}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {query.phoneNumber}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {query.email || "N/A"}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {formatDate(query.createdAt)}
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+
+//             <Pagination totalItems={filteredQueries.length} section="queries" />
+//           </div>
+//         );
+
+//       case "contacts":
+//         const filteredContacts = getFilteredData(
+//           "contacts"
+//         ) as ContactSubmission[];
+//         const paginatedContacts = getPaginatedData(filteredContacts);
+
+//         return (
+//           <div>
+//             <TableHeader
+//               title="Contact Submissions"
+//               data={filteredContacts}
+//               filename="contacts"
+//               columns={[
+//                 "Full Name",
+//                 "Course",
+//                 "City",
+//                 "Phone Number",
+//                 "Email",
+//                 "Date",
+//               ]}
+//               searchValue={contactFilter}
+//               onSearchChange={setContactFilter}
+//             />
+
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full divide-y divide-gray-200">
+//                   <thead className="bg-gray-50">
+//                     <tr>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Full Name
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Course
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         City
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Phone Number
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Email
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Date
+//                       </th>
+//                     </tr>
+//                   </thead>
+//                   <tbody className="bg-white divide-y divide-gray-200">
+//                     {paginatedContacts.map((contact) => (
+//                       <tr
+//                         key={contact._id}
+//                         className="hover:bg-gray-50 transition-colors"
+//                       >
+//                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+//                           {contact.fullName}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <Badge variant="outline">{contact.course}</Badge>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {contact.city}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {contact.phoneNumber}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {contact.email || "N/A"}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {formatDate(contact.createdAt)}
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+
+//             <Pagination
+//               totalItems={filteredContacts.length}
+//               section="contacts"
+//             />
+//           </div>
+//         );
+
+//       case "bookings":
+//         const filteredBookings = getFilteredData("bookings");
+//         const paginatedBookings = getPaginatedData(filteredBookings);
+
+//         return (
+//           <div>
+//             <TableHeader
+//               title="One-to-One Bookings"
+//               data={filteredBookings}
+//               filename="bookings"
+//               columns={[
+//                 "Full Name",
+//                 "Domain",
+//                 "Booking Date",
+//                 "Email",
+//                 "Message",
+//                 "Phone Number",
+//                 "Time",
+//                 "Date",
+//               ]}
+//               searchValue={bookingFilter}
+//               onSearchChange={setBookingFilter}
+//             />
+
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full divide-y divide-gray-200">
+//                   <thead className="bg-gray-50">
+//                     <tr>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Full Name
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Domain
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Booking Date
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Contact
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Message
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Time
+//                       </th>
+//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                         Submitted
+//                       </th>
+//                     </tr>
+//                   </thead>
+//                   <tbody className="bg-white divide-y divide-gray-200">
+//                     {paginatedBookings.map((booking: any, idx: number) => (
+//                       <tr
+//                         key={idx}
+//                         className="hover:bg-gray-50 transition-colors"
+//                       >
+//                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+//                           {booking.fullName}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <Badge variant="outline">{booking.domain}</Badge>
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {booking.date}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap">
+//                           <div>
+//                             <div className="text-sm text-gray-900">
+//                               {booking.email || "N/A"}
+//                             </div>
+//                             <div className="text-sm text-gray-500">
+//                               {booking.phoneNumber}
+//                             </div>
+//                           </div>
+//                         </td>
+//                         <td
+//                           className="px-6 py-4 max-w-xs truncate text-gray-600"
+//                           title={booking.message}
+//                         >
+//                           {booking.message}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {booking.time}
+//                         </td>
+//                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+//                           {formatDate(booking.createdAt)}
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+
+//             <Pagination
+//               totalItems={filteredBookings.length}
+//               section="bookings"
+//             />
+//           </div>
+//         );
+
+//       default:
+//         return <div>Section not found</div>;
+//     }
+//   };
+
+//   return (
+//     <div className="flex h-screen bg-gray-50">
+//       <Toaster position="top-right" />
+
+//       {/* Sidebar */}
+//       <Sidebar />
+
+//       {/* Overlay for mobile */}
+//       {sidebarOpen && (
+//         <div
+//           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+//           onClick={() => setSidebarOpen(false)}
+//         />
+//       )}
+
+//       {/* Main content */}
+//       <div className="flex-1 flex flex-col overflow-hidden lg:ml-0">
+//         <Header />
+//         <main className="flex-1 overflow-y-auto p-6">{renderContent()}</main>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AdminDashboard;
+
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client"
+
+import React from "react" // Ensure React is imported for React.memo and React.FC
+import { useState, useEffect, useCallback, useMemo } from "react"
+import axios from "axios"
+import jsPDF from "jspdf"
+import "jspdf-autotable"
+import toast, { Toaster } from "react-hot-toast"
+import {
+  FiDownload,
+  FiChevronLeft,
+  FiChevronRight,
+  FiMenu,
+  FiX,
+  FiUser,
+  FiMail,
+  FiCalendar,
+  FiBook,
+  FiBriefcase,
+  FiBarChart2,
+  FiUsers,
+  FiClipboard,
+  FiHelpCircle,
+  FiPhone,
+  FiFilter,
+  FiSearch,
+  FiRefreshCw,
+  FiTrendingUp,
+  FiEye,
+} from "react-icons/fi"
+
+// Types
 interface EnrollmentStats {
-  _id: string;
-  count: number;
-  totalAmount: number;
+  _id: string
+  count: number
+  totalAmount: number
 }
 
 interface Enrollment {
-  _id: string;
-  courseId: string;
-  courseName?: string;
-  courseTitle?: string;
-  amount: number;
-  createdAt: string;
-  userId: string;
-  name: string;
-  email: string;
-  phone: string;
-  orderType: string;
-  status: string;
-  razorpayOrderId: string;
-  razorpayPaymentId: string;
+  _id: string
+  courseId: string
+  courseName?: string
+  courseTitle?: string
+  amount: number
+  createdAt: string
+  userId: any
+  name: string
+  email: string
+  phone: string
+  orderType: string
+  status: string
+  razorpayOrderId: string
+  razorpayPaymentId: string
 }
 
 interface QuerySubmission {
-  _id: string;
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  createdAt: string;
+  _id: string
+  fullName: string
+  phoneNumber: string
+  email: string
+  createdAt: string
 }
 
 interface ContactSubmission {
-  _id: string;
-  fullName: string;
-  course: string;
-  city: string;
-  phoneNumber: string;
-  email: string;
-  createdAt: string;
+  _id: string
+  fullName: string
+  course: string
+  city: string
+  phoneNumber: string
+  email: string
+  createdAt: string
 }
 
+interface User {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+  createdAt: string
+  updatedAt: string
+  enrollments: any[]
+}
+
+interface BookingSubmission {
+  _id?: string
+  fullName: string
+  domain: string
+  date: string
+  email?: string
+  message: string
+  phoneNumber: string
+  time: string
+  createdAt: string
+}
+
+// Memoized SearchInput component to prevent focus loss
+const SearchInput = React.memo(
+  ({
+    value,
+    onChange,
+    placeholder,
+  }: {
+    value: string
+    onChange: (value: string) => void
+    placeholder: string
+  }) => {
+    return (
+      <div className="relative">
+        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+        />
+      </div>
+    )
+  },
+)
+SearchInput.displayName = "SearchInput"
+
+// Memoized EnrollmentFilters component
+const EnrollmentFilters = React.memo(
+  ({
+    filters,
+    onFilterChange,
+    onApplyFilters,
+  }: {
+    filters: { startDate: string; endDate: string; orderType: string; feeStatus: string }
+    onFilterChange: (key: string, value: string) => void
+    onApplyFilters: () => void
+  }) => {
+    return (
+      <>
+        <input
+          type="date"
+          value={filters.startDate}
+          onChange={(e) => onFilterChange("startDate", e.target.value)}
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        />
+        <input
+          type="date"
+          value={filters.endDate}
+          onChange={(e) => onFilterChange("endDate", e.target.value)}
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        />
+        <select
+          value={filters.orderType}
+          onChange={(e) => onFilterChange("orderType", e.target.value)}
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        >
+          <option value="all">All Types</option>
+          <option value="course">Course</option>
+          <option value="internship">Internship</option>
+        </select>
+        <select
+          value={filters.feeStatus}
+          onChange={(e) => onFilterChange("feeStatus", e.target.value)}
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        >
+          <option value="all">Status</option>
+          <option value="paid">Paid</option>
+          <option value="created">Created</option>
+        </select>
+        <button
+          onClick={onApplyFilters}
+          className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+        >
+          <FiFilter className="h-4 w-4 mr-2" />
+          Filter
+        </button>
+      </>
+    )
+  },
+)
+EnrollmentFilters.displayName = "EnrollmentFilters"
+
+// Table header with filters and export - Memoized
+const TableHeader = React.memo(
+  ({
+    title,
+    data,
+    filename,
+    columns,
+    searchValue,
+    onSearchChange,
+    additionalFilters,
+  }: {
+    title: string
+    data: any[]
+    filename: string
+    columns: string[]
+    searchValue: string
+    onSearchChange?: (value: string) => void
+    additionalFilters?: React.ReactNode
+  }) => {
+    const formatDate = useCallback((dateString: string) => {
+      return new Date(dateString).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    }, [])
+
+    const formatCurrency = useCallback((amount: number) => {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+      }).format(amount)
+    }, [])
+
+    const exportToPDF = useCallback(
+      (data: any[], filename: string, columns: string[], title: string) => {
+        const doc = new jsPDF()
+        doc.setFontSize(20)
+        doc.setTextColor(40, 40, 40)
+        doc.text(title, 20, 20)
+        doc.setFontSize(10)
+        doc.setTextColor(100, 100, 100)
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 30)
+        doc.setFontSize(12)
+        doc.setTextColor(40, 40, 40)
+        doc.text(`Total Records: ${data.length}`, 20, 40)
+
+        let tableRows: any[] = []
+        if (filename.includes("user")) {
+          tableRows = data.map((user: User) => [
+            `${user.firstName} ${user.lastName}`,
+            user.email,
+            formatDate(user.createdAt),
+            user.enrollments.length,
+          ])
+        } else if (filename.includes("enrollment")) {
+          tableRows = data.map((enrollment: Enrollment) => [
+            enrollment.courseId,
+            `${enrollment.userId?.firstName || ""} ${enrollment.userId?.lastName || ""}`,
+            enrollment.name,
+            formatCurrency(enrollment.amount),
+            formatDate(enrollment.createdAt),
+            enrollment.orderType,
+            enrollment.status,
+          ])
+        } else if (filename.includes("query")) {
+          tableRows = data.map((query: QuerySubmission) => [
+            query.fullName,
+            query.phoneNumber,
+            query.email || "",
+            formatDate(query.createdAt),
+          ])
+        } else if (filename.includes("contact")) {
+          tableRows = data.map((contact: ContactSubmission) => [
+            contact.fullName,
+            contact.course,
+            contact.city,
+            contact.phoneNumber,
+            contact.email || "",
+            formatDate(contact.createdAt),
+          ])
+        }
+        ;(doc as any).autoTable({
+          startY: 50,
+          head: [columns],
+          body: tableRows,
+          theme: "grid",
+          headStyles: { fillColor: [59, 130, 246], textColor: 255, fontSize: 12, halign: "center" },
+          bodyStyles: { fontSize: 10 },
+          alternateRowStyles: { fillColor: [245, 245, 245] },
+          margin: { top: 50 },
+          styles: { cellPadding: 3, fontSize: 10, valign: "middle", overflow: "linebreak", cellWidth: "auto" },
+        })
+
+        const pageCount = (doc as any).internal.getNumberOfPages()
+        for (let i = 1; i <= pageCount; i++) {
+          doc.setPage(i)
+          doc.setFontSize(10)
+          doc.setTextColor(100, 100, 100)
+          doc.text(
+            `Page ${i} of ${pageCount}`,
+            (doc as any).internal.pageSize.getWidth() - 30,
+            (doc as any).internal.pageSize.getHeight() - 10,
+          )
+        }
+        doc.save(`${filename}.pdf`)
+        toast.success(`${title} exported as PDF successfully!`)
+      },
+      [formatDate, formatCurrency],
+    )
+
+    const exportToCSV = useCallback(
+      (data: any[], filename: string, columns: string[]) => {
+        let csvData: any[] = []
+        if (filename.includes("user")) {
+          csvData = data.map((user: User) => [
+            `${user.firstName} ${user.lastName}`,
+            user.email,
+            formatDate(user.createdAt),
+            user.enrollments.length,
+          ])
+        } else if (filename.includes("enrollment")) {
+          csvData = data.map((enrollment: Enrollment) => [
+            enrollment.courseId,
+            `${enrollment.userId?.firstName || ""} ${enrollment.userId?.lastName || ""}`,
+            enrollment.userId?.email || "",
+            enrollment.name,
+            enrollment.email || "",
+            enrollment.phone,
+            enrollment.amount.toFixed(2),
+            formatDate(enrollment.createdAt),
+            enrollment.orderType,
+            enrollment.status,
+          ])
+        } else if (filename.includes("query")) {
+          csvData = data.map((query: QuerySubmission) => [
+            query.fullName,
+            query.phoneNumber,
+            query.email || "",
+            formatDate(query.createdAt),
+          ])
+        } else if (filename.includes("contact")) {
+          csvData = data.map((contact: ContactSubmission) => [
+            contact.fullName,
+            contact.course,
+            contact.city,
+            contact.phoneNumber,
+            contact.email || "",
+            formatDate(contact.createdAt),
+          ])
+        }
+
+        const csvContent = [
+          columns.join(","),
+          ...csvData.map((row) => row.map((cell: any) => `"${cell}"`).join(",")),
+        ].join("\n")
+        const blob = new Blob(["\ufeff" + csvContent], { type: "text/csv;charset=utf-8;" })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.href = url
+        a.download = `${filename}.csv`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+        toast.success("Data exported as CSV successfully!")
+      },
+      [formatDate],
+    )
+
+    return (
+      <div className="mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">{title}</h2>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => exportToPDF(data, filename, columns, title)}
+              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              <FiDownload className="h-4 w-4 mr-2" />
+              PDF
+            </button>
+            <button
+              onClick={() => exportToCSV(data, filename, columns)}
+              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              <FiDownload className="h-4 w-4 mr-2" />
+              CSV
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 mb-4">
+          {/* Use memoized SearchInput only if onSearchChange is provided (not for enrollments) */}
+          {onSearchChange && (
+            <SearchInput
+              value={searchValue}
+              onChange={onSearchChange}
+              placeholder={`Search ${title.toLowerCase()}...`}
+            />
+          )}
+          {additionalFilters && <div className="flex flex-wrap gap-2">{additionalFilters}</div>}
+        </div>
+      </div>
+    )
+  },
+)
+TableHeader.displayName = "TableHeader"
+
 const AdminDashboard: React.FC = () => {
-  const [stats, setStats] = useState<EnrollmentStats[]>([]);
-  const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
-  const [queries, setQueries] = useState<QuerySubmission[]>([]);
-  const [contacts, setContacts] = useState<ContactSubmission[]>([]);
-  const [bookings, setBookings] = useState<any>([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [orderType, setOrderType] = useState("");
-  const [queryFilter, setQueryFilter] = useState("");
-  const [contactFilter, setContactFilter] = useState("");
-  const [bookingFilter, setBookingFilter] = useState("");
+  const [activeSection, setActiveSection] = useState("dashboard")
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  // New state for pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [enrollmentsPerPage, setEnrollmentsPerPage] = useState(5);
+  const [stats, setStats] = useState<EnrollmentStats[]>([])
+  const [enrollments, setEnrollments] = useState<Enrollment[]>([])
+  const [queries, setQueries] = useState<QuerySubmission[]>([])
+  const [contacts, setContacts] = useState<ContactSubmission[]>([])
+  const [bookings, setBookings] = useState<BookingSubmission[]>([])
+  const [allUser, setAllUser] = useState<User[]>([])
 
-  // New state for query pagination
-  const [currentQueryPage, setCurrentQueryPage] = useState(1);
-  const [queriesPerPage, setQueriesPerPage] = useState(5);
+  const [filters, setFilters] = useState({
+    startDate: "",
+    endDate: "",
+    orderType: "all",
+    feeStatus: "all",
+    queryFilter: "",
+    contactFilter: "",
+    bookingFilter: "",
+    userFilter: "",
+  })
 
-  // New state for contact pagination
-  const [currentContactPage, setCurrentContactPage] = useState(1);
-  const [contactsPerPage, setContactsPerPage] = useState(5);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    itemsPerPage: 10,
+  })
 
-  const [allUser, setAllUser] = useState<any>([]);
-  const { getAllUsers } = useAuth();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const userData = async () => {
+  const handleFilterChange = useCallback((key: string, value: string) => {
+    setFilters((prev) => ({ ...prev, [key]: value }))
+  }, [])
+
+  const handlePaginationChange = useCallback((key: string, value: number) => {
+    setPagination((prev) => ({ ...prev, [key]: value }))
+  }, [])
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL || ""
+
+  const fetchUsers = useCallback(async () => {
     try {
-      const res = await getAllUsers();
-      setAllUser(res);
+      const response = await axios.get(`${API_BASE_URL}/api/auth/get-all-users`, { withCredentials: true })
+      setAllUser(response.data)
     } catch (error) {
-      console.log("error in get user: ", error);
+      console.error("Error fetching users:", error)
+      toast.error("Failed to fetch users")
     }
-  };
+  }, [API_BASE_URL])
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/admin/enrollment-stats`, { withCredentials: true })
+      setStats(response.data)
+    } catch (error) {
+      console.error("Error fetching stats:", error)
+    }
+  }, [API_BASE_URL])
+
+  const fetchEnrollments = useCallback(async () => {
+    // This function is now also the onApplyFilters for EnrollmentFilters
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/admin/filtered-enrollments`, {
+        params: {
+          startDate: filters.startDate,
+          endDate: filters.endDate,
+          orderType: filters.orderType === "all" ? "" : filters.orderType,
+          status: filters.feeStatus === "all" ? "" : filters.feeStatus,
+        },
+        withCredentials: true,
+      })
+      setEnrollments(response.data)
+      toast.success("Enrollments filtered successfully!")
+    } catch (error) {
+      console.error("Error fetching enrollments:", error)
+      toast.error("Failed to filter enrollments.")
+    }
+  }, [API_BASE_URL, filters.startDate, filters.endDate, filters.orderType, filters.feeStatus])
+
+  const fetchQueries = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/all-queries`, { withCredentials: true })
+      setQueries(response.data)
+    } catch (error) {
+      console.error("Error fetching queries:", error)
+    }
+  }, [API_BASE_URL])
+
+  const fetchContacts = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/all-contacts`, { withCredentials: true })
+      setContacts(response.data)
+    } catch (error) {
+      console.error("Error fetching contacts:", error)
+    }
+  }, [API_BASE_URL])
+
+  const fetchBookings = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/get-bookings`, { withCredentials: true })
+      setBookings(response.data)
+    } catch (error) {
+      console.error("Error fetching bookings:", error)
+    }
+  }, [API_BASE_URL])
+
+  const fetchAllData = useCallback(async () => {
+    setLoading(true)
+    try {
+      await Promise.all([
+        fetchStats(),
+        fetchEnrollments(), // Initial fetch for enrollments
+        fetchQueries(),
+        fetchContacts(),
+        fetchBookings(),
+        fetchUsers(),
+      ])
+      toast.success("Data refreshed successfully!")
+    } catch (error) {
+      console.error("Error fetching data:", error)
+      toast.error("Failed to refresh data. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }, [fetchStats, fetchEnrollments, fetchQueries, fetchContacts, fetchBookings, fetchUsers])
 
   useEffect(() => {
-    userData();
-    fetchStats();
-    fetchEnrollments();
-    fetchQueries();
-    fetchContacts();
-    fetchBookings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchAllData()
+  }, [fetchAllData])
 
-  const fetchStats = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/admin/enrollment-stats`,
-        {
-          withCredentials: true,
+  const sidebarItems = useMemo(
+    () => [
+      { id: "dashboard", label: "Dashboard", icon: FiBarChart2 },
+      { id: "users", label: "Users", icon: FiUsers },
+      { id: "enrollments", label: "Enrollments", icon: FiClipboard },
+      { id: "queries", label: "Queries", icon: FiHelpCircle },
+      { id: "contacts", label: "Contacts", icon: FiPhone },
+      { id: "bookings", label: "Bookings", icon: FiCalendar },
+    ],
+    [],
+  )
+
+  const formatDate = useCallback((dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  }, [])
+
+  const formatCurrency = useCallback((amount: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(amount)
+  }, [])
+
+  const getFilteredData = useMemo(() => {
+    // This function itself is memoized, its stability depends on its dependencies.
+    // The dependencies are individual filter strings, which is good.
+    return (section: string) => {
+      switch (section) {
+        case "users": {
+          const filteredUsers = allUser.filter(
+            (user) =>
+              filters.userFilter === "" ||
+              user.firstName.toLowerCase().includes(filters.userFilter.toLowerCase()) ||
+              user.lastName.toLowerCase().includes(filters.userFilter.toLowerCase()) ||
+              user.email.toLowerCase().includes(filters.userFilter.toLowerCase()),
+          )
+          return filteredUsers
         }
-      );
-      setStats(response.data);
-    } catch (error) {
-      console.error("Error fetching stats:", error);
-    }
-  };
-
-  const fetchEnrollments = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/admin/filtered-enrollments`,
-        {
-          params: { startDate, endDate, orderType },
-          withCredentials: true,
+        case "queries": {
+          const filteredQueries = queries.filter(
+            (query) =>
+              filters.queryFilter === "" ||
+              query.fullName.toLowerCase().includes(filters.queryFilter.toLowerCase()) ||
+              (query.email && query.email.toLowerCase().includes(filters.queryFilter.toLowerCase())) ||
+              query.phoneNumber.includes(filters.queryFilter),
+          )
+          return filteredQueries
         }
-      );
-      setEnrollments(response.data);
-    } catch (error) {
-      console.error("Error fetching enrollments:", error);
-    }
-  };
-
-  const fetchQueries = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/all-queries`,
-        {
-          withCredentials: true,
+        case "contacts": {
+          const filteredContacts = contacts.filter(
+            (contact) =>
+              filters.contactFilter === "" ||
+              contact.fullName.toLowerCase().includes(filters.contactFilter.toLowerCase()) ||
+              (contact.email && contact.email.toLowerCase().includes(filters.contactFilter.toLowerCase())) ||
+              contact.phoneNumber.includes(filters.contactFilter) ||
+              contact.course.toLowerCase().includes(filters.contactFilter.toLowerCase()) ||
+              contact.city.toLowerCase().includes(filters.contactFilter.toLowerCase()),
+          )
+          return filteredContacts
         }
-      );
-      setQueries(response.data);
-    } catch (error) {
-      console.error("Error fetching queries:", error);
-    }
-  };
-
-  const fetchContacts = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/all-contacts`,
-        {
-          withCredentials: true,
+        case "bookings": {
+          const filteredBookings = bookings.filter(
+            (booking: BookingSubmission) =>
+              filters.bookingFilter === "" ||
+              booking.fullName.toLowerCase().includes(filters.bookingFilter.toLowerCase()) ||
+              booking.domain.toLowerCase().includes(filters.bookingFilter.toLowerCase()) ||
+              booking.date.includes(filters.bookingFilter) ||
+              (booking.email && booking.email.toLowerCase().includes(filters.bookingFilter.toLowerCase())) ||
+              booking.message.toLowerCase().includes(filters.bookingFilter.toLowerCase()) ||
+              booking.phoneNumber.toLowerCase().includes(filters.bookingFilter.toLowerCase()) ||
+              booking.time.toLowerCase().includes(filters.bookingFilter.toLowerCase()),
+          )
+          return filteredBookings
         }
-      );
-      setContacts(response.data);
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
+        default:
+          return []
+      }
     }
-  };
+  }, [
+    allUser,
+    queries,
+    contacts,
+    bookings,
+    filters.userFilter,
+    filters.queryFilter,
+    filters.contactFilter,
+    filters.bookingFilter,
+  ])
 
-  const fetchBookings = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/get-bookings`,
-        {
-          withCredentials: true,
-        }
-      );
-      setBookings(response.data);
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
+  const getPaginatedData = useCallback(
+    (data: any[]) => {
+      const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage
+      const endIndex = startIndex + pagination.itemsPerPage
+      return data.slice(startIndex, endIndex)
+    },
+    [pagination.currentPage, pagination.itemsPerPage],
+  )
+
+  const getTotalPages = useCallback(
+    (dataLength: number) => {
+      return Math.ceil(dataLength / pagination.itemsPerPage)
+    },
+    [pagination.itemsPerPage],
+  )
+
+  useEffect(() => {
+    handlePaginationChange("currentPage", 1)
+  }, [activeSection, handlePaginationChange])
+
+  const Sidebar = useMemo(
+    () => () => (
+      <div
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Admin Panel</h2>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
+          >
+            <FiX className="h-5 w-5" />
+          </button>
+        </div>
+        <nav className="mt-6 px-3">
+          {sidebarItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                setActiveSection(item.id)
+                setSidebarOpen(false)
+              }}
+              className={`w-full flex items-center px-3 py-2 mb-1 text-left rounded-lg transition-colors duration-200 ${
+                activeSection === item.id
+                  ? "bg-blue-50 text-blue-700 border-r-2 border-blue-700"
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              }`}
+            >
+              <item.icon className="h-5 w-5 mr-3 flex-shrink-0" />
+              <span className="truncate">{item.label}</span>
+            </button>
+          ))}
+        </nav>
+      </div>
+    ),
+    [sidebarOpen, activeSection, sidebarItems],
+  ) // Added dependencies
+
+  const Header = useMemo(
+    () => () => (
+      <header className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center min-w-0">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden mr-2 p-2 rounded-md hover:bg-gray-100 transition-colors flex-shrink-0"
+            >
+              <FiMenu className="h-5 w-5" />
+            </button>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 capitalize truncate">
+              {activeSection === "dashboard" ? "Dashboard Overview" : activeSection}
+            </h1>
+          </div>
+          <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+            <button
+              onClick={fetchAllData}
+              disabled={loading}
+              className="flex items-center px-3 sm:px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <FiRefreshCw className={`h-4 w-4 mr-0 sm:mr-2 ${loading ? "animate-spin" : ""}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </button>
+          </div>
+        </div>
+      </header>
+    ),
+    [activeSection, loading, fetchAllData],
+  ) // Added dependencies
+
+  const StatsCards = useMemo(
+    () => () => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        {stats.map((stat) => (
+          <div
+            key={stat._id}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow duration-200"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-medium text-gray-600 truncate">{stat._id}</h3>
+              <FiTrendingUp className="h-5 w-5 text-green-600 flex-shrink-0" />
+            </div>
+            <div className="space-y-2">
+              <div className="text-xl sm:text-2xl font-bold text-gray-900">{stat.count}</div>
+              <p className="text-xs sm:text-sm text-gray-600">Total Enrollments</p>
+              <div className="text-base sm:text-lg font-semibold text-green-600">
+                {formatCurrency(stat.totalAmount)}
+              </div>
+              <p className="text-xs text-gray-500">Total Revenue</p>
+            </div>
+          </div>
+        ))}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-gray-600">Total Users</h3>
+            <FiUsers className="h-5 w-5 text-blue-600" />
+          </div>
+          <div className="space-y-2">
+            <div className="text-xl sm:text-2xl font-bold text-gray-900">{allUser.length}</div>
+            <p className="text-xs sm:text-sm text-gray-600">Registered Users</p>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-gray-600">Total Queries</h3>
+            <FiHelpCircle className="h-5 w-5 text-orange-600" />
+          </div>
+          <div className="space-y-2">
+            <div className="text-xl sm:text-2xl font-bold text-gray-900">{queries.length}</div>
+            <p className="text-xs sm:text-sm text-gray-600">Query Submissions</p>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-gray-600">Total Contacts</h3>
+            <FiPhone className="h-5 w-5 text-purple-600" />
+          </div>
+          <div className="space-y-2">
+            <div className="text-xl sm:text-2xl font-bold text-gray-900">{contacts.length}</div>
+            <p className="text-xs sm:text-sm text-gray-600">Contact Submissions</p>
+          </div>
+        </div>
+      </div>
+    ),
+    [stats, allUser.length, queries.length, contacts.length],
+  ) // Added dependencies
+
+  const PaginationComponent = React.memo(
+    ({
+      totalItems,
+    }: {
+      totalItems: number
+    }) => {
+      const totalPages = getTotalPages(totalItems)
+      if (totalPages === 0) return null
+      const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage + 1
+      const endIndex = Math.min(pagination.currentPage * pagination.itemsPerPage, totalItems)
+
+      return (
+        <div className="flex flex-col sm:flex-row items-center justify-between mt-6 gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <span className="text-sm text-gray-700 text-center sm:text-left">
+              Showing {startIndex} to {endIndex} of {totalItems} entries
+            </span>
+            <select
+              value={pagination.itemsPerPage.toString()}
+              onChange={(e) => {
+                handlePaginationChange("itemsPerPage", Number(e.target.value))
+                handlePaginationChange("currentPage", 1) // Reset to page 1
+              }}
+              className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option value="5">5 per page</option>
+              <option value="10">10 per page</option>
+              <option value="25">25 per page</option>
+              <option value="50">50 per page</option>
+            </select>
+          </div>
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <button
+              onClick={() => handlePaginationChange("currentPage", Math.max(1, pagination.currentPage - 1))}
+              disabled={pagination.currentPage === 1}
+              className="p-2 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <FiChevronLeft className="h-4 w-4" />
+            </button>
+            <div className="flex space-x-1">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum = i + 1
+                if (totalPages > 5 && pagination.currentPage > 3) {
+                  pageNum = pagination.currentPage - 2 + i
+                }
+                if (pageNum > totalPages) return null
+                if (pageNum <= 0) return null // Ensure pageNum is positive
+
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePaginationChange("currentPage", pageNum)}
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-md text-sm font-medium transition-colors ${
+                      pagination.currentPage === pageNum
+                        ? "bg-blue-600 text-white"
+                        : "border border-gray-300 hover:bg-gray-50"
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              })}
+            </div>
+            <button
+              onClick={() => handlePaginationChange("currentPage", Math.min(totalPages, pagination.currentPage + 1))}
+              disabled={pagination.currentPage === totalPages}
+              className="p-2 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <FiChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )
+    },
+  )
+  PaginationComponent.displayName = "PaginationComponent"
+
+  const UserModal = React.memo(
+    ({
+      user,
+      isOpen,
+      onClose,
+    }: {
+      user: User | null
+      isOpen: boolean
+      onClose: () => void
+    }) => {
+      if (!isOpen || !user) return null
+      return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-4 sm:p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl sm:text-2xl font-semibold flex items-center gap-2">
+                  <FiUser className="h-5 w-5" /> User Details
+                </h2>
+                <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                  <FiX className="w-6 h-6" />
+                </button>
+              </div>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2">
+                    <FiUser className="text-blue-500 h-4 w-4 flex-shrink-0" />
+                    <span className="font-medium">Name:</span>
+                    <span className="truncate">
+                      {user.firstName} {user.lastName}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FiMail className="text-blue-500 h-4 w-4 flex-shrink-0" />
+                    <span className="font-medium">Email:</span>
+                    <span className="truncate">{user.email}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FiCalendar className="text-blue-500 h-4 w-4 flex-shrink-0" />
+                    <span className="font-medium">Joined:</span>
+                    <span>{formatDate(user.createdAt)}</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                    <FiBook className="text-blue-500 h-4 w-4" /> Enrollments ({user.enrollments.length})
+                  </h3>
+                  {user.enrollments.length > 0 ? (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="space-y-3">
+                        {user.enrollments.map((enrollment: any) => (
+                          <div key={enrollment._id} className="flex items-center gap-3 p-2 bg-white rounded border">
+                            {enrollment.type === "course" ? (
+                              <FiBook className="text-blue-500 h-4 w-4 flex-shrink-0" />
+                            ) : (
+                              <FiBriefcase className="text-green-500 h-4 w-4 flex-shrink-0" />
+                            )}
+                            <div className="min-w-0">
+                              <span className="capitalize font-medium">{enrollment.type}</span>
+                              <p className="text-sm text-gray-500 truncate">ID: {enrollment.item}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 bg-gray-50 rounded-lg p-4">No enrollments yet</p>
+                  )}
+                </div>
+                <div className="text-sm text-gray-500 pt-4 border-t">Last updated: {formatDate(user.updatedAt)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+  )
+  UserModal.displayName = "UserModal"
+
+  const Badge = React.memo(
+    ({
+      children,
+      variant = "default",
+    }: {
+      children: React.ReactNode
+      variant?: "default" | "secondary" | "destructive" | "outline"
+    }) => {
+      const baseClasses = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+      const variantClasses = {
+        default: "bg-blue-100 text-blue-800",
+        secondary: "bg-gray-100 text-gray-800",
+        destructive: "bg-red-100 text-red-800",
+        outline: "border border-gray-300 text-gray-700",
+      }
+      return <span className={`${baseClasses} ${variantClasses[variant]}`}>{children}</span>
+    },
+  )
+  Badge.displayName = "Badge"
+
+  // Memoized enrollment filters specifically for the enrollments section
+  const memoizedEnrollmentFilters = useMemo(() => {
+    return (
+      <EnrollmentFilters
+        filters={{
+          startDate: filters.startDate,
+          endDate: filters.endDate,
+          orderType: filters.orderType,
+          feeStatus: filters.feeStatus,
+        }}
+        onFilterChange={handleFilterChange}
+        onApplyFilters={fetchEnrollments} // fetchEnrollments is already useCallback'd
+      />
+    )
+  }, [filters.startDate, filters.endDate, filters.orderType, filters.feeStatus, handleFilterChange, fetchEnrollments])
+
+  const renderContent = useCallback(() => {
+    switch (activeSection) {
+      case "dashboard":
+        return (
+          <div className="space-y-6">
+            <StatsCards />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+              <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+              <p className="text-gray-600">
+                Welcome to your admin dashboard. Use the sidebar to navigate between different sections.
+              </p>
+            </div>
+          </div>
+        )
+
+      case "users": {
+        const filteredUsers = getFilteredData("users") as User[]
+        const paginatedUsers = getPaginatedData(filteredUsers)
+        return (
+          <div>
+            <TableHeader
+              title="Registered Users"
+              data={filteredUsers}
+              filename="users"
+              columns={["Name", "Email", "Join Date", "Enrollments"]}
+              searchValue={filters.userFilter}
+              onSearchChange={(value) => handleFilterChange("userFilter", value)}
+            />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        User
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Join Date
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Enrollments
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {paginatedUsers.map((user) => (
+                      <tr key={user._id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                              <span className="text-sm font-medium text-blue-600">{user.firstName.charAt(0)}</span>
+                            </div>
+                            <div className="min-w-0">
+                              <div className="font-medium text-gray-900 truncate">
+                                {user.firstName} {user.lastName}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          <div className="truncate max-w-xs">{user.email}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {formatDate(user.createdAt)}
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <Badge variant="secondary">{user.enrollments.length}</Badge>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => {
+                              setSelectedUser(user)
+                              setIsModalOpen(true)
+                            }}
+                            className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                          >
+                            <FiEye className="h-4 w-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <PaginationComponent totalItems={filteredUsers.length} />
+            <UserModal user={selectedUser} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          </div>
+        )
+      }
+
+      case "enrollments": {
+        const paginatedEnrollments = getPaginatedData(enrollments)
+        return (
+          <div>
+            <TableHeader
+              title="Enrollments"
+              data={enrollments}
+              filename="enrollments"
+              columns={["ID", "User Name", "Student Name", "Amount", "Date", "Type", "Status"]}
+              searchValue="" // No search for enrollments in this setup
+              // onSearchChange is not passed, so SearchInput won't render for enrollments
+              additionalFilters={memoizedEnrollmentFilters}
+              // onSearchChange={()=>""}
+            />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Course/Internship ID
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Student Details
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Amount
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Date
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Type
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {paginatedEnrollments.map((enrollment: any) => (
+                      <tr key={enrollment._id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="font-medium text-gray-900 truncate">{enrollment.courseId}</div>
+                            <div className="text-sm text-gray-500 truncate">
+                              User: {enrollment.userId?.firstName} {enrollment.userId?.lastName}
+                            </div>
+                            <div className="text-sm text-gray-500 truncate">Email: {enrollment.userId?.email}</div>
+                          </div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="font-medium text-gray-900 truncate">{enrollment.name}</div>
+                            <div className="text-sm text-gray-500 truncate">{enrollment.email}</div>
+                            <div className="text-sm text-gray-500">{enrollment.phone}</div>
+                          </div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                          {formatCurrency(enrollment.amount)}
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {formatDate(enrollment.createdAt)}
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <Badge variant={enrollment.orderType === "course" ? "default" : "secondary"}>
+                            {enrollment.orderType}
+                          </Badge>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <Badge
+                            variant={
+                              enrollment.status === "paid"
+                                ? "default"
+                                : enrollment.status === "pending"
+                                  ? "secondary"
+                                  : "destructive"
+                            }
+                          >
+                            {enrollment.status}
+                          </Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <PaginationComponent totalItems={enrollments.length} />
+          </div>
+        )
+      }
+
+      case "queries": {
+        const filteredQueries = getFilteredData("queries") as QuerySubmission[]
+        const paginatedQueries = getPaginatedData(filteredQueries)
+        return (
+          <div>
+            <TableHeader
+              title="Query Submissions"
+              data={filteredQueries}
+              filename="queries"
+              columns={["Full Name", "Phone Number", "Email", "Date"]}
+              searchValue={filters.queryFilter}
+              onSearchChange={(value) => handleFilterChange("queryFilter", value)}
+            />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Full Name
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Phone Number
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Date
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {paginatedQueries.map((query) => (
+                      <tr key={query._id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                          <div className="truncate max-w-xs">{query.fullName}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">{query.phoneNumber}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          <div className="truncate max-w-xs">{query.email || "N/A"}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {formatDate(query.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <PaginationComponent totalItems={filteredQueries.length} />
+          </div>
+        )
+      }
+
+      case "contacts": {
+        const filteredContacts = getFilteredData("contacts") as ContactSubmission[]
+        const paginatedContacts = getPaginatedData(filteredContacts)
+        return (
+          <div>
+            <TableHeader
+              title="Contact Submissions"
+              data={filteredContacts}
+              filename="contacts"
+              columns={["Full Name", "Course", "City", "Phone Number", "Email", "Date"]}
+              searchValue={filters.contactFilter}
+              onSearchChange={(value) => handleFilterChange("contactFilter", value)}
+            />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Full Name
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Course
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        City
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Phone Number
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Date
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {paginatedContacts.map((contact) => (
+                      <tr key={contact._id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                          <div className="truncate max-w-xs">{contact.fullName}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <Badge variant="outline">{contact.course}</Badge>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          <div className="truncate max-w-xs">{contact.city}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">{contact.phoneNumber}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          <div className="truncate max-w-xs">{contact.email || "N/A"}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {formatDate(contact.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <PaginationComponent totalItems={filteredContacts.length} />
+          </div>
+        )
+      }
+
+      case "bookings": {
+        const filteredBookings = getFilteredData("bookings") as BookingSubmission[]
+        const paginatedBookings = getPaginatedData(filteredBookings)
+        return (
+          <div>
+            <TableHeader
+              title="One-to-One Bookings"
+              data={filteredBookings}
+              filename="bookings"
+              columns={["Full Name", "Domain", "Booking Date", "Email", "Message", "Phone Number", "Time", "Date"]}
+              searchValue={filters.bookingFilter}
+              onSearchChange={(value) => handleFilterChange("bookingFilter", value)}
+            />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Full Name
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Domain
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Booking Date
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Contact
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Message
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Time
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Submitted
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {paginatedBookings.map((booking, idx) => (
+                      <tr key={booking._id || idx} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                          <div className="truncate max-w-xs">{booking.fullName}</div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <Badge variant="outline">{booking.domain}</Badge>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">{booking.date}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm text-gray-900 truncate max-w-xs">{booking.email || "N/A"}</div>
+                            <div className="text-sm text-gray-500">{booking.phoneNumber}</div>
+                          </div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 max-w-xs truncate text-gray-600" title={booking.message}>
+                          {booking.message}
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">{booking.time}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {formatDate(booking.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <PaginationComponent totalItems={filteredBookings.length} />
+          </div>
+        )
+      }
+      default:
+        return <div>Section not found</div>
     }
-  };
-
-  const handleFilter = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchEnrollments();
-  };
-
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    doc.text("Filtered Enrollments", 14, 15);
-
-    const tableColumn = [
-      "ID",
-      "User Name",
-      "Student Name",
-      "Amount",
-      "Date",
-      "Type",
-      "Status",
-    ];
-    const tableRows = enrollments.map((enrollment: any) => [
-      enrollment.courseId,
-      `${enrollment.userId?.firstName} ${enrollment.userId?.lastName}`,
-      enrollment.name,
-      `$${enrollment.amount.toFixed(2)}`,
-      new Date(enrollment.createdAt).toLocaleDateString(),
-      enrollment.orderType,
-      enrollment.status,
-    ]);
-    (doc as any).autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 20,
-      styles: { fontSize: 8, cellPadding: 1.5, overflow: "linebreak" },
-      columnStyles: {
-        0: { cellWidth: 20 },
-        1: { cellWidth: 30 },
-        2: { cellWidth: 30 },
-        3: { cellWidth: 20 },
-        4: { cellWidth: 25 },
-        5: { cellWidth: 25 },
-        6: { cellWidth: 20 },
-      },
-    });
-
-    doc.save("filtered_enrollments.pdf");
-  };
-
-  const exportToCSV = () => {
-    const csvContent = [
-      // CSV header
-      [
-        "Internship ID",
-        "User Name",
-        "Logged In Email",
-        "Student Name",
-        "Student Email",
-        "Student Phone",
-        "Amount",
-        "Date",
-        "Type",
-        "Status",
-      ],
-      // CSV data rows
-      ...enrollments.map((enrollment: any) => [
-        enrollment.courseId,
-        `${enrollment.userId?.firstName} ${enrollment.userId?.lastName}`,
-        enrollment.userId?.email,
-        enrollment.name,
-        enrollment?.email,
-        enrollment.phone,
-        enrollment.amount.toFixed(2),
-        new Date(enrollment.createdAt).toLocaleDateString(),
-        enrollment.orderType,
-        enrollment.status,
-      ]),
-    ]
-      .map((row) => row.map((cell) => `"${cell}"`).join(","))
-      .join("\n");
-
-    const blob = new Blob(["\ufeff" + csvContent], {
-      type: "text/csv;charset=utf-8;",
-    });
-    const link = document.createElement("a");
-    if (link.download !== undefined) {
-      const url = URL.createObjectURL(blob);
-      link.setAttribute("href", url);
-      link.setAttribute("download", "filtered_enrollments.csv");
-      link.style.visibility = "hidden";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
-  const filteredQueries = queries.filter(
-    (query) =>
-      query.fullName.toLowerCase().includes(queryFilter.toLowerCase()) ||
-      query?.email.toLowerCase().includes(queryFilter.toLowerCase()) ||
-      query.phoneNumber.includes(queryFilter)
-  );
-
-  const filteredContacts = contacts.filter(
-    (contact) =>
-      contact.fullName.toLowerCase().includes(contactFilter.toLowerCase()) ||
-      contact?.email.toLowerCase().includes(contactFilter.toLowerCase()) ||
-      contact.phoneNumber.includes(contactFilter) ||
-      contact.course.toLowerCase().includes(contactFilter.toLowerCase()) ||
-      contact.city.toLowerCase().includes(contactFilter.toLowerCase())
-  );
-
-  const filteredBookings = bookings.filter(
-    (bookings: any) =>
-      bookings.fullName.toLowerCase().includes(bookingFilter.toLowerCase()) ||
-      bookings.domain.toLowerCase().includes(bookingFilter.toLowerCase()) ||
-      bookings.date.includes(bookingFilter) ||
-      bookings?.email.toLowerCase().includes(bookingFilter.toLowerCase()) ||
-      bookings.message.toLowerCase().includes(bookingFilter.toLowerCase()) ||
-      bookings.phoneNumber
-        .toLowerCase()
-        .includes(bookingFilter.toLowerCase()) ||
-      bookings.time.toLowerCase().includes(bookingFilter.toLowerCase())
-  );
-
-  // Calculate pagination values
-  const indexOfLastEnrollment = currentPage * enrollmentsPerPage;
-  const indexOfFirstEnrollment = indexOfLastEnrollment - enrollmentsPerPage;
-  const currentEnrollments = enrollments.slice(
-    indexOfFirstEnrollment,
-    indexOfLastEnrollment
-  );
-  const totalPages = Math.ceil(enrollments.length / enrollmentsPerPage);
-
-  // Pagination navigation functions
-  const goToNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const goToPreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const goToPage = (pageNumber: number) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
-
-  // Generate page numbers for pagination controls
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    const maxPageButtons = 5;
-
-    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-    let endPage = startPage + maxPageButtons - 1;
-
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = Math.max(1, endPage - maxPageButtons + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
-  };
-
-  /////query pagination
-  // Calculate pagination values for queries
-  const indexOfLastQuery = currentQueryPage * queriesPerPage;
-  const indexOfFirstQuery = indexOfLastQuery - queriesPerPage;
-  const currentQueries = filteredQueries.slice(
-    indexOfFirstQuery,
-    indexOfLastQuery
-  );
-  const totalQueryPages = Math.ceil(filteredQueries.length / queriesPerPage);
-
-  // Pagination navigation functions for queries
-  const goToNextQueryPage = () => {
-    if (currentQueryPage < totalQueryPages) {
-      setCurrentQueryPage(currentQueryPage + 1);
-    }
-  };
-
-  const goToPreviousQueryPage = () => {
-    if (currentQueryPage > 1) {
-      setCurrentQueryPage(currentQueryPage - 1);
-    }
-  };
-
-  const goToQueryPage = (pageNumber: number) => {
-    if (pageNumber >= 1 && pageNumber <= totalQueryPages) {
-      setCurrentQueryPage(pageNumber);
-    }
-  };
-
-  // Generate page numbers for query pagination controls
-  const getQueryPageNumbers = () => {
-    const pageNumbers = [];
-    const maxPageButtons = 5;
-
-    let startPage = Math.max(
-      1,
-      currentQueryPage - Math.floor(maxPageButtons / 2)
-    );
-    let endPage = startPage + maxPageButtons - 1;
-
-    if (endPage > totalQueryPages) {
-      endPage = totalQueryPages;
-      startPage = Math.max(1, endPage - maxPageButtons + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
-  };
-
-  //contact pagination
-  // Calculate pagination values for contacts
-  const indexOfLastContact = currentContactPage * contactsPerPage;
-  const indexOfFirstContact = indexOfLastContact - contactsPerPage;
-  const currentContacts = filteredContacts.slice(
-    indexOfFirstContact,
-    indexOfLastContact
-  );
-  const totalContactPages = Math.ceil(
-    filteredContacts.length / contactsPerPage
-  );
-
-  // Pagination navigation functions for contacts
-  const goToNextContactPage = () => {
-    if (currentContactPage < totalContactPages) {
-      setCurrentContactPage(currentContactPage + 1);
-    }
-  };
-
-  const goToPreviousContactPage = () => {
-    if (currentContactPage > 1) {
-      setCurrentContactPage(currentContactPage - 1);
-    }
-  };
-
-  const goToContactPage = (pageNumber: number) => {
-    if (pageNumber >= 1 && pageNumber <= totalContactPages) {
-      setCurrentContactPage(pageNumber);
-    }
-  };
-
-  // Generate page numbers for contact pagination controls
-  const getContactPageNumbers = () => {
-    const pageNumbers = [];
-    const maxPageButtons = 5;
-
-    let startPage = Math.max(
-      1,
-      currentContactPage - Math.floor(maxPageButtons / 2)
-    );
-    let endPage = startPage + maxPageButtons - 1;
-
-    if (endPage > totalContactPages) {
-      endPage = totalContactPages;
-      startPage = Math.max(1, endPage - maxPageButtons + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
-  };
+  }, [
+    activeSection,
+    filters, // filters object itself
+    handleFilterChange, // stable callback
+    getFilteredData, // stable memoized function
+    getPaginatedData, // stable callback
+    enrollments, // data for enrollments section
+    memoizedEnrollmentFilters, // stable memoized component for enrollment filters
+    selectedUser, // for modal
+    isModalOpen, // for modal
+    StatsCards, // memoized component
+    formatDate,
+    formatCurrency,
+    // Note: Not including individual filter strings like filters.userFilter here
+    // because getFilteredData already depends on them.
+    // The goal is to make renderContent stable if its direct output structure doesn't change.
+  ])
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <nav className="flex justify-center items-center gap-2">
-        <img src={logo} alt="logo" className="w-44" />
-      </nav>
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-
-      <div className="mb-8">
-        {/* <h2 className="text-2xl font-semibold mb-4">Enrollment Statistics</h2> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {stats.map((stat) => (
-            <div key={stat._id} className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-lg font-semibold mb-2">{stat._id}</h3>
-              <p>Total Enrollments: {stat.count}</p>
-              <p>Total Revenue: Rs{stat.totalAmount.toFixed(2)}</p>
-            </div>
-          ))}
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-2xl font-semibold mt-4">All Registered Users</h2>
-          <div className="p-4">
-            <UserInfo allUser={allUser} />
-          </div>
-        </div>
-      </div>
-
-      {/* filter contact */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">Filtered Enrollments</h2>
-        <form onSubmit={handleFilter} className="mb-4 flex flex-wrap gap-4">
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="border rounded px-2 py-1"
-          />
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="border rounded px-2 py-1"
-          />
-          <select
-            value={orderType}
-            onChange={(e) => setOrderType(e.target.value)}
-            className="border rounded px-2 py-1"
-          >
-            <option value="">All Types</option>
-            <option value="course">Course</option>
-            <option value="internship">Internship</option>
-          </select>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Filter
-          </button>
-        </form>
-
-        <button
-          onClick={generatePDF}
-          className="bg-green-500 text-white px-4 py-2 rounded mb-4"
-        >
-          Download Filtered Enrollments PDF
-        </button>
-        <button
-          onClick={exportToCSV}
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-4 ml-2"
-        >
-          Export to CSV
-        </button>
-
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">Internship ID/userDetail</th>
-              <th className="border p-2">Student</th>
-              <th className="border p-2">Amount</th>
-              <th className="border p-2">Date</th>
-              <th className="border p-2">Type</th>
-              <th className="border p-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentEnrollments.map((enrollment: any) => (
-              <tr key={enrollment._id}>
-                <td className="border p-2">
-                  {enrollment.courseId} <br />{" "}
-                  <span>
-                    userName:{" "}
-                    {enrollment.userId?.firstName +
-                      " " +
-                      enrollment.userId?.lastName}
-                  </span>{" "}
-                  <br />
-                  <span>LoggedIn email: {enrollment.userId?.email}</span>
-                </td>
-                <td className="border p-2">
-                  {enrollment.name}
-                  <br />
-                  <span className="text-sm text-gray-600">
-                    {enrollment?.email}
-                  </span>
-                  <br />
-                  <span className="text-sm text-gray-600">
-                    {enrollment.phone}
-                  </span>
-                </td>
-                <td className="border p-2">Rs{enrollment.amount.toFixed(2)}</td>
-                <td className="border p-2">
-                  {new Date(enrollment.createdAt).toLocaleDateString()}
-                </td>
-                <td className="border p-2">{enrollment.orderType}</td>
-                <td className="border p-2">{enrollment.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* Pagination Controls */}
-        <div className="mt-4 flex items-center justify-between">
-          <div>
-            <span className="text-sm text-gray-700">
-              Showing{" "}
-              <span className="font-medium">{indexOfFirstEnrollment + 1}</span>{" "}
-              to{" "}
-              <span className="font-medium">
-                {Math.min(indexOfLastEnrollment, enrollments.length)}
-              </span>{" "}
-              of <span className="font-medium">{enrollments.length}</span>{" "}
-              enrollments
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            {/* Previous page button */}
-            <button
-              onClick={goToPreviousPage}
-              disabled={currentPage === 1}
-              className={`p-2 rounded ${
-                currentPage === 1
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              <FiChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Page numbers */}
-            <div className="flex space-x-1">
-              {getPageNumbers().map((number) => (
-                <button
-                  key={number}
-                  onClick={() => goToPage(number)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === number
-                      ? "bg-blue-500 text-white"
-                      : "text-blue-600 hover:bg-blue-100"
-                  }`}
-                >
-                  {number}
-                </button>
-              ))}
-            </div>
-
-            {/* Next page button */}
-            <button
-              onClick={goToNextPage}
-              disabled={currentPage === totalPages}
-              className={`p-2 rounded ${
-                currentPage === totalPages
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              <FiChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Items per page selector */}
-        <div className="mt-2 flex justify-end">
-          <select
-            value={enrollmentsPerPage}
-            onChange={(e) => {
-              setEnrollmentsPerPage(Number(e.target.value));
-              setCurrentPage(1); // Reset to first page when changing items per page
-            }}
-            className="border rounded px-2 py-1 text-sm"
-          >
-            <option value={5}>5 per page</option>
-            <option value={10}>10 per page</option>
-            <option value={25}>25 per page</option>
-            <option value={50}>50 per page</option>
-          </select>
-        </div>
-      </div>
-
-      {/* query form submission  */}
-      <div className="mt-12">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Query Form Submissions</h2>
-          <div className="flex gap-4">
-            <button
-              onClick={() => {
-                const doc: any = new jsPDF();
-
-                // Add title
-                doc.setFontSize(20);
-                doc.setTextColor(40, 40, 40);
-                doc.text("Query Form Submissions Report", 20, 20);
-
-                // Add generation date
-                doc.setFontSize(10);
-                doc.setTextColor(100, 100, 100);
-                doc.text(
-                  `Generated on: ${new Date().toLocaleString()}`,
-                  20,
-                  30
-                );
-
-                // Add summary
-                doc.setFontSize(12);
-                doc.setTextColor(40, 40, 40);
-                doc.text(`Total Queries: ${filteredQueries.length}`, 20, 40);
-
-                // Prepare table data
-                const tableColumn = [
-                  "Full Name",
-                  "Phone Number",
-                  "Email",
-                  "Date",
-                ];
-                const tableRows = filteredQueries.map((query) => [
-                  query.fullName,
-                  query.phoneNumber,
-                  query?.email,
-                  new Date(query.createdAt).toLocaleDateString(),
-                ]);
-
-                // Add table
-                doc.autoTable({
-                  startY: 50,
-                  head: [tableColumn],
-                  body: tableRows,
-                  theme: "grid",
-                  headStyles: {
-                    fillColor: [51, 122, 183],
-                    textColor: 255,
-                    fontSize: 12,
-                    halign: "center",
-                  },
-                  bodyStyles: {
-                    fontSize: 10,
-                  },
-                  alternateRowStyles: {
-                    fillColor: [245, 245, 245],
-                  },
-                  margin: { top: 50 },
-                  styles: {
-                    cellPadding: 3,
-                    fontSize: 10,
-                    valign: "middle",
-                    overflow: "linebreak",
-                    cellWidth: "auto",
-                  },
-                });
-
-                // Add footer with page numbers
-                const pageCount = doc.internal.getNumberOfPages();
-                for (let i = 1; i <= pageCount; i++) {
-                  doc.setPage(i);
-                  doc.setFontSize(10);
-                  doc.setTextColor(100, 100, 100);
-                  doc.text(
-                    `Page ${i} of ${pageCount}`,
-                    doc.internal.pageSize.getWidth() - 30,
-                    doc.internal.pageSize.getHeight() - 10
-                  );
-                }
-
-                doc.save("query-submissions.pdf");
-              }}
-              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-            >
-              <FiDownload /> Export as PDF
-            </button>
-            <button
-              onClick={() => {
-                const headers = ["Full Name", "Phone Number", "Email", "Date"];
-                const csvData = filteredQueries.map((query) => [
-                  query.fullName,
-                  query.phoneNumber,
-                  query?.email,
-                  new Date(query.createdAt).toLocaleDateString(),
-                ]);
-
-                const csvContent = [
-                  headers.join(","),
-                  ...csvData.map((row) => row.join(",")),
-                ].join("\n");
-
-                const blob = new Blob([csvContent], { type: "text/csv" });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "query-submissions.csv";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-              }}
-              className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-            >
-              <FiDownload /> Export as CSV
-            </button>
-          </div>
-        </div>
-
-        <input
-          type="text"
-          placeholder="Filter queries..."
-          value={queryFilter}
-          onChange={(e) => setQueryFilter(e.target.value)}
-          className="border rounded px-2 py-1 mb-4 w-full"
-        />
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">Full Name</th>
-              <th className="border p-2">Phone Number</th>
-              <th className="border p-2">Email</th>
-              <th className="border p-2">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentQueries.map((query) => (
-              <tr key={query._id}>
-                <td className="border p-2">{query.fullName}</td>
-                <td className="border p-2">{query.phoneNumber}</td>
-                <td className="border p-2">{query?.email}</td>
-                <td className="border p-2">
-                  {new Date(query.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* Pagination Controls for Queries */}
-        <div className="mt-4 flex items-center justify-between">
-          <div>
-            <span className="text-sm text-gray-700">
-              Showing{" "}
-              <span className="font-medium">{indexOfFirstQuery + 1}</span> to{" "}
-              <span className="font-medium">
-                {Math.min(indexOfLastQuery, filteredQueries.length)}
-              </span>{" "}
-              of <span className="font-medium">{filteredQueries.length}</span>{" "}
-              queries
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            {/* Previous page button */}
-            <button
-              onClick={goToPreviousQueryPage}
-              disabled={currentQueryPage === 1}
-              className={`p-2 rounded ${
-                currentQueryPage === 1
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              <FiChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Page numbers */}
-            <div className="flex space-x-1">
-              {getQueryPageNumbers().map((number) => (
-                <button
-                  key={number}
-                  onClick={() => goToQueryPage(number)}
-                  className={`px-3 py-1 rounded ${
-                    currentQueryPage === number
-                      ? "bg-blue-500 text-white"
-                      : "text-blue-600 hover:bg-blue-100"
-                  }`}
-                >
-                  {number}
-                </button>
-              ))}
-            </div>
-
-            {/* Next page button */}
-            <button
-              onClick={goToNextQueryPage}
-              disabled={currentQueryPage === totalQueryPages}
-              className={`p-2 rounded ${
-                currentQueryPage === totalQueryPages
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              <FiChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Items per page selector for Queries */}
-        <div className="mt-2 flex justify-end">
-          <select
-            value={queriesPerPage}
-            onChange={(e) => {
-              setQueriesPerPage(Number(e.target.value));
-              setCurrentQueryPage(1);
-            }}
-            className="border rounded px-2 py-1 text-sm"
-          >
-            <option value={5}>5 per page</option>
-            <option value={10}>10 per page</option>
-            <option value={25}>25 per page</option>
-            <option value={50}>50 per page</option>
-          </select>
-        </div>
-      </div>
-
-      {/* contact form submission  */}
-      <div className="mt-12">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Contact Form Submissions</h2>
-          <div className="flex gap-4">
-            <button
-              onClick={() => {
-                const doc: any = new jsPDF();
-
-                // Add title
-                doc.setFontSize(20);
-                doc.setTextColor(40, 40, 40);
-                doc.text("Contact Form Submissions Report", 20, 20);
-
-                // Add generation date
-                doc.setFontSize(10);
-                doc.setTextColor(100, 100, 100);
-                doc.text(
-                  `Generated on: ${new Date().toLocaleString()}`,
-                  20,
-                  30
-                );
-
-                // Add summary
-                doc.setFontSize(12);
-                doc.setTextColor(40, 40, 40);
-                doc.text(`Total Contacts: ${filteredContacts.length}`, 20, 40);
-
-                // Prepare table data
-                const tableColumn = [
-                  "Full Name",
-                  "Course",
-                  "City",
-                  "Phone Number",
-                  "Email",
-                  "Date",
-                ];
-                const tableRows = filteredContacts.map((contact) => [
-                  contact.fullName,
-                  contact.course,
-                  contact.city,
-                  contact.phoneNumber,
-                  contact?.email,
-                  new Date(contact.createdAt).toLocaleDateString(),
-                ]);
-
-                // Add table
-                doc.autoTable({
-                  startY: 50,
-                  head: [tableColumn],
-                  body: tableRows,
-                  theme: "grid",
-                  headStyles: {
-                    fillColor: [51, 122, 183],
-                    textColor: 255,
-                    fontSize: 12,
-                    halign: "center",
-                  },
-                  bodyStyles: {
-                    fontSize: 10,
-                  },
-                  alternateRowStyles: {
-                    fillColor: [245, 245, 245],
-                  },
-                  margin: { top: 50 },
-                  styles: {
-                    cellPadding: 3,
-                    fontSize: 10,
-                    valign: "middle",
-                    overflow: "linebreak",
-                    cellWidth: "auto",
-                  },
-                });
-
-                // Add footer with page numbers
-                const pageCount = doc.internal.getNumberOfPages();
-                for (let i = 1; i <= pageCount; i++) {
-                  doc.setPage(i);
-                  doc.setFontSize(10);
-                  doc.setTextColor(100, 100, 100);
-                  doc.text(
-                    `Page ${i} of ${pageCount}`,
-                    doc.internal.pageSize.getWidth() - 30,
-                    doc.internal.pageSize.getHeight() - 10
-                  );
-                }
-
-                doc.save("contact-submissions.pdf");
-              }}
-              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-            >
-              <FiDownload /> Export as PDF
-            </button>
-            <button
-              onClick={() => {
-                const headers = [
-                  "Full Name",
-                  "Course",
-                  "City",
-                  "Phone Number",
-                  "Email",
-                  "Date",
-                ];
-                const csvData = filteredContacts.map((contact) => [
-                  contact.fullName,
-                  contact.course,
-                  contact.city,
-                  contact.phoneNumber,
-                  contact?.email,
-                  new Date(contact.createdAt).toLocaleDateString(),
-                ]);
-
-                const csvContent = [
-                  headers.join(","),
-                  ...csvData.map((row) => row.join(",")),
-                ].join("\n");
-
-                const blob = new Blob([csvContent], { type: "text/csv" });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "contact-submissions.csv";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-              }}
-              className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-            >
-              <FiDownload /> Export as CSV
-            </button>
-          </div>
-        </div>
-
-        <input
-          type="text"
-          placeholder="Filter contacts..."
-          value={contactFilter}
-          onChange={(e) => setContactFilter(e.target.value)}
-          className="border rounded px-2 py-1 mb-4 w-full"
-        />
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">Full Name</th>
-              <th className="border p-2">Course</th>
-              <th className="border p-2">City</th>
-              <th className="border p-2">Phone Number</th>
-              <th className="border p-2">Email</th>
-              <th className="border p-2">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentContacts.map((contact) => (
-              <tr key={contact._id}>
-                <td className="border p-2">{contact.fullName}</td>
-                <td className="border p-2">{contact.course}</td>
-                <td className="border p-2">{contact.city}</td>
-                <td className="border p-2">{contact.phoneNumber}</td>
-                <td className="border p-2">{contact?.email}</td>
-                <td className="border p-2">
-                  {new Date(contact.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="mt-4 flex items-center justify-between">
-          <div>
-            <span className="text-sm text-gray-700">
-              Showing{" "}
-              <span className="font-medium">{indexOfFirstContact + 1}</span> to{" "}
-              <span className="font-medium">
-                {Math.min(indexOfLastContact, filteredContacts.length)}
-              </span>{" "}
-              of <span className="font-medium">{filteredContacts.length}</span>{" "}
-              contacts
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            {/* Previous page button */}
-            <button
-              onClick={goToPreviousContactPage}
-              disabled={currentContactPage === 1}
-              className={`p-2 rounded ${
-                currentContactPage === 1
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              <FiChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Page numbers */}
-            <div className="flex space-x-1">
-              {getContactPageNumbers().map((number) => (
-                <button
-                  key={number}
-                  onClick={() => goToContactPage(number)}
-                  className={`px-3 py-1 rounded ${
-                    currentContactPage === number
-                      ? "bg-blue-500 text-white"
-                      : "text-blue-600 hover:bg-blue-100"
-                  }`}
-                >
-                  {number}
-                </button>
-              ))}
-            </div>
-
-            {/* Next page button */}
-            <button
-              onClick={goToNextContactPage}
-              disabled={currentContactPage === totalContactPages}
-              className={`p-2 rounded ${
-                currentContactPage === totalContactPages
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-600 hover:bg-blue-100"
-              }`}
-            >
-              <FiChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Items per page selector for Contacts */}
-        <div className="mt-2 flex justify-end">
-          <select
-            value={contactsPerPage}
-            onChange={(e) => {
-              setContactsPerPage(Number(e.target.value));
-              setCurrentContactPage(1);
-            }}
-            className="border rounded px-2 py-1 text-sm"
-          >
-            <option value={5}>5 per page</option>
-            <option value={10}>10 per page</option>
-            <option value={25}>25 per page</option>
-            <option value={50}>50 per page</option>
-          </select>
-        </div>
-      </div>
-
-      {/* one two one form submission */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold mb-4">
-          One To One Form Submissions
-        </h2>
-        <div className="flex gap-4">
-          <button
-            onClick={() => {
-              const doc: any = new jsPDF();
-
-              // Add title
-              doc.setFontSize(20);
-              doc.setTextColor(40, 40, 40);
-              doc.text("One To One Form Submissions Report", 20, 20);
-
-              // Add generation date
-              doc.setFontSize(10);
-              doc.setTextColor(100, 100, 100);
-              doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 30);
-
-              // Add summary
-              doc.setFontSize(12);
-              doc.setTextColor(40, 40, 40);
-              doc.text(`Total submissons: ${filteredContacts.length}`, 20, 40);
-
-              // Prepare table data
-              const tableColumn = [
-                "Full Name",
-                "Domain",
-                "Booking Date",
-                "Email",
-                "Message",
-                "Phone Number",
-                "Time",
-                "Date",
-              ];
-              const tableRows = filteredBookings.map((booking: any) => [
-                booking.fullName,
-                booking.domain,
-                booking.bookingDate,
-                booking?.email,
-                booking.message,
-                booking.phoneNumber,
-                booking.time,
-                booking.date,
-                new Date(booking.createdAt).toLocaleDateString(),
-              ]);
-
-              // Add table
-              doc.autoTable({
-                startY: 50,
-                head: [tableColumn],
-                body: tableRows,
-                theme: "grid",
-                headStyles: {
-                  fillColor: [51, 122, 183],
-                  textColor: 255,
-                  fontSize: 12,
-                  halign: "center",
-                },
-                bodyStyles: {
-                  fontSize: 10,
-                },
-                alternateRowStyles: {
-                  fillColor: [245, 245, 245],
-                },
-                margin: { top: 50 },
-                styles: {
-                  cellPadding: 3,
-                  fontSize: 10,
-                  valign: "middle",
-                  overflow: "linebreak",
-                  cellWidth: "auto",
-                },
-              });
-
-              // Add footer with page numbers
-              const pageCount = doc.internal.getNumberOfPages();
-              for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(10);
-                doc.setTextColor(100, 100, 100);
-                doc.text(
-                  `Page ${i} of ${pageCount}`,
-                  doc.internal.pageSize.getWidth() - 30,
-                  doc.internal.pageSize.getHeight() - 10
-                );
-              }
-
-              doc.save("bookings-submissions.pdf");
-            }}
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-          >
-            <FiDownload /> Export as PDF
-          </button>
-          <button
-            onClick={() => {
-              const headers = [
-                "Full Name",
-                "Domain",
-                "Booking Date",
-                "Email",
-                "Message",
-                "Phone Number",
-                "Time",
-                "Date",
-              ];
-              const csvData = filteredBookings.map((booking: any) => [
-                booking.fullName,
-                booking.domain,
-                booking.bookingDate,
-                booking?.email,
-                booking.message,
-                booking.phoneNumber,
-                booking.time,
-                booking.date,
-                new Date(booking.createdAt).toLocaleDateString(),
-              ]);
-
-              const csvContent = [
-                headers.join(","),
-                ...csvData.map((row: any) => row.join(",")),
-              ].join("\n");
-
-              const blob = new Blob([csvContent], { type: "text/csv" });
-              const url = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = "booking-submissions.csv";
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              window.URL.revokeObjectURL(url);
-            }}
-            className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-          >
-            <FiDownload /> Export as CSV
-          </button>
-        </div>
-        <input
-          type="text"
-          placeholder="Filter contacts..."
-          value={bookingFilter}
-          onChange={(e) => setBookingFilter(e.target.value)}
-          className="border rounded px-2 py-1 mb-4 w-full"
-        />
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">Full Name</th>
-              <th className="border p-2">Domain</th>
-              <th className="border p-2">Booking Date</th>
-              <th className="border p-2">Email</th>
-              <th className="border p-2">Message</th>
-              <th className="border p-2">PhoneNumber</th>
-              <th className="border p-2">Time</th>
-              <th className="border p-2">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredBookings.map((booking: any, idx: any) => (
-              <tr key={idx}>
-                <td className="border p-2">{booking.fullName}</td>
-                <td className="border p-2">{booking.domain}</td>
-                <td className="border p-2">{booking.date}</td>
-                <td className="border p-2">{booking?.email}</td>
-                <td className="border p-2">{booking.message}</td>
-                <td className="border p-2">{booking.phoneNumber}</td>
-                <td className="border p-2">{booking.time}</td>
-                <td className="border p-2">
-                  {new Date(booking.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="flex h-screen bg-gray-50">
+      <Toaster position="top-right" />
+      <Sidebar />
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+      <div className="flex-1 flex flex-col overflow-hidden lg:ml-0">
+        <Header />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{renderContent()}</main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminDashboard;
+export default AdminDashboard
+
+

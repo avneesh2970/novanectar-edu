@@ -22,9 +22,8 @@ export const getEnrollmentStats = async (req, res) => {
 
 export const getFilteredEnrollments = async (req, res) => {
   try {
-    const { startDate, endDate, orderType } = req.query;
-
-    const query = { status: "paid" };
+    const { startDate, endDate, orderType, status } = req.query;
+    const query = {};
 
     if (startDate && endDate) {
       query.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) };
@@ -33,6 +32,11 @@ export const getFilteredEnrollments = async (req, res) => {
     if (orderType) {
       query.orderType = orderType;
     }
+
+     if (status) {
+      query.status = status;
+    }
+
     const enrollmentsQuery = Order.find(query);
     // Check if UserId exists and is valid before populating
     if (
