@@ -1,7 +1,7 @@
 import { protectRouteForPayment } from "../middlewares/auth.middleware.js";
 import {
   createOrder,
-  handleWebhook,
+  // handleWebhook,
   verifyPayment,
   findOrders,
   sendOfferLetter,
@@ -13,7 +13,7 @@ paymentRouter.post("/create-order", protectRouteForPayment, createOrder);
 
 paymentRouter.post("/verify-payment", verifyPayment);
 
-paymentRouter.post("/razorpay-webhook", handleWebhook);
+// paymentRouter.post("/razorpay-webhook", handleWebhook);
 
 paymentRouter.post("/find-orders", findOrders);
 
