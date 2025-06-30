@@ -424,6 +424,7 @@ const AdminDashboard: React.FC = () => {
   const [queries, setQueries] = useState<QuerySubmission[]>([]);
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [bookings, setBookings] = useState<BookingSubmission[]>([]);
+  const [paymentSuccess, setPaymentSuccess] = useState<any>([]);
   const [allUser, setAllUser] = useState<User[]>([]);
 
   const [filters, setFilters] = useState({
@@ -435,6 +436,7 @@ const AdminDashboard: React.FC = () => {
     contactFilter: "",
     bookingFilter: "",
     userFilter: "",
+    paymentSuccessFilter: "",
   });
 
   const [pagination, setPagination] = useState({
@@ -542,6 +544,20 @@ const AdminDashboard: React.FC = () => {
     }
   }, [API_BASE_URL]);
 
+  const fetchSuccessfulPayments = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/api/successful-payments`,
+        {
+          withCredentials: true,
+        }
+      );
+      setPaymentSuccess(response.data.data);
+    } catch (error) {
+      console.error("Error fetching successful payments:", error);
+    }
+  }, [API_BASE_URL]);
+
   const fetchAllData = useCallback(async () => {
     setLoading(true);
     try {
@@ -552,6 +568,7 @@ const AdminDashboard: React.FC = () => {
         fetchContacts(),
         fetchBookings(),
         fetchUsers(),
+        fetchSuccessfulPayments(),
       ]);
       toast.success("Data refreshed successfully!");
     } catch (error) {
@@ -567,6 +584,7 @@ const AdminDashboard: React.FC = () => {
     fetchContacts,
     fetchBookings,
     fetchUsers,
+    fetchSuccessfulPayments,
   ]);
 
   useEffect(() => {
@@ -582,6 +600,7 @@ const AdminDashboard: React.FC = () => {
       { id: "contacts", label: "Contacts", icon: FiPhone },
       { id: "bookings", label: "Bookings", icon: FiCalendar },
       { id: "offer", label: "Offer Letter", icon: FaFileSignature },
+      { id: "payments", label: "payment Success", icon: FiBarChart2 },
     ],
     []
   );
@@ -685,6 +704,37 @@ const AdminDashboard: React.FC = () => {
           );
           return filteredBookings;
         }
+        case "payments": {
+          const filteredPayments = paymentSuccess.filter(
+            (payment: any) =>
+              filters.paymentSuccessFilter === "" ||
+              payment.razorpay_order_id
+                .toLowerCase()
+                .includes(filters.paymentSuccessFilter.toLowerCase()) ||
+              payment.razorpay_payment_id
+                .toLowerCase()
+                .includes(filters.paymentSuccessFilter.toLowerCase()) ||
+              payment.razorpay_signature
+                .toLowerCase()
+                .includes(filters.paymentSuccessFilter.toLowerCase()) ||
+              (payment.email &&
+                payment.email
+                  .toLowerCase()
+                  .includes(filters.paymentSuccessFilter.toLowerCase())) ||
+              payment.status
+                .toLowerCase()
+                .includes(filters.paymentSuccessFilter.toLowerCase()) ||
+              new Date(payment.createdAt)
+                .toLocaleString()
+                .toLowerCase()
+                .includes(filters.paymentSuccessFilter.toLowerCase()) ||
+              payment._id
+                .toLowerCase()
+                .includes(filters.paymentSuccessFilter.toLowerCase())
+          );
+          return filteredPayments;
+        }
+
         default:
           return [];
       }
@@ -694,10 +744,12 @@ const AdminDashboard: React.FC = () => {
     queries,
     contacts,
     bookings,
+    paymentSuccess,
     filters.userFilter,
     filters.queryFilter,
     filters.contactFilter,
     filters.bookingFilter,
+    filters.paymentSuccessFilter,
   ]);
 
   const getPaginatedData = useCallback(
@@ -1609,10 +1661,107 @@ const AdminDashboard: React.FC = () => {
       case "offer": {
         return <OfferLetter />;
       }
+
+      case "payments": {
+        const filteredPayments = getFilteredData("payments") as any[];
+        const paginatedPayments = getPaginatedData(filteredPayments);
+        return (
+          <div>
+            <TableHeader
+              title="successful payments"
+              data={filteredPayments}
+              filename="payments"
+              columns={[
+                "razorpay_order_id",
+                "razorpay_payment_id",
+                "razorpay_signature",
+                "email",
+                "status",
+                "Time",
+                "Date",
+              ]}
+              searchValue={filters.paymentSuccessFilter}
+              onSearchChange={(value) =>
+                handleFilterChange("paymentSuccessFilter", value)
+              }
+            />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        razorpay_order_id
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        razorpay_payment_id
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      razorpay_signature
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        email
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        status
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Time
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        date
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {paginatedPayments.map((payment, idx) => (
+                      <tr
+                        key={payment._id || idx}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                          <div className="truncate max-w-xs">
+                            {payment.razorpay_order_id}
+                          </div>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <Badge variant="outline">{payment.razorpay_payment_id}</Badge>
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {payment.razorpay_signature}
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm text-gray-900 truncate max-w-xs">
+                              {payment.email || "N/A"}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {payment.status}
+                            </div>
+                          </div>
+                        </td>
+       
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {payment.time}
+                        </td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
+                          {formatDate(payment.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <PaginationComponent totalItems={filteredPayments.length} />
+          </div>
+        );
+      }
+
       default:
         return <div>Section not found</div>;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     activeSection,
     filters, // filters object itself

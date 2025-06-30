@@ -769,10 +769,32 @@ const sendOfferLetter = async (req, res) => {
   }
 };
 
+const successfulPayments = async (req, res) => {
+  try {
+    const payments = await PaymentAttemptModel.find({ status: "success" }).sort(
+      { createdAt: -1 }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully fetched successful payments",
+      data: payments,
+    });
+  } catch (error) {
+    console.error("Error fetching successful payments:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch successful payments",
+      error: error.message,
+    });
+  }
+};
+
 export {
   createOrder,
   verifyPayment,
   // handleWebhook,
   findOrders,
   sendOfferLetter,
+  successfulPayments,
 };
