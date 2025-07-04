@@ -21,20 +21,26 @@ const InternshipDetail = () => {
   const durationOptions = [
     {
       months: "1",
-      price: "149",
-      originalPrice: "299",
+      // price: "149",
+      price: "1499",
+      // originalPrice: "299",
+      originalPrice: "2999",
       highlight: "Perfect for quick skill development",
     },
     {
       months: "3",
-      price: "599",
-      originalPrice: "1199",
+      // price: "599",
+      price: "2499",
+      // originalPrice: "1199",
+      originalPrice: "4999",
       highlight: "Ideal for in-depth learning",
     },
     {
       months: "6",
-      price: "999",
-      originalPrice: "1999",
+      // price: "999",
+      price: "4599",
+      // originalPrice: "1999",
+      originalPrice: "9199",
       highlight: "Complete professional experience",
     },
   ];
