@@ -104,11 +104,11 @@ const InternshipDetail = () => {
 
   if (internship) {
     if (selectedDuration == "1") {
-      internship.price = 149;
+      internship.price = 1499;
     } else if (selectedDuration == "3") {
-      internship.price = 599;
+      internship.price = 2499;
     } else if (selectedDuration == "6") {
-      internship.price = 999;
+      internship.price = 4599;
     }
   }
 
