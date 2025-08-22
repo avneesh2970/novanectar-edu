@@ -332,7 +332,7 @@ export const coursesCards = [
     id: "6",
     category: "Trending",
     title: "Graphic Design",
-    duration: "3 month",
+    duration: "4 month",
     title_: "Graphic DesignCourse",
     description:
       "Novanectar's Graphic Design course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -462,7 +462,7 @@ export const coursesCards = [
     id: "8",
     category: "Trending",
     title: "React Development",
-    duration: "3 month",
+    duration: "4 month",
     title_: "React Development course",
     description:
       "Novanectar React Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -527,7 +527,7 @@ export const coursesCards = [
     id: "9",
     category: "Trending",
     title: "Angular Development",
-    duration: "3 month",
+    duration: "4 month",
     title_: "Angular Development course",
     description:
       "Novanectar Angular Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -650,14 +650,14 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 29999,
+    regularPrice: 59999,
   },
   {
     id: "11",
     category: "Trending",
     title: "Digital Marketing",
-    duration: "3 month",
+    duration: "4 month",
     title_: "Digital Marketing course",
     description:
       "Novanectar Digital Marketing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -722,7 +722,7 @@ export const coursesCards = [
     id: "12",
     category: "Trending",
     title: "UI UX Designing",
-    duration: "3 month",
+    duration: "4 month",
     title_: "UI UX Designing course",
     description:
       "Novanectar UI UX Designing Development course: Acquire visual communication skills, creating stunning visuals for various media platforms.",
@@ -4721,7 +4721,7 @@ export const internshipData = [
       "Master the art of managing social media platforms for businesses and personal brands. Learn content strategy, audience engagement, analytics, and advertising campaigns.",
     image: internImages[37].internImage,
     // logos: internImages[29].logo29,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Social Media Handling Internship",
     description_:
@@ -4838,7 +4838,7 @@ export const internshipData = [
       "Master the end-to-end management of social media profiles for businesses and brands, covering content strategy, analytics, paid promotions, and brand reputation handling.",
     image: internImages[38].internImage,
     // logos: internImages[30].logo30,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Social Media Management Internship",
     description_:
@@ -4956,7 +4956,7 @@ export const internshipData = [
       "Master social media marketing by learning content strategy, audience growth, ad campaigns, influencer collaborations, and analytics reporting across major platforms.",
     image: internImages[39].internImage,
     // logos: internImages[31].logo31,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Social Media Marketing Internship",
     description_:
@@ -5074,7 +5074,7 @@ export const internshipData = [
       "Master accounting fundamentals including bookkeeping, financial statements, tax management, and accounting software like Tally ERP and Excel reporting.",
     image: internImages[40].internImage,
     // logos: internImages[32].logo32,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Accounting Internship",
     description_:
@@ -5194,7 +5194,7 @@ export const internshipData = [
       "Learn essential business development skills including lead generation, market research, sales pitching, client acquisition, CRM tools, and deal negotiation.",
     image: internImages[41].internImage,
     // logos: internImages[33].logo33,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Business Development Executive (BDE) Internship",
     description_:
@@ -5312,7 +5312,7 @@ export const internshipData = [
       "Master the skills to plan, write, and manage email marketing campaigns that convert. Learn list building, automation, performance tracking, and deliverability strategies.",
     image: internImages[42].internImage,
     // logos: internImages[34].logo34,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Email Marketing Internship",
     description_:
@@ -5428,7 +5428,7 @@ export const internshipData = [
       "Learn the essentials of telecalling including lead calling, follow-ups, client relationship building, objection handling, and effective call etiquette.",
     image: internImages[43].internImage,
     // logos: internImages[35].logo35,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Telecalling Internship",
     description_:
@@ -5546,7 +5546,7 @@ export const internshipData = [
       "Learn how to professionally manage customer support calls, resolve service queries, handle complaints, and maintain positive client relationships through effective telecommunication.",
     image: internImages[44].internImage,
     // logos: internImages[36].logo36,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Support Calling Internship",
     description_:
@@ -5663,7 +5663,7 @@ export const internshipData = [
       "Learn to run profitable paid ad campaigns on Facebook, Instagram, Google Search, Display, YouTube, and Shopping Ads platforms, mastering targeting, bidding, and ad optimization.",
     image: internImages[45].internImage,
     // logos: internImages[37].logo37,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Meta & Google Ads Internship",
     description_:
@@ -5780,7 +5780,7 @@ export const internshipData = [
       "Master business development strategies including client acquisition, sales pitching, lead conversion, relationship management, and deal closures with practical projects.",
     image: internImages[46].internImage,
     // logos: internImages[38].logo38,
-    category:  "Non-Technology",
+    category: "Non-Technology",
 
     title_: "Business Development Associate (BDA) Internship",
     description_:
@@ -5881,6 +5881,144 @@ export const internshipData = [
           "Lecture 3: Proposal & Quotation Preparation",
           "Lecture 4: Live Sales Pitch Simulation",
           "Lecture 5: Deal Closure & Post-sale Follow-up",
+        ],
+      },
+    ],
+    price: 3299,
+    duration: "5 months",
+  },
+  {
+    id: "48",
+    title: "DevOps Engineer",
+    icon: "briefcase",
+    description:
+      "Master DevOps practices including CI/CD pipelines, containerization, infrastructure as code, monitoring, and cloud deployment with real-world projects.",
+    image: internImages[47].internImage,
+    category: "Technology",
+
+    title_: "DevOps Engineer Internship",
+    description_:
+      'This internship prepares you for high-performing client-facing business development roles by teaching lead generation, client acquisition, sales pitch strategies, objection handling, proposal creation, relationship management, and deal closure techniques. Learn how to boost sales and revenue while maintaining strong client relationships through hands-on projects.", "This internship prepares you for industry-ready DevOps roles by teaching automation, CI/CD pipelines, Docker, Kubernetes, infrastructure as code (Terraform, Ansible), monitoring with Prometheus & Grafana, and cloud deployment. Learn how to bridge the gap between development and operations with hands-on projects.',
+
+    features: [
+      "Complete DevOps Tools & Practices Curriculum",
+      "Certificate of Completion",
+      "100% Placement Assistance",
+      "Hands-On CI/CD & Cloud Projects",
+      "Weekly Automation & Monitoring Exercises",
+      "Mock DevOps Interviews & System Design Discussions",
+      "GitHub Actions, Jenkins & Docker Labs",
+      "Mentorship from Senior DevOps Engineers",
+    ],
+    courseIncludes: {
+      videoHours: "70 hours on-demand video",
+      resources: "120 downloadable resources",
+      exercises: "12 real-world DevOps automation exercises",
+      articles: "50 articles",
+      certificate: "Certificate of completion",
+      access: "Lifetime access on mobile and TV",
+    },
+    stats: {
+      learners: "1,950,400",
+      practices: "2,000",
+      rating: "4.9",
+    },
+
+    content: [
+      {
+        title: "Introduction to DevOps & Career Scope",
+        lectures: 4,
+        duration: "20 min",
+        content: [
+          "Lecture 1: What is DevOps?",
+          "Lecture 2: DevOps Lifecycle & Principles",
+          "Lecture 3: DevOps vs Traditional IT",
+          "Lecture 4: Career Paths in DevOps",
+        ],
+      },
+      {
+        title: "Version Control with Git & GitHub",
+        lectures: 6,
+        duration: "1 hr 15 min",
+        content: [
+          "Lecture 1: Git Basics & Installation",
+          "Lecture 2: Git Branching & Merging",
+          "Lecture 3: Pull Requests & Code Reviews",
+          "Lecture 4: GitHub Actions Overview",
+          "Lecture 5: Managing Remote Repositories",
+          "...",
+        ],
+      },
+      {
+        title: "CI/CD Pipelines with Jenkins & GitHub Actions",
+        lectures: 8,
+        duration: "2 hr",
+        content: [
+          "Lecture 1: What is CI/CD?",
+          "Lecture 2: Jenkins Setup & Configuration",
+          "Lecture 3: GitHub Actions Workflow",
+          "Lecture 4: Automating Build & Test",
+          "Lecture 5: Continuous Deployment Pipeline",
+          "Lecture 6: Environment Variables & Secrets",
+        ],
+      },
+      {
+        title: "Containerization with Docker",
+        lectures: 7,
+        duration: "1 hr 45 min",
+        content: [
+          "Lecture 1: Introduction to Docker & Containers",
+          "Lecture 2: Docker Images & Containers",
+          "Lecture 3: Dockerfile & Custom Images",
+          "Lecture 4: Docker Compose for Multi-container Apps",
+          "Lecture 5: Docker Hub & Image Management",
+        ],
+      },
+      {
+        title: "Kubernetes & Container Orchestration",
+        lectures: 8,
+        duration: "2 hr 15 min",
+        content: [
+          "Lecture 1: Kubernetes Architecture",
+          "Lecture 2: Pods, Deployments & Services",
+          "Lecture 3: ConfigMaps & Secrets",
+          "Lecture 4: Scaling & Load Balancing",
+          "Lecture 5: Helm Charts for Automation",
+        ],
+      },
+      {
+        title: "Infrastructure as Code (IaC)",
+        lectures: 6,
+        duration: "1 hr 40 min",
+        content: [
+          "Lecture 1: Introduction to IaC",
+          "Lecture 2: Terraform Basics & Providers",
+          "Lecture 3: Creating Infrastructure with Terraform",
+          "Lecture 4: Ansible for Configuration Management",
+          "Lecture 5: Automating Infrastructure Setup",
+        ],
+      },
+      {
+        title: "Monitoring & Logging",
+        lectures: 6,
+        duration: "1 hr 20 min",
+        content: [
+          "Lecture 1: Monitoring with Prometheus",
+          "Lecture 2: Grafana Dashboards",
+          "Lecture 3: Centralized Logging with ELK Stack",
+          "Lecture 4: Alerting & Incident Response",
+        ],
+      },
+      {
+        title: "Capstone Project: Full DevOps Pipeline",
+        lectures: 5,
+        duration: "2 hr 30 min",
+        content: [
+          "Lecture 1: Designing CI/CD Workflow",
+          "Lecture 2: Dockerizing Application",
+          "Lecture 3: Deploying on Kubernetes",
+          "Lecture 4: Setting up Monitoring Dashboard",
+          "Lecture 5: Final Deployment on Cloud (AWS/GCP/Azure)",
         ],
       },
     ],

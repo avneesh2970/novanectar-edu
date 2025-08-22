@@ -1,4 +1,7 @@
+import { LiaLinkedin } from "react-icons/lia";
 import logo from "../assets/logos/footer-logo.png";
+import { BsInstagram } from "react-icons/bs";
+import { FaFacebook } from "react-icons/fa";
 export default function Footer() {
   return (
     <footer className="mt-16 bg-gray-800 text-white py-10 px-6">
@@ -49,7 +52,7 @@ export default function Footer() {
                 className="hover:text-blue-500"
                 target="_blank"
               >
-                LinkedIn
+                <LiaLinkedin className="inline" /> LinkedIn
               </a>
             </li>
             <li>
@@ -58,7 +61,7 @@ export default function Footer() {
                 className="hover:text-blue-500"
                 target="_blank"
               >
-                Instagram
+                <BsInstagram className="inline" /> Instagram
               </a>
             </li>
             <li>
@@ -68,7 +71,7 @@ export default function Footer() {
                 className="hover:text-blue-500"
                 target="_blank"
               >
-                Facebook
+                <FaFacebook className="inline" /> Facebook
               </a>
             </li>
           </ul>

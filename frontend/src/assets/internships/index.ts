@@ -46,6 +46,7 @@ import intern44 from "./intern44.png";
 import intern45 from "./intern45.png";
 import intern46 from "./intern46.png";
 import intern47 from "./intern47.png";
+import intern48 from "./intern48.png";
 
 // intern logos
 import intern1Logo1 from "./intern1-1.png";
@@ -245,6 +246,10 @@ const internImages = [
   },
   {
     internImage: intern47,
+    logo15: [intern12Logo1, intern12Logo2, intern12Logo3],
+  },
+  {
+    internImage: intern48,
     logo15: [intern12Logo1, intern12Logo2, intern12Logo3],
   },
 ];
