@@ -9,7 +9,7 @@ import authRoutes from "./src/user/user.route.js";
 import cookieParser from "cookie-parser";
 import adminRoutes from "./src/admin/admin.route.js";
 import bookRouter from "./src/oneTwoOne/book.route.js";
-import certificateRouter from "./src/certificate/certificate.route.js";
+import certificateRouter from "./src/certificate/certificateRoute.js";
 
 dotenv.config();
 const app = express();
@@ -35,8 +35,8 @@ app.use("/api", router);
 app.use("/api", paymentRouter);
 app.use("/api", contactRouter);
 app.use("/api", bookRouter);
-app.use("/api/admin", adminRoutes);
 app.use("/api", certificateRouter);
+app.use("/api/admin", adminRoutes);
 const PORT = process.env.PORT || 5000;
 
 dbConnect().then(() => {

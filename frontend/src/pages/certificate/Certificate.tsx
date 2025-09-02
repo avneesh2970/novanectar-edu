@@ -1,64 +1,63 @@
-import type React from "react";
-import certificatePreview from "../../assets/certificate/preview.png";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { generateCertificate } from "../../api/services";
-import { useNavigate } from "react-router-dom";
+// certificate-OUC8L.tsx
+"use client"
 
-const Certificate: React.FC = () => {
-  const navigate = useNavigate();
-  const [uniqueId, setUniqueId] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+import { type FormEvent, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-  const handleGenerateCertificate = async () => {
-    if (uniqueId.trim() === "") {
-      toast.error("please provide your unique enrollment id");
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const data = await generateCertificate.submitForm(uniqueId);
-      console.log("data api response: ", data);
-      // Encode the ID for URL safety
-      const encodedId = encodeURIComponent(uniqueId);
-      // Redirect to the ID page using React Router
-      navigate(`/certificate/${encodedId}`);
-    } catch (error) {
-      console.log("error in getting certificate:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+export default function Certificate() {
+  const navigate = useNavigate()
+  const [certificateId, setCertificateId] = useState("")
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    const id = certificateId.trim()
+    if (!id) return
+    navigate(`/certificate/${encodeURIComponent(id)}`)
+  }
+
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-8 p-6 bg-slate-50 min-h-screen">
-      {/* Certificate Image */}
-      <div className="max-w-md shadow-lg rounded-lg overflow-hidden">
-        <img
-          src={certificatePreview}
-          alt="Certificate of Completion for Shikha Yadav"
-          className="w-full h-auto"
-        />
-      </div>
+    <main className="mx-auto max-w-xl px-6 py-8 mt-20">
+      <header className="mb-6">
+        <h1 className="text-pretty text-2xl font-bold tracking-tight text-gray-900">Verify Certificate</h1>
+        <p className="mt-2 text-sm text-gray-600">
+          Enter your Certificate ID to verify and view the details.
+        </p>
+      </header>
 
-      {/* Action Buttons */}
-      <div className="flex flex-col gap-6 w-full max-w-sm">
+      <form
+        onSubmit={onSubmit}
+        aria-label="Certificate verification form"
+        className="flex flex-col gap-3 sm:flex-row sm:items-center"
+      >
+        <label htmlFor="certificateId" className="sr-only">
+          Certificate ID
+        </label>
+
         <input
+          id="certificateId"
+          name="certificateId"
           type="text"
-          className="p-2 rounded-md bg-white border border-gray-500"
-          placeholder="enter your unique id"
-          value={uniqueId}
-          onChange={(e) => setUniqueId(e.target.value)}
+          value={certificateId}
+          onChange={(e) => setCertificateId(e.target.value)}
+          placeholder="e.g. NN/IN/01/1000"
+          aria-label="Certificate ID"
+          required
+          className="w-full flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm outline-none transition-colors placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
         />
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md text-lg font-medium transition-colors"
-          onClick={handleGenerateCertificate}
-          disabled={isLoading}
-        >
-          {isLoading ? "Processing..." : "Generate Certificate"}
-        </button>
-      </div>
-    </div>
-  );
-};
 
-export default Certificate;
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-50"
+        >
+          Verify
+        </button>
+      </form>
+
+      <section className="mt-4">
+        <p className="text-xs text-gray-600">
+          Tip: The Certificate ID is shown on your issued certificate (e.g., NN/IN/01/1000).
+        </p>
+      </section>
+    </main>
+  )
+}

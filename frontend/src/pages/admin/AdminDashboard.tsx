@@ -26,9 +26,11 @@ import {
   FiRefreshCw,
   FiTrendingUp,
   FiEye,
+  FiUpload,
 } from "react-icons/fi";
 import { FaFileSignature } from "react-icons/fa";
 import OfferLetter from "./OfferLetter";
+import CertificateForm from "./uploadCertificate/Certificate";
 
 // Types
 interface EnrollmentStats {
@@ -601,6 +603,7 @@ const AdminDashboard: React.FC = () => {
       { id: "bookings", label: "Bookings", icon: FiCalendar },
       { id: "offer", label: "Offer Letter", icon: FaFileSignature },
       { id: "payments", label: "payment Success", icon: FiBarChart2 },
+      { id: "certificate", label: "certificate upload", icon: FiUpload },
     ],
     []
   );
@@ -813,7 +816,7 @@ const AdminDashboard: React.FC = () => {
         </div>
       ),
     [sidebarOpen, activeSection, sidebarItems]
-  ); // Added dependencies
+  );
 
   const Header = useMemo(
     () => () =>
@@ -1697,7 +1700,7 @@ const AdminDashboard: React.FC = () => {
                         razorpay_payment_id
                       </th>
                       <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      razorpay_signature
+                        razorpay_signature
                       </th>
                       <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         email
@@ -1725,7 +1728,9 @@ const AdminDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                          <Badge variant="outline">{payment.razorpay_payment_id}</Badge>
+                          <Badge variant="outline">
+                            {payment.razorpay_payment_id}
+                          </Badge>
                         </td>
                         <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
                           {payment.razorpay_signature}
@@ -1740,7 +1745,7 @@ const AdminDashboard: React.FC = () => {
                             </div>
                           </div>
                         </td>
-       
+
                         <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600">
                           {payment.time}
                         </td>
@@ -1754,6 +1759,14 @@ const AdminDashboard: React.FC = () => {
               </div>
             </div>
             <PaginationComponent totalItems={filteredPayments.length} />
+          </div>
+        );
+      }
+
+      case "certificate": {
+        return (
+          <div>
+            <CertificateForm />
           </div>
         );
       }

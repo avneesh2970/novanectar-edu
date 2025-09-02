@@ -3,6 +3,7 @@
 import api from "./axios";
 import { QueryFormData } from "../types";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export const queyForm = {
   submitForm: async (data: QueryFormData) => {
@@ -58,12 +59,20 @@ export const updateProfile = {
   },
 };
 
-export const generateCertificate = {
-  submitForm: async (data: any) => {
+export const uploadCertificate = {
+  submitCertificate: async (formData: FormData) => {
     try {
-      return await api.post("/api/get-certificate", { uniqueId: data });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/upload-certificate`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        // withCredentials: true, // uncomment if your backend uses cookie auth
+      })
+      return response.data // return data so the component can read { success, ... }
     } catch (error: any) {
-      toast.error("error in getting certificate", error);
+      console.log("[v0] error in upload-certificate: ", error)
+      toast.error(error?.response?.data?.message || "error in uploading certificate")
+      throw error
     }
   },
-};
+}

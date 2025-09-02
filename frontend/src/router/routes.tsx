@@ -16,8 +16,7 @@ import Profile from "../pages/profile/Profile";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminProtectedRoute from "../components/auth/AdminProtectedRoute";
-import Certificate from "../pages/certificate/Certificate";
-
+import CertificateDetail from "../pages/certificate/CertificateDetail";
 
 export const routes: RouteObject[] = [
   {
@@ -88,10 +87,10 @@ export const routes: RouteObject[] = [
         path: "*",
         element: <NotFound />,
       },
-      {
-        path: "certificate",
-        element: <Certificate />,
-      },
+      // {
+      //   path: "certificate",
+      //   element: <Certificate />,
+      // },
     ],
   },
   {
@@ -100,7 +99,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: "certificate/:id",
-    element: "<div>preview page</div>",
+    element: <CertificateDetail />,
   },
   {
     path: "admin/dashboard",

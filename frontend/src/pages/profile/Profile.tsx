@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { updateProfile } from "../../api/services";
 import CallingIcon from "../../components/socialContact/Call";
 import WhatsappIcon from "../../components/socialContact/Whatsapp";
+import Certificate from "../certificate/Certificate";
 
 // import courseImages from "../../assets/courses/index";
 const courseImages: Record<string, { default: string }> = import.meta.glob(
@@ -19,7 +20,10 @@ const internshipImages: Record<string, { default: string }> = import.meta.glob(
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<
-    "profile" | "enrolled-courses" | "enrolled-internships"
+    | "profile"
+    | "enrolled-courses"
+    | "enrolled-internships"
+    | "verify-certificates"
   >("profile");
   const { logout, getUser } = useAuth();
   const [userInfo, setUserInfo] = useState<any>({
@@ -162,6 +166,16 @@ const Profile = () => {
               }`}
             >
               Enrolled Internships
+            </button>
+            <button
+              onClick={() => setActiveTab("verify-certificates")}
+              className={`font-semibold w-full text-left px-4 py-2 rounded-lg transition-colors text-sm md:text-base ${
+                activeTab === "verify-certificates"
+                  ? "bg-blue-100 text-blue-600"
+                  : "hover:bg-gray-100 text-gray-600"
+              }`}
+            >
+              Verify Certificates
             </button>
             <button
               className="w-full text-left px-4 py-2 rounded-lg transition-colors text-sm md:text-base hover:text-blue-500 text-gray-700 font-semibold"
@@ -403,6 +417,8 @@ const Profile = () => {
               )}
             </div>
           )}
+
+          {activeTab === "verify-certificates" && <Certificate />}
         </main>
       </div>
       {/* call icons */}
