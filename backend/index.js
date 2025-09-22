@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 import adminRoutes from "./src/admin/admin.route.js";
 import bookRouter from "./src/oneTwoOne/book.route.js";
 import certificateRouter from "./src/certificate/certificateRoute.js";
+import couponRouter from "./src/orders/couponroute.js"
 
 dotenv.config();
 const app = express();
@@ -37,6 +38,10 @@ app.use("/api", contactRouter);
 app.use("/api", bookRouter);
 app.use("/api", certificateRouter);
 app.use("/api/admin", adminRoutes);
+
+//coupern route
+app.use("/api/discount/", couponRouter)
+
 const PORT = process.env.PORT || 5000;
 
 dbConnect().then(() => {

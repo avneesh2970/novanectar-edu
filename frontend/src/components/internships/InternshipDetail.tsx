@@ -21,26 +21,26 @@ const InternshipDetail = () => {
   const durationOptions = [
     {
       months: "1",
-      // price: "149",
-      price: "1499",
-      // originalPrice: "299",
-      originalPrice: "2999",
+      // price: "1499",
+      price: "1999",
+      // originalPrice: "2999",
+      originalPrice: "3999",
       highlight: "Perfect for quick skill development",
     },
     {
       months: "3",
-      // price: "599",
-      price: "2499",
-      // originalPrice: "1199",
-      originalPrice: "4999",
+      // price: "2499",
+      price: "3499",
+      // originalPrice: "4999",
+      originalPrice: "6999",
       highlight: "Ideal for in-depth learning",
     },
     {
       months: "6",
-      // price: "999",
-      price: "4599",
-      // originalPrice: "1999",
-      originalPrice: "9199",
+      // price: "4599",
+      price: "5999",
+      // originalPrice: "9199",
+      originalPrice: "11999",
       highlight: "Complete professional experience",
     },
   ];
@@ -104,11 +104,14 @@ const InternshipDetail = () => {
 
   if (internship) {
     if (selectedDuration == "1") {
-      internship.price = 1499;
+      // internship.price = 1499;
+      internship.price = 1999;
     } else if (selectedDuration == "3") {
-      internship.price = 2499;
+      // internship.price = 2499;
+      internship.price = 3499;
     } else if (selectedDuration == "6") {
-      internship.price = 4599;
+      // internship.price = 4599;
+      internship.price = 5999;
     }
   }
 

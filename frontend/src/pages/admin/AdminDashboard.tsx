@@ -27,10 +27,12 @@ import {
   FiTrendingUp,
   FiEye,
   FiUpload,
+  FiTag,
 } from "react-icons/fi";
 import { FaFileSignature } from "react-icons/fa";
 import OfferLetter from "./OfferLetter";
 import CertificateForm from "./uploadCertificate/Certificate";
+import Coupon from "./Coupon";
 
 // Types
 interface EnrollmentStats {
@@ -604,6 +606,7 @@ const AdminDashboard: React.FC = () => {
       { id: "offer", label: "Offer Letter", icon: FaFileSignature },
       { id: "payments", label: "payment Success", icon: FiBarChart2 },
       { id: "certificate", label: "certificate upload", icon: FiUpload },
+      { id: "discount", label: "create offer", icon: FiTag },
     ],
     []
   );
@@ -1767,6 +1770,13 @@ const AdminDashboard: React.FC = () => {
         return (
           <div>
             <CertificateForm />
+          </div>
+        );
+      }
+      case "discount": {
+        return (
+          <div>
+            <Coupon />
           </div>
         );
       }
