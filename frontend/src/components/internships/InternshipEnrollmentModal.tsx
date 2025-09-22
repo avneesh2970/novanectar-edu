@@ -159,20 +159,24 @@ const InternshipEnrollmentModal = ({
   };
 
   let basePrice;
+  let actualPrice;
   if (selectedDuration === "3") {
     // price = 2499;
     basePrice = 3499;
+    actualPrice=6999;
   } else if (selectedDuration === "1") {
     // price = 1499;
     basePrice = 1999;
+    actualPrice=3999;
   } else if (selectedDuration === "6") {
     // price = 4599;
     basePrice = 5999;
+    actualPrice=11999;
     // price = 1;
   } else {
     throw new Error("Invalid duration");
   }
-  const discountAmount = isCouponApplied ? Math.round(basePrice * 0.3) : 0;
+  const discountAmount = isCouponApplied ? Math.round(actualPrice * 0.3) : 0;
   const discountedPrice = basePrice - discountAmount;
   const gstRate = 0.18;
   const finalPrice = Math.round(discountedPrice * (1 + gstRate));
@@ -500,11 +504,16 @@ const InternshipEnrollmentModal = ({
                     <div className="text-sm text-gray-600 space-y-1">
                       <div className="flex justify-between">
                         <span>Base Price:</span>
+                        {/* <span>₹{basePrice}</span> */}
+                        <span>₹{actualPrice}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Discount (50%):</span>
                         <span>₹{basePrice}</span>
                       </div>
                       {isCouponApplied && (
                         <div className="flex justify-between text-green-600">
-                          <span>Discount (30%):</span>
+                          <span>Extra Discount (30%):</span>
                           <span>-₹{discountAmount}</span>
                         </div>
                       )}
