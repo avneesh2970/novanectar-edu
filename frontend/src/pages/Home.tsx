@@ -10,6 +10,7 @@ import WhatsappIcon from "../components/socialContact/Whatsapp";
 import popup1 from "../assets/popup/popup1.webp";
 import AdPopup from "../components/adpopup/AdPopup";
 import { useEffect, useState } from "react";
+import Chatbot from "../components/socialContact/Chatbot";
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -54,6 +55,9 @@ const Home = () => {
       {/* call icons */}
       <CallingIcon />
       <WhatsappIcon />
+
+      {/* chat bot  */}
+      <Chatbot />
 
       {/* Advertisement Popup - only shows on first visit */}
       {showPopup && <AdPopup imageSrc={popup1} onClose={handleClosePopup} />}
