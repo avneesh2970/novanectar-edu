@@ -17,7 +17,6 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { code, discountPercent, expiry, maxClaims } = req.body;
-console.log("....", code, discountPercent, expiry, maxClaims)
     // Check if coupon code already exists
     const existingCoupon = await Coupon.findOne({ code: code.toUpperCase() });
     if (existingCoupon) {
