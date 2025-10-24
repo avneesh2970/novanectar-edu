@@ -331,7 +331,7 @@ const Chatbot = () => {
             onClick={() => setIsOpen(true)}
             className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full p-4 shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center"
           >
-            <MessageCircle size={28} />
+            <MessageCircle size={24} />
             <span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-xs">
               Chat with us!
             </span>
@@ -339,7 +339,7 @@ const Chatbot = () => {
         )}
 
         {isOpen && (
-          <div className="bg-white rounded-2xl shadow-2xl w-96 h-[600px] flex flex-col overflow-hidden border border-gray-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-96 h-[450px] flex flex-col overflow-hidden border border-gray-200">
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
