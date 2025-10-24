@@ -26,6 +26,8 @@ const InternshipEnrollmentModal = ({
   const [error, setError] = useState<string | null>(null);
   const [isCouponApplied, setIsCouponApplied] = useState<boolean>(false);
   const [couponError, setCouponError] = useState<string>("");
+  const [discountPercent, setDiscountPercent] = useState<any>(null);
+
   const navigate = useNavigate();
   if (error) {
     console.log("error: ", error);
@@ -64,35 +66,38 @@ const InternshipEnrollmentModal = ({
     return error;
   };
 
-  const validateCoupon = async(couponCode: string) => {
+  const validateCoupon = async (couponCode: string) => {
     if (!couponCode.trim()) {
       setCouponError("");
       setIsCouponApplied(false);
       return;
     }
 
-     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/discount/validate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code: couponCode }),
-      })
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/discount/validate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code: couponCode }),
+        }
+      );
 
-      const data = await response.json()
-
+      const data = await response.json();
       if (data.success) {
-        setCouponError("")
-        setIsCouponApplied(true)
+        setDiscountPercent(data.discountPercent);
+        setCouponError("");
+        setIsCouponApplied(true);
       } else {
-        setCouponError(data.message || "Invalid coupon code")
-        setIsCouponApplied(false)
+        setCouponError(data.message || "Invalid coupon code");
+        setIsCouponApplied(false);
       }
     } catch (error) {
-      console.log("error: ", error)
-      setCouponError("Error validating coupon")
-      setIsCouponApplied(false)
+      console.log("error: ", error);
+      setCouponError("Error validating coupon");
+      setIsCouponApplied(false);
     }
     // if (validCoupons.includes(couponCode.toUpperCase())) {
     //   setCouponError("");
@@ -163,20 +168,22 @@ const InternshipEnrollmentModal = ({
   if (selectedDuration === "3") {
     // price = 2499;
     basePrice = 3499;
-    actualPrice=6999;
+    actualPrice = 6999;
   } else if (selectedDuration === "1") {
     // price = 1499;
     basePrice = 1999;
-    actualPrice=3999;
+    actualPrice = 3999;
   } else if (selectedDuration === "6") {
     // price = 4599;
     basePrice = 5999;
-    actualPrice=11999;
+    actualPrice = 11999;
     // price = 1;
   } else {
     throw new Error("Invalid duration");
   }
-  const discountAmount = isCouponApplied ? Math.round(actualPrice * 0.3) : 0;
+  const discountAmount = isCouponApplied
+    ? Math.round(actualPrice * (discountPercent / 100))
+    : 0;
   const discountedPrice = basePrice - discountAmount;
   const gstRate = 0.18;
   const finalPrice = Math.round(discountedPrice * (1 + gstRate));
@@ -375,23 +382,48 @@ const InternshipEnrollmentModal = ({
             exit={{ scale: 0.9, opacity: 0 }}
             className="bg-white rounded-3xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto"
           >
-            <h2 className="text-2xl font-bold text-blue-900 mb-2">Enroll in Internship</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-2">
+              Enroll in Internship
+            </h2>
             <p className="text-sm text-blue-700 mb-6">
               {selectedDuration}-month {internship?.title_}
             </p>
             {isVerifying ? (
               <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="flex items-center space-x-1">
-                  <span className="text-sm text-red-500">please wait! Generating offer letter</span>
-                  <svg className="w-5 h-5 text-red-500" viewBox="0 0 120 30" fill="currentColor">
+                  <span className="text-sm text-red-500">
+                    please wait! Generating offer letter
+                  </span>
+                  <svg
+                    className="w-5 h-5 text-red-500"
+                    viewBox="0 0 120 30"
+                    fill="currentColor"
+                  >
                     <circle cx="15" cy="15" r="15">
-                      <animate attributeName="cy" values="15;5;15" dur="0.6s" repeatCount="indefinite" />
+                      <animate
+                        attributeName="cy"
+                        values="15;5;15"
+                        dur="0.6s"
+                        repeatCount="indefinite"
+                      />
                     </circle>
                     <circle cx="60" cy="15" r="15">
-                      <animate attributeName="cy" values="15;5;15" dur="0.6s" begin="0.2s" repeatCount="indefinite" />
+                      <animate
+                        attributeName="cy"
+                        values="15;5;15"
+                        dur="0.6s"
+                        begin="0.2s"
+                        repeatCount="indefinite"
+                      />
                     </circle>
                     <circle cx="105" cy="15" r="15">
-                      <animate attributeName="cy" values="15;5;15" dur="0.6s" begin="0.4s" repeatCount="indefinite" />
+                      <animate
+                        attributeName="cy"
+                        values="15;5;15"
+                        dur="0.6s"
+                        begin="0.4s"
+                        repeatCount="indefinite"
+                      />
                     </circle>
                   </svg>
                 </div>
@@ -399,7 +431,9 @@ const InternshipEnrollmentModal = ({
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -412,11 +446,15 @@ const InternshipEnrollmentModal = ({
                     } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
                     placeholder="Enter your full name"
                   />
-                  {errors.name && touched.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+                  {errors.name && touched.name && (
+                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -429,11 +467,15 @@ const InternshipEnrollmentModal = ({
                     } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
                     placeholder="Enter your email"
                   />
-                  {errors.email && touched.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+                  {errors.email && touched.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number
+                  </label>
                   <input
                     type="tel"
                     name="phone"
@@ -446,11 +488,15 @@ const InternshipEnrollmentModal = ({
                     } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
                     placeholder="Enter your phone number"
                   />
-                  {errors.phone && touched.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
+                  {errors.phone && touched.phone && (
+                    <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Coupon Code (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Coupon Code (Optional)
+                  </label>
                   <input
                     type="text"
                     name="couponCode"
@@ -458,27 +504,40 @@ const InternshipEnrollmentModal = ({
                     onChange={handleChange}
                     disabled={isLoading}
                     className={`w-full px-4 py-2 rounded-lg border ${
-                      couponError ? "border-red-500" : isCouponApplied ? "border-green-500" : "border-gray-300"
+                      couponError
+                        ? "border-red-500"
+                        : isCouponApplied
+                        ? "border-green-500"
+                        : "border-gray-300"
                     } focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100`}
                     placeholder="Enter coupon code for 30% discount"
                   />
-                  {couponError && <p className="mt-1 text-sm text-red-500">{couponError}</p>}
+                  {couponError && (
+                    <p className="mt-1 text-sm text-red-500">{couponError}</p>
+                  )}
                   {isCouponApplied && (
                     <p className="mt-1 text-sm text-green-600 flex items-center">
-                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-4 h-4 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                           clipRule="evenodd"
                         />
                       </svg>
-                      Coupon applied! 30% discount activated
+                      Coupon applied! {discountPercent}% discount activated
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="duration"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Select Internship Duration
                   </label>
                   <select
@@ -513,7 +572,7 @@ const InternshipEnrollmentModal = ({
                       </div>
                       {isCouponApplied && (
                         <div className="flex justify-between text-green-600">
-                          <span>Extra Discount (30%):</span>
+                          <span>Extra Discount ({discountPercent}%):</span>
                           <span>-₹{discountAmount}</span>
                         </div>
                       )}

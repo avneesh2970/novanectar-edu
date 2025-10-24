@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const couponSchema = new mongoose.Schema(
   {
@@ -8,8 +8,17 @@ const couponSchema = new mongoose.Schema(
     active: { type: Boolean, default: true },
   },
   {
-    timestamps: true, // This adds createdAt and updatedAt fields
-  },
-)
+    timestamps: true,
+  }
+);
 
-export default mongoose.model("Coupon", couponSchema)
+// 🔁 Middleware to auto-deactivate expired coupons
+couponSchema.pre(/^find/, async function (next) {
+  await this.model.updateMany(
+    { expiry: { $lt: new Date() }, active: true },
+    { $set: { active: false } }
+  );
+  next();
+});
+
+export default mongoose.model("Coupon", couponSchema);
