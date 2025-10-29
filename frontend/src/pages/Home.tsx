@@ -7,28 +7,28 @@ import Footer from "../components/Footer";
 import StudentJourney from "../components/student-journey/Journey";
 import CallingIcon from "../components/socialContact/Call";
 import WhatsappIcon from "../components/socialContact/Whatsapp";
-import popup1 from "../assets/popup/popup1.webp";
-import AdPopup from "../components/adpopup/AdPopup";
-import { useEffect, useState } from "react";
+// import popup1 from "../assets/popup/popup1.webp";
+// import AdPopup from "../components/adpopup/AdPopup";
+// import { useEffect } from "react";
 import Chatbot from "../components/socialContact/Chatbot";
 
 const Home = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  // const [showPopup, setShowPopup] = useState(false);
 
-  useEffect(() => {
-    // Check if user has already seen the popup in this session
-    const hasSeenPopup = sessionStorage.getItem("hasSeenAdPopup");
+  // useEffect(() => {
+  //   // Check if user has already seen the popup in this session
+  //   const hasSeenPopup = sessionStorage.getItem("hasSeenAdPopup");
 
-    if (!hasSeenPopup) {
-      setShowPopup(true);
-    }
-  }, []);
+  //   if (!hasSeenPopup) {
+  //     setShowPopup(true);
+  //   }
+  // }, []);
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
-    // Mark that user has seen the popup in this session
-    sessionStorage.setItem("hasSeenAdPopup", "true");
-  };
+  // const handleClosePopup = () => {
+  //   setShowPopup(false);
+  //   // Mark that user has seen the popup in this session
+  //   sessionStorage.setItem("hasSeenAdPopup", "true");
+  // };
 
   return (
     <>
@@ -60,7 +60,7 @@ const Home = () => {
       <Chatbot />
 
       {/* Advertisement Popup - only shows on first visit */}
-      {showPopup && <AdPopup imageSrc={popup1} onClose={handleClosePopup} />}
+      {/* {showPopup && <AdPopup imageSrc={popup1} onClose={handleClosePopup} />} */}
     </>
   );
 };
