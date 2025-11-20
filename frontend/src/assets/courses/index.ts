@@ -16,6 +16,8 @@ import course15 from "./course15.webp";
 import course16 from "./course16.webp";
 import course17 from "./course17.webp";
 import course18 from "./course18.webp";
+import course19 from "./course19.webp";
+import course20 from "./course20.webp";
 
 const courseImages = {
   course1,
@@ -36,6 +38,8 @@ const courseImages = {
   course16,
   course17,
   course18,
+  course19,
+  course20,
 };
 
 export default courseImages;
