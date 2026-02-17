@@ -21,25 +21,25 @@ const InternshipDetail = () => {
   const durationOptions = [
     {
       months: "1",
-      // price: "1499",
-      price: "1999",
-      // originalPrice: "2999",
+      // price: "1999",
+      // originalPrice: "3999",
+      price: "799",
       originalPrice: "3999",
       highlight: "Perfect for quick skill development",
     },
     {
       months: "3",
-      // price: "2499",
-      price: "3499",
-      // originalPrice: "4999",
+      // price: "3499",
+      // originalPrice: "6999",
+      price: "1399",
       originalPrice: "6999",
       highlight: "Ideal for in-depth learning",
     },
     {
       months: "6",
-      // price: "4599",
-      price: "5999",
-      // originalPrice: "9199",
+      // price: "5999",
+      // originalPrice: "11999",
+      price: "2399",
       originalPrice: "11999",
       highlight: "Complete professional experience",
     },
@@ -175,7 +175,8 @@ const InternshipDetail = () => {
 
                   {/* Discount Badge */}
                   <div className="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">
-                    50% OFF
+                    {/* 50% OFF */}
+                    80% OFF
                   </div>
 
                   {/* Original Price with Strikethrough */}

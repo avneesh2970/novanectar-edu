@@ -166,18 +166,20 @@ const InternshipEnrollmentModal = ({
   let basePrice;
   let actualPrice;
   if (selectedDuration === "3") {
-    // price = 2499;
-    basePrice = 3499;
+    // basePrice = 3499;
+    // actualPrice = 6999;
+    basePrice = 1399;
     actualPrice = 6999;
   } else if (selectedDuration === "1") {
-    // price = 1499;
-    basePrice = 1999;
+    // basePrice = 1999;
+    // actualPrice = 3999;
+    basePrice = 799;
     actualPrice = 3999;
   } else if (selectedDuration === "6") {
-    // price = 4599;
-    basePrice = 5999;
+    // basePrice = 5999;
+    // actualPrice = 11999;
+    basePrice = 2399;
     actualPrice = 11999;
-    // price = 1;
   } else {
     throw new Error("Invalid duration");
   }
@@ -567,7 +569,8 @@ const InternshipEnrollmentModal = ({
                         <span>₹{actualPrice}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Discount (50%):</span>
+                        {/* <span>Discount (50%):</span> */}
+                        <span>Discount (80%):</span>
                         <span>₹{basePrice}</span>
                       </div>
                       {isCouponApplied && (
