@@ -1598,6 +1598,100 @@ export const coursesCards = [
     price: 19999,
     regularPrice: 39999,
   },
+{
+  id: "21",
+  category: "Trending",
+  title: "Google My Business",
+  duration: "2 months",
+  title_: "Google My Business (GMB) Course",
+  description:
+    "Novanectar Google My Business (GMB) course: Learn how to optimize business listings, rank higher on Google Maps, manage reviews, and drive local customers using powerful local SEO strategies.",
+  description_:
+    "Novanectar Google My Business (GMB) course: Learn how to optimize business listings, rank higher on Google Maps, manage reviews, and drive local customers using powerful local SEO strategies.",
+  image: courseImages.course21,
+  features: [
+    "Complete GMB Profile Optimization",
+    "Google Maps Ranking Strategies",
+    "Local SEO Fundamentals",
+    "Business Verification Process",
+    "Reviews & Reputation Management",
+    "Customer Engagement Techniques",
+    "Analytics & Insights Tracking",
+    "Mentorship from Industry Experts",
+  ],
+  courseIncludes: {
+    videoHours: "30 hours on-demand video",
+    resources: "60 downloadable resources",
+    codingExercises: "20 optimization tasks",
+    articles: "20 articles",
+    certificate: "Certificate of completion",
+    access: "Access on mobile and TV",
+  },
+  stats: {
+    learners: "245,320",
+    practices: "540",
+    rating: "4.8",
+  },
+  content: [
+    {
+      title: "Introduction to Google My Business",
+      lectures: 4,
+      duration: "2 hr",
+      content: [
+        "Lecture 1: What is Google My Business?",
+        "Lecture 2: Importance of Local SEO",
+        "Lecture 3: Setting Up Your GMB Profile",
+        "...",
+      ],
+    },
+    {
+      title: "GMB Profile Optimization",
+      lectures: 6,
+      duration: "4 hr",
+      content: [
+        "Lecture 1: Optimizing Business Information",
+        "Lecture 2: Adding Products & Services",
+        "Lecture 3: Writing SEO-Friendly Descriptions",
+        "...",
+      ],
+    },
+    {
+      title: "Google Maps Ranking Strategies",
+      lectures: 6,
+      duration: "5 hr",
+      content: [
+        "Lecture 1: Local Keyword Research",
+        "Lecture 2: Ranking Factors for GMB",
+        "Lecture 3: NAP Consistency",
+        "...",
+      ],
+    },
+    {
+      title: "Reviews & Reputation Management",
+      lectures: 5,
+      duration: "3 hr",
+      content: [
+        "Lecture 1: Getting Customer Reviews",
+        "Lecture 2: Responding to Reviews",
+        "Lecture 3: Handling Negative Feedback",
+        "...",
+      ],
+    },
+    {
+      title: "Analytics & Growth Strategies",
+      lectures: 5,
+      duration: "3 hr",
+      content: [
+        "Lecture 1: Understanding GMB Insights",
+        "Lecture 2: Tracking Calls & Clicks",
+        "Lecture 3: Improving Performance",
+        "...",
+      ],
+    },
+  ],
+  price: 19999,
+  regularPrice: 39999,
+}
 ];
 
 export const programs = [
