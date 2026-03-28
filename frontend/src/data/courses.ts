@@ -84,8 +84,8 @@ export const coursesCards = [
       },
     ],
 
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "2",
@@ -166,8 +166,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "3",
@@ -239,8 +239,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "4",
@@ -315,8 +315,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "5",
@@ -380,8 +380,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "6",
@@ -464,8 +464,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "7",
@@ -546,8 +546,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "8",
@@ -620,8 +620,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "9",
@@ -699,8 +699,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "10",
@@ -775,8 +775,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 29999,
-    regularPrice: 59999,
+    price: 39999,
+    regularPrice: 79999,
   },
   {
     id: "11",
@@ -853,10 +853,8 @@ export const coursesCards = [
         ],
       },
     ],
-    // price: 19999,
-    // regularPrice: 39999,
-    price: 29999,
-    regularPrice: 59999,
+    price: 39999,
+    regularPrice: 79999,
   },
   {
     id: "12",
@@ -934,8 +932,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "13",
@@ -1013,8 +1011,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "14",
@@ -1086,8 +1084,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "15",
@@ -1159,8 +1157,8 @@ export const coursesCards = [
       },
      
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "16",
@@ -1250,8 +1248,8 @@ export const coursesCards = [
       
       
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "17",
@@ -1329,8 +1327,8 @@ export const coursesCards = [
      
       
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 14999,
+    regularPrice: 29999,
   },
   {
     id: "18",
@@ -1407,8 +1405,8 @@ export const coursesCards = [
       },
       
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 14999,
+    regularPrice: 29999,
   },
   {
     id: "19",
@@ -1501,8 +1499,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
   {
     id: "20",
@@ -1595,8 +1593,8 @@ export const coursesCards = [
         ],
       },
     ],
-    price: 19999,
-    regularPrice: 39999,
+    price: 24999,
+    regularPrice: 49999,
   },
 {
   id: "21",
@@ -1689,8 +1687,8 @@ export const coursesCards = [
       ],
     },
   ],
-  price: 19999,
-  regularPrice: 39999,
+    price: 14999,
+    regularPrice: 29999,
 }
 ];
 
