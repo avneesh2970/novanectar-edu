@@ -13,7 +13,7 @@ const WhatsappIcon = () => {
     >
       <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         <Link
-          to="https://wa.me/918979891703"
+          to="https://wa.me/918979891705"
           target="_blank"
           rel="noopener noreferrer"
           className="block relative"

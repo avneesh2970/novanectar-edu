@@ -183,7 +183,7 @@ export default function Internships() {
             <div className="flex items-center gap-3">
               <Phone className="h-6 w-6 text-blue-600" />
               <span className="font-semibold">WhatsApp:</span>
-              <span>8979891703</span>
+              <span>8979891705</span>
             </div>
           </div>
           <div className="flex justify-center">
